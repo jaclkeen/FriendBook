@@ -6,26 +6,23 @@ using System.Threading.Tasks;
 
 namespace FriendBook.Models
 {
-    public class Post
+    public class Comment
     {
         [Key]
-        public int PostId { get; set; }
+        public int CommentId { get; set; }
 
         [Required]
         public int UserId { get; set; }
         public User User { get; set; }
 
         [Required]
+        public int PostId { get; set; }
+        public Post Post { get; set; }
+
+        [Required]
         public string Text { get; set; }
 
         [Required]
-        public List<User> Likes { get; set; }
-
-        [Required]
-        public List<User> Dislikes { get; set; }
-
-        public string ImgUrl { get; set; }
-
-        public ICollection<Comment> Comments { get; set; }
+        public DateTime TimePosted { get; set; }
     }
 }
