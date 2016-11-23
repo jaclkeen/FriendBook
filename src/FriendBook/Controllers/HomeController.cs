@@ -42,6 +42,22 @@ namespace FriendBook.Controllers
 
         public IActionResult NewStatus(Post post)
         {
+            post.UserId = 1;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            context.Post.Add(post);
+            try
+            {
+                context.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+
             return RedirectToAction("Index");
         }
 
