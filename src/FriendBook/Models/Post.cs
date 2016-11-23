@@ -20,10 +20,10 @@ namespace FriendBook.Models
         public string Text { get; set; }
 
         [Required]
-        public List<User> Likes { get; set; }
+        public ICollection<User> Likes { get; set; }
 
         [Required]
-        public List<User> Dislikes { get; set; }
+        public ICollection<User> Dislikes { get; set; }
 
         public string ImgUrl { get; set; }
 

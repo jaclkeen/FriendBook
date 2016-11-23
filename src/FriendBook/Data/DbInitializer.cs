@@ -36,15 +36,6 @@ namespace FriendBook.Data
                         LastName = "Keen",
                         Email = "mason@mason.com",
                         Password = "mason",
-                        Relationships = new List<Relationship>
-                        {
-                            new Relationship
-                            {
-                                UserId1 = 1,
-                                UserId2 = 2,
-                                Status = 1
-                            }
-                        }
                     },
                     new User
                     {
@@ -52,18 +43,14 @@ namespace FriendBook.Data
                         LastName = "Keen",
                         Email = "aaron@aaron.com",
                         Password = "aaron",
-                        Relationships = new List<Relationship>
-                        {
-                            new Relationship
-                            {
-                                UserId1 = 2,
-                                UserId2 = 3,
-                                Status = 1
-                            }
-                        }
                     }
                 };
-                context.Add(users);
+
+                foreach (User u in users)
+                {
+                    context.User.Add(u);
+                }
+                context.SaveChanges();
 
                 var posts = new Post[]
                 {
@@ -83,7 +70,12 @@ namespace FriendBook.Data
                         Text = "This is the third seeded post!!! Finally!"
                     }
                 };
-                context.Add(posts);
+
+                foreach (Post p in posts)
+                {
+                    context.Post.Add(p);
+                }
+                context.SaveChanges();
 
                 var comments = new Comment[]
                 {
@@ -109,7 +101,12 @@ namespace FriendBook.Data
                         TimePosted = DateTime.Parse("07/18, 2016")
                     }
                 };
-                context.Add(comments);
+
+                foreach (Comment c in comments)
+                {
+                    context.Comment.Add(c);
+                }
+                context.SaveChanges();
 
                 var styles = new Style[]
                 {
@@ -143,10 +140,37 @@ namespace FriendBook.Data
                         DetailColor = "green"
                     }
                 };
-                context.Add(styles);
 
+                foreach (Style s in styles)
+                {
+                    context.Style.Add(s);
+                }
 
+                var relationships = new Relationship[]
+                {
+                    new Relationship
+                    {
+                        UserId1 = 1,
+                        UserId2 = 2
+                    },
+                    new Relationship
+                    {
+                        UserId1 = 1,
+                        UserId2 = 3
+                    },
+                    new Relationship
+                    {
+                        UserId1 = 2,
+                        UserId2 = 3
+                    }
+                };
 
+                foreach(Relationship r in relationships)
+                {
+                    context.Relationship.Add(r);
+                }
+
+                context.SaveChanges();
             }
         }
     }
