@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using FriendBook.Data;
 
 namespace FriendBook
 {
@@ -37,6 +39,11 @@ namespace FriendBook
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
+
+            string path = System.Environment.GetEnvironmentVariable("FriendBook_Path");
+            var connection = $"Filename={path}";
+            Console.WriteLine($"connection = {connection}");
+            services.AddDbContext<FriendBook.Data.FriendBookContext>(options => options.UseSqlite(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
