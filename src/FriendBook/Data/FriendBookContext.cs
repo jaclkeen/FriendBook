@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FriendBook.Models;
 
 namespace FriendBook.Data
 {
@@ -11,5 +12,11 @@ namespace FriendBook.Data
         public FriendBookContext(DbContextOptions<FriendBookContext> options)
                 : base(options)
             { }
+
+        public DbSet<User> User { get; set; }
+        public DbSet<Comment> Comment { get; set; }
+        public DbSet<Post> Post { get; set; }
+        public DbSet<Style> Style { get; set; }
+        public DbSet<Relationship> Relationship { get; set; }
     }
 }
