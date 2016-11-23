@@ -20,6 +20,7 @@ namespace FriendBook.Models
         public Post Post { get; set; }
 
         [Required]
+        [StringLength(200)]
         public string Text { get; set; }
 
         [Required]

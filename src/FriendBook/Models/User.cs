@@ -23,6 +23,8 @@ namespace FriendBook.Models
         [Required]
         public string Password { get; set; }
 
+        public List<Relationship> Relationships { get; set; }
+
         public string ProfileImg { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace FriendBook.Models
         public User User { get; set; }
 
         [Required]
+        [StringLength(200)]
         public string Text { get; set; }
 
         [Required]
