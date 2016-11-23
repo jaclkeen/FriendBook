@@ -19,10 +19,8 @@ namespace FriendBook.Models
         [StringLength(200)]
         public string Text { get; set; }
 
-        [Required]
         public ICollection<User> Likes { get; set; }
 
-        [Required]
         public ICollection<User> Dislikes { get; set; }
 
         public string ImgUrl { get; set; }
