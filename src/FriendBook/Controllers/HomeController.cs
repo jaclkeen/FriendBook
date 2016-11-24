@@ -20,6 +20,7 @@ namespace FriendBook.Controllers
 
         public IActionResult Index()
         {
+            var styling = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
             var posts = context.Post.ToList();
             var users = context.User.ToList();
 
@@ -36,6 +37,7 @@ namespace FriendBook.Controllers
 
             HomePageViewModel model = new HomePageViewModel();
             model.Posts = posts;
+            model.UserStyle = styling;
 
             return View(model);
         }

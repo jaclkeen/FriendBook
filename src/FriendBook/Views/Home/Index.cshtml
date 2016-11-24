@@ -4,8 +4,8 @@
     <div class="col-md-12">
         <h2>Home</h2>
         <form asp-action="NewStatus">
-            <textarea asp-for="@Model.Post.Text" class="newStatus" style="width: 50%; height: 120px; max-width: 50%; max-height: 120px;"></textarea>
-            <input type="submit" value="Submit" />
+            <textarea asp-for="@Model.Post.Text" class="newStatus"></textarea>
+            <input type="submit" class="submitStatus" value="Submit" />
         </form>
     </div>
 </div>
