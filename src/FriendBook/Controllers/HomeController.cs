@@ -20,8 +20,8 @@ namespace FriendBook.Controllers
 
         public IActionResult Index()
         {
-            var styling = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
-            var posts = context.Post.ToList();
+            var styling = context.Style.Where(s => s.UserId == 2).SingleOrDefault();
+            var posts = context.Post.OrderByDescending(p => p.TimePosted).ToList();
             var users = context.User.ToList();
 
             foreach(Post p in posts)
@@ -45,6 +45,7 @@ namespace FriendBook.Controllers
         public IActionResult NewStatus(Post post)
         {
             post.UserId = 1;
+            post.TimePosted = DateTime.Now;
 
             if (!ModelState.IsValid)
             {

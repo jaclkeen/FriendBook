@@ -50,6 +50,8 @@ namespace FriendBook.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 200);
 
+                    b.Property<DateTime>("TimePosted");
+
                     b.Property<int>("UserId");
 
                     b.HasKey("PostId");

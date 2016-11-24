@@ -1,5 +1,6 @@
 ﻿@model FriendBook.ViewModels.HomePageViewModel
 
+<br><br>
 <div class="row">
     <div class="col-md-12">
         <h2>Home</h2>
@@ -25,6 +26,15 @@
                 else
                 {
                     <span>Likes: @Html.DisplayFor(modelItem => s.Likes)</span>
+                }
+
+                @if (s.Dislikes == null)
+                {
+                    <span>Dislikes: 0</span>
+                }
+                else
+                {
+                    <span>Dislikes: @Html.DisplayFor(modelItem => s.Dislikes)</span>
                 }
             </p>
         }
