@@ -20,9 +20,10 @@ namespace FriendBook.Controllers
 
         public IActionResult Index()
         {
-            var styling = context.Style.Where(s => s.UserId == 2).SingleOrDefault();
+            var styling = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
             var posts = context.Post.OrderByDescending(p => p.TimePosted).ToList();
             var users = context.User.ToList();
+            var currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
 
             foreach(Post p in posts)
             {
@@ -38,6 +39,7 @@ namespace FriendBook.Controllers
             HomePageViewModel model = new HomePageViewModel();
             model.Posts = posts;
             model.UserStyle = styling;
+            model.CurrentUser = currentUser;
 
             return View(model);
         }
@@ -64,11 +66,44 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult About()
+        public IActionResult AddLike([FromRoute] int id)
         {
-            ViewData["Message"] = "Your application description page.";
+            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
+            post.Likes++;
 
-            return View();
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult AddDislike([FromRoute] int id)
+        {
+            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
+            post.Dislikes++;
+
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DeletePost([FromRoute] int id)
+        {
+            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
+            context.Post.Remove(post);
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Profile([FromRoute] int id)
+        {
+            User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
+            Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
+            List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
+
+            UserProfileViewModel model = new UserProfileViewModel();
+            model.CurrentUser = user;
+            model.UserStyle = style;
+            model.Posts = posts;
+
+            return View(model);
         }
 
         public IActionResult Contact()

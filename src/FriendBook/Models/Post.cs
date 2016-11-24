@@ -22,9 +22,9 @@ namespace FriendBook.Models
         [Required]
         public DateTime TimePosted { get; set; }
 
-        public ICollection<User> Likes { get; set; }
+        public int Likes { get; set; }
 
-        public ICollection<User> Dislikes { get; set; }
+        public int Dislikes { get; set; }
 
         public string ImgUrl { get; set; }
 

@@ -9,22 +9,6 @@ namespace FriendBook.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Comment",
-                columns: table => new
-                {
-                    CommentId = table.Column<int>(nullable: false)
-                        .Annotation("Autoincrement", true),
-                    PostId = table.Column<int>(nullable: false),
-                    Text = table.Column<string>(maxLength: 200, nullable: false),
-                    TimePosted = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comment", x => x.CommentId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -34,8 +18,6 @@ namespace FriendBook.Migrations
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false),
-                    PostId = table.Column<int>(nullable: true),
-                    PostId1 = table.Column<int>(nullable: true),
                     ProfileImg = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -49,7 +31,9 @@ namespace FriendBook.Migrations
                 {
                     PostId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
+                    Dislikes = table.Column<int>(nullable: false),
                     ImgUrl = table.Column<string>(nullable: true),
+                    Likes = table.Column<int>(nullable: false),
                     Text = table.Column<string>(maxLength: 200, nullable: false),
                     TimePosted = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
@@ -112,6 +96,34 @@ namespace FriendBook.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    PostId = table.Column<int>(nullable: false),
+                    Text = table.Column<string>(maxLength: 200, nullable: false),
+                    TimePosted = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comment_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comment_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_PostId",
                 table: "Comment",
@@ -136,60 +148,10 @@ namespace FriendBook.Migrations
                 name: "IX_Style_UserId",
                 table: "Style",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_PostId",
-                table: "User",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_PostId1",
-                table: "User",
-                column: "PostId1");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Comment_Post_PostId",
-                table: "Comment",
-                column: "PostId",
-                principalTable: "Post",
-                principalColumn: "PostId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Comment_User_UserId",
-                table: "Comment",
-                column: "UserId",
-                principalTable: "User",
-                principalColumn: "UserId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_User_Post_PostId",
-                table: "User",
-                column: "PostId",
-                principalTable: "Post",
-                principalColumn: "PostId",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_User_Post_PostId1",
-                table: "User",
-                column: "PostId1",
-                principalTable: "Post",
-                principalColumn: "PostId",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_User_Post_PostId",
-                table: "User");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_User_Post_PostId1",
-                table: "User");
-
             migrationBuilder.DropTable(
                 name: "Comment");
 
