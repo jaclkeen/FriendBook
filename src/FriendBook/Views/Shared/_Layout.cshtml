@@ -13,9 +13,30 @@
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+    <style>
+        .navbar-brand{
+            color: black!important;
+        }
+        body{
+            background-color: @Model.UserStyle.BackgroundColor;
+            color: @Model.UserStyle.FontColor;
+        }
+        .navbar, .nav li{
+            background-color: @Model.UserStyle.NavColor;
+        }
+        .NewStatus{
+            color: black !important;
+        }
+        .submitStatus{
+            background-color: @Model.UserStyle.DetailColor;
+        }
+        hr{
+            background-color: 1px solid @Model.UserStyle.DetailColor;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -38,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container">
         @RenderBody()
         <hr />
         <footer>

@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161123233046_InitialCreate")]
+    [Migration("20161124002543_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,8 @@ namespace FriendBook.Migrations
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 200);
+
+                    b.Property<DateTime>("TimePosted");
 
                     b.Property<int>("UserId");
 

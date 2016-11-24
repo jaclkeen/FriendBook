@@ -51,6 +51,7 @@ namespace FriendBook.Migrations
                         .Annotation("Autoincrement", true),
                     ImgUrl = table.Column<string>(nullable: true),
                     Text = table.Column<string>(maxLength: 200, nullable: false),
+                    TimePosted = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

@@ -19,6 +19,9 @@ namespace FriendBook.Models
         [StringLength(200)]
         public string Text { get; set; }
 
+        [Required]
+        public DateTime TimePosted { get; set; }
+
         public ICollection<User> Likes { get; set; }
 
         public ICollection<User> Dislikes { get; set; }
