@@ -44,7 +44,11 @@ namespace FriendBook.Migrations
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Dislikes");
+
                     b.Property<string>("ImgUrl");
+
+                    b.Property<int>("Likes");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -124,17 +128,9 @@ namespace FriendBook.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
-                    b.Property<int?>("PostId");
-
-                    b.Property<int?>("PostId1");
-
                     b.Property<string>("ProfileImg");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("PostId1");
 
                     b.ToTable("User");
                 });
@@ -173,17 +169,6 @@ namespace FriendBook.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("FriendBook.Models.User", b =>
-                {
-                    b.HasOne("FriendBook.Models.Post")
-                        .WithMany("Dislikes")
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("FriendBook.Models.Post")
-                        .WithMany("Likes")
-                        .HasForeignKey("PostId1");
                 });
         }
     }

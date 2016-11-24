@@ -1,7 +1,23 @@
-﻿.newStatus {
-    width: 50%!important;
-    height: 120px;
+﻿.nav img{
+    width: 20%;
+}
+
+.nav a{
+    margin-top: 8%;
+}
+
+.nav span img{
+    margin-top: 5%;
+}
+
+.newStatus{
+    width: 50%;
+    height: 130px;
     max-width: 50%;
-    max-height: 120px;
+    max-height: 130px;
     color: black;
+}
+
+.body{
+    margin-top: 5%;
 }
