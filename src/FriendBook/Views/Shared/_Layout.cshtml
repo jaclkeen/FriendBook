@@ -21,11 +21,21 @@
             color: black!important;
         }
         body{
-            background-color: @Model.UserStyle.BackgroundColor;
+            background-color: lightblue;
             color: @Model.UserStyle.FontColor;
         }
+        .colorContainer{
+            background-color: @Model.UserStyle.BackgroundColor;
+            padding: 2%;
+            border-left: 2px solid @Model.UserStyle.DetailColor;
+            border-right: 2px solid @Model.UserStyle.DetailColor;
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
+        }
         .navbar, .nav li{
-            background-color: @Model.UserStyle.NavColor;
+            background-color: @Model.CurrentUserStyle.NavColor;
+        }
+        .navbar{
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
         }
         .NewStatus{
             color: black !important;
@@ -44,80 +54,78 @@
         }
     </style>
 </head>
+
 <body id="page-top" class="index">
 
-        <div class="userSearchArea">
-            <input type="text" class="userSearch" placeholder="User Search..." />
-            <div class="searchResults"></div>
-        </div>
+    <div class="userSearchArea">
+        <input type="text" class="userSearch" placeholder="User Search..." />
+        <div class="searchResults"></div>
+    </div>
 
-        <!-- Navigation -->
-        <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header page-scroll">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                    </button>
-                    <a class="navbar-brand" asp-action="Index" asp-controller="Home">FriendBook</a>
-                </div>
-
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">             
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-                        <li class="page-scroll">
-                            <a asp-action="Profile" asp-controller="Profile" asp-route-id="@Model.CurrentUser.UserId">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</a>
-                        </li>
-                        <li class="page-scroll">
-                            @if (@Model.CurrentUser.ProfileImg == null)
-                            {
-                                <span><img src="~/images/egg.png" class="profileImg" /></span>
-                            }
-                            else
-                            {
-                                <span><img src="@Model.CurrentUser.ProfileImg" class="profileImg"></span>
-                            }
-                        </li>
-                        <li class="page-scroll">
-                            <a href="#portfolio">Portfolio</a>
-                        </li>
-                        <li class="page-scroll">
-                            <a href="#about">About</a>
-                        </li>
-                    </ul>
-                </div>
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home">FriendBook</a>
             </div>
-        </nav>
 
-        <div class="container body">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; 2016 - FriendBook</p>
-            </footer>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a asp-action="Profile" asp-controller="Profile" asp-route-id="@Model.CurrentUser.UserId">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</a>
+                    </li>
+                    <li class="page-scroll">
+                        @if (@Model.CurrentUser.ProfileImg == null)
+                        {
+                            <span><img src="~/images/egg.png" class="profileImg" /></span>
+                        }
+                        else
+                        {
+                            <span><img src="@Model.CurrentUser.ProfileImg" class="profileImg"></span>
+                        }
+                    </li>
+                    <li class="page-scroll">
+                        <a asp-action="Index" asp-controller="Home">Home</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">About</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-        <environment names="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-        </environment>
-        <environment names="Staging,Production">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-            </script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-        </environment>
+    <div class="container body">
+        <div class="bodyWrapper">
+            @RenderBody()
+        </div>
+    </div>
 
-        @RenderSection("scripts", required: false)
-    </body>
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+</body>
 </html>

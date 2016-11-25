@@ -43,6 +43,27 @@ namespace FriendBook.Data
                         LastName = "Keen",
                         Email = "aaron@aaron.com",
                         Password = "aaron",
+                    },
+                    new User
+                    {
+                        FirstName = "Josh",
+                        LastName = "Dobbs",
+                        Email = "josh@josh.com",
+                        Password = "josh",
+                    },
+                    new User
+                    {
+                        FirstName = "BillyBob",
+                        LastName = "Johnson",
+                        Email = "billy@billy.com",
+                        Password = "billy",
+                    },
+                    new User
+                    {
+                        FirstName = "Tommy",
+                        LastName = "John",
+                        Email = "tommy@tommy.com",
+                        Password = "tommy",
                     }
                 };
 
@@ -141,7 +162,8 @@ namespace FriendBook.Data
                         FontSize = 20,
                         NavColor = "black",
                         DetailColor = "green"
-                    }
+                    },
+                    new Style(4), new Style(5), new Style(6)
                 };
 
                 foreach (Style s in styles)

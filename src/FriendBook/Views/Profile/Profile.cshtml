@@ -1,24 +1,51 @@
 ﻿@model FriendBook.ViewModels.UserProfileViewModel
 
-<h2>My Profile</h2>
-<div class="row">
-    <div class="col-md-12">
-        @foreach (var s in Model.Posts)
+<div class="colorContainer">
+    <h2>My Profile</h2>
+
+    <div class="row profileHead">
+        @if (Model.UserProfile.ProfileImg == null)
         {
-            <div class="post">
-                <p>
-                    <span>@Html.DisplayFor(modelItem => s.User.FirstName) @Html.DisplayFor(modelItem => s.User.LastName): </span>
-                    <span>@Html.DisplayFor(modelItem => s.Text)</span>
-                </p>
-                <div>
-                    <a asp-action="AddLike" asp-controller="Profile" asp-route-id="@s.PostId"><span>Likes: @Html.DisplayFor(modelItem => s.Likes)</span></a>
-                    <a asp-action="AddDislike" asp-controller="Profile" asp-route-id="@s.PostId"><span>Dislikes: @Html.DisplayFor(modelItem => s.Dislikes)</span></a>
-                    @if (s.UserId == Model.CurrentUser.UserId)
-                    {
-                        <a asp-action="DeletePost" asp-route-id="@s.PostId"><span>Delete</span></a>
-                    }
-                </div>
-            </div>
+            <img class="profileHeadImg" src="~/images/egg.png" />
         }
+        else
+        {
+            <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
+        }
+        <h3 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h3>
+        @if(Model.AreFriends == "NoRelationship" || Model.AreFriends == "no")
+        {
+            <a class="addFriend" asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId"><span class="profileAddFriend">Add Friend!</span></a>
+        }
+        @if(Model.AreFriends == "Pending")
+        {
+            <p class="pending">Pending</p>
+        }
+        @if(Model.AreFriends == "yes")
+        {
+            <p class="friends">Friends</p>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var s in Model.Posts)
+            {
+                <div class="post">
+                    <p>
+                        <span>@Html.DisplayFor(modelItem => s.User.FirstName) @Html.DisplayFor(modelItem => s.User.LastName): </span>
+                        <span>@Html.DisplayFor(modelItem => s.Text)</span>
+                    </p>
+                    <div>
+                        <a asp-action="AddLike" asp-controller="Profile" asp-route-id="@s.PostId"><span>Likes: @Html.DisplayFor(modelItem => s.Likes)</span></a>
+                        <a asp-action="AddDislike" asp-controller="Profile" asp-route-id="@s.PostId"><span>Dislikes: @Html.DisplayFor(modelItem => s.Dislikes)</span></a>
+                        @if (s.UserId == Model.CurrentUser.UserId)
+                        {
+                            <a asp-action="DeletePost" asp-route-id="@s.PostId"><span>Delete</span></a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </div>

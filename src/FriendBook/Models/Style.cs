@@ -14,11 +14,25 @@ namespace FriendBook.Models
         public int UserId { get; set; }
         public User User { get; set; }
 
+        public string WallBackgroundColor { get; set; }
         public string BackgroundColor { get; set; }
         public string FontColor { get; set; }
         public int FontSize { get; set; }
         public string FontFamily { get; set; }
         public string NavColor { get; set; }
         public string DetailColor { get; set; }
+
+        public Style() { }
+
+        public Style(int id){
+            this.UserId = id;
+            this.BackgroundColor = "lightgrey";
+            this.WallBackgroundColor = "#6495ED";
+            this.FontColor = "black";
+            this.FontSize = 16;
+            this.FontFamily = "Times New Roman";
+            this.NavColor = "darkgrey";
+            this.DetailColor = "lightblue";
+        }
     }
 }

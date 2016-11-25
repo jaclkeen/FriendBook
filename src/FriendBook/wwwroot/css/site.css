@@ -1,9 +1,18 @@
 ﻿.navbar{
+    position: absolute;
     z-index: -1;
 }
 
 .nav img{
     width: 20%;
+}
+
+.bodyWrapper{
+    margin-top: 6%;
+}
+
+.body{
+    z-index: -2!important;
 }
 
 .nav a{
@@ -23,14 +32,17 @@
 }
 
 .userSearchArea{
-    margin-top: -3.6%;
+    margin-top: 1.3%;
     margin-left: 17%;
     float: left;
     width: 40%;
 }
 
 .body{
-    margin-top: 5%;
+    z-index: -1;
+    width: 80%;
+    margin-left: 10%;
+    position: absolute;
 }
 
 .userSearch{
@@ -44,7 +56,6 @@
     background-color: lightgrey;
     text-align: center;
     border-bottom: 2px solid black;
-    /*border-left: 2px solid black;*/
-    /*border-right: 2px solid black;*/
+    z-index: 3;
     margin-bottom: 0;
 }

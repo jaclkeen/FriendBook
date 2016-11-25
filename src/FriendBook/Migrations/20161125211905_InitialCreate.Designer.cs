@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161124171555_InitialCreate")]
+    [Migration("20161125211905_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,8 @@ namespace FriendBook.Migrations
                     b.Property<string>("NavColor");
 
                     b.Property<int>("UserId");
+
+                    b.Property<string>("WallBackgroundColor");
 
                     b.HasKey("StyleId");
 

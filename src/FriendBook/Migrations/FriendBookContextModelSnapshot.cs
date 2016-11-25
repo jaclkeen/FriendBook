@@ -104,6 +104,8 @@ namespace FriendBook.Migrations
 
                     b.Property<int>("UserId");
 
+                    b.Property<string>("WallBackgroundColor");
+
                     b.HasKey("StyleId");
 
                     b.HasIndex("UserId");
