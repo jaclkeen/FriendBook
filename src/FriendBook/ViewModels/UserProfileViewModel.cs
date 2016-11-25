@@ -13,5 +13,6 @@ namespace FriendBook.ViewModels
         public User UserProfile { get; set; }
         public Style UserStyle { get; set; }
         public Style CurrentUserStyle { get; set; }
+        public string AreFriends { get; set; }
     }
 }

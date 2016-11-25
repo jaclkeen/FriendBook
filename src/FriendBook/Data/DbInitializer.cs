@@ -162,7 +162,8 @@ namespace FriendBook.Data
                         FontSize = 20,
                         NavColor = "black",
                         DetailColor = "green"
-                    }
+                    },
+                    new Style(4), new Style(5), new Style(6)
                 };
 
                 foreach (Style s in styles)
