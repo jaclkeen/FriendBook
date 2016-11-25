@@ -175,18 +175,18 @@ namespace FriendBook.Data
                 {
                     new Relationship
                     {
-                        UserId1 = 1,
-                        UserId2 = 2
+                        SenderUserId = 1,
+                        ReciverUserId = 2
                     },
                     new Relationship
                     {
-                        UserId1 = 1,
-                        UserId2 = 3
+                        SenderUserId = 1,
+                        ReciverUserId = 3
                     },
                     new Relationship
                     {
-                        UserId1 = 2,
-                        UserId2 = 3
+                        SenderUserId = 2,
+                        ReciverUserId = 3
                     }
                 };
 

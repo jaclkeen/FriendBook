@@ -55,10 +55,10 @@ namespace FriendBook.Migrations
                 {
                     RelationshipId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
+                    ReciverUserId = table.Column<int>(nullable: false),
+                    SenderUserId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: true),
-                    UserId1 = table.Column<int>(nullable: false),
-                    UserId2 = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

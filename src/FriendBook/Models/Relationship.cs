@@ -12,10 +12,10 @@ namespace FriendBook.Models
         public int RelationshipId { get; set; }
 
         [Required]
-        public int UserId1 { get; set; }
+        public int SenderUserId { get; set; }
 
         [Required]
-        public int UserId2 { get; set; }
+        public int ReciverUserId { get; set; }
 
         [Required]
         public int Status { get; set; }

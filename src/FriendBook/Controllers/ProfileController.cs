@@ -29,7 +29,8 @@ namespace FriendBook.Controllers
             model.AreFriends = "NoRelationship";
             foreach(Relationship r in relationships)
             {
-                if(r.UserId1 == id || r.UserId2 == id && r.UserId1 == 1 || r.UserId2 == 1)
+                //LATER REPLACE WITH CURRENT USER
+                if(r.SenderUserId == id || r.ReciverUserId == id && r.SenderUserId == 1 || r.ReciverUserId == 1)
                 {
                     if (r.Status == 0)
                     {
@@ -81,6 +82,25 @@ namespace FriendBook.Controllers
 
             context.SaveChanges();
             return RedirectToAction("Profile", new { id = userId });
+        }
+
+        public IActionResult AddFriend([FromRoute] int id)
+        {
+            //REPLACE WITH CURRENT USER LATER
+            User currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            User userBeingAdded = context.User.Where(u => u.UserId == id).SingleOrDefault();
+
+            Relationship TheirRelationship = new Relationship
+            {
+                SenderUserId = currentUser.UserId,
+                ReciverUserId = userBeingAdded.UserId,
+                Status = 0
+            };
+
+            context.Relationship.Add(TheirRelationship);
+            context.SaveChanges();
+
+            return RedirectToAction("Profile", new { id });
         }
     }
 }

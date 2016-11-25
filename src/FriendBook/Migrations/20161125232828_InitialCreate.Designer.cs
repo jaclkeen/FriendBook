@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161125211905_InitialCreate")]
+    [Migration("20161125232828_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,13 +71,13 @@ namespace FriendBook.Migrations
                     b.Property<int>("RelationshipId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("ReciverUserId");
+
+                    b.Property<int>("SenderUserId");
+
                     b.Property<int>("Status");
 
                     b.Property<int?>("UserId");
-
-                    b.Property<int>("UserId1");
-
-                    b.Property<int>("UserId2");
 
                     b.HasKey("RelationshipId");
 
