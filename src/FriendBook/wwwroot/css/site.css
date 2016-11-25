@@ -1,4 +1,8 @@
-﻿.nav img{
+﻿.navbar{
+    z-index: -1;
+}
+
+.nav img{
     width: 20%;
 }
 
@@ -18,6 +22,29 @@
     color: black;
 }
 
+.userSearchArea{
+    margin-top: -3.6%;
+    margin-left: 17%;
+    float: left;
+    width: 40%;
+}
+
 .body{
     margin-top: 5%;
+}
+
+.userSearch{
+    color: black;
+    vertical-align: middle;
+    width: 100%;
+    border-bottom: 2px solid black;
+}
+
+.userInSearch{
+    background-color: lightgrey;
+    text-align: center;
+    border-bottom: 2px solid black;
+    /*border-left: 2px solid black;*/
+    /*border-right: 2px solid black;*/
+    margin-bottom: 0;
 }
