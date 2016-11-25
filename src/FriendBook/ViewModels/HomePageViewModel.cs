@@ -12,6 +12,7 @@ namespace FriendBook.ViewModels
         public List<Post> Posts { get; set; }
         public List<User> Users { get; set; }
         public Post Post { get; set; }
+        public Style CurrentUserStyle { get; set; }
         public Style UserStyle { get; set; }
     }
 }

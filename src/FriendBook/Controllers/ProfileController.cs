@@ -28,6 +28,7 @@ namespace FriendBook.Controllers
             //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
             model.CurrentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
             model.UserProfile = user;
+            model.CurrentUserStyle = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
             model.UserStyle = style;
             model.Posts = posts;
 

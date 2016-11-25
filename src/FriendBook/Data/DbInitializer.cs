@@ -43,6 +43,27 @@ namespace FriendBook.Data
                         LastName = "Keen",
                         Email = "aaron@aaron.com",
                         Password = "aaron",
+                    },
+                    new User
+                    {
+                        FirstName = "Josh",
+                        LastName = "Dobbs",
+                        Email = "josh@josh.com",
+                        Password = "josh",
+                    },
+                    new User
+                    {
+                        FirstName = "BillyBob",
+                        LastName = "Johnson",
+                        Email = "billy@billy.com",
+                        Password = "billy",
+                    },
+                    new User
+                    {
+                        FirstName = "Tommy",
+                        LastName = "John",
+                        Email = "tommy@tommy.com",
+                        Password = "tommy",
                     }
                 };
 

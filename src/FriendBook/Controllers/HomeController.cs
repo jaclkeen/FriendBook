@@ -41,6 +41,7 @@ namespace FriendBook.Controllers
             HomePageViewModel model = new HomePageViewModel();
             model.Posts = posts;
             model.UserStyle = styling;
+            model.CurrentUserStyle = styling;
             model.CurrentUser = currentUser;
 
             return View(model);
