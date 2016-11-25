@@ -20,9 +20,11 @@ namespace FriendBook.Controllers
 
         public IActionResult Index()
         {
+            //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
             var styling = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
             var posts = context.Post.OrderByDescending(p => p.TimePosted).ToList();
             var users = context.User.ToList();
+            //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
             var currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
 
             foreach(Post p in posts)
@@ -46,6 +48,7 @@ namespace FriendBook.Controllers
 
         public IActionResult NewStatus(Post post)
         {
+            //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
             post.UserId = 1;
             post.TimePosted = DateTime.Now;
 
@@ -92,25 +95,11 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Profile([FromRoute] int id)
+        [HttpGet]
+        public List<User> GetUsers()
         {
-            User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
-            Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
-            List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
-
-            UserProfileViewModel model = new UserProfileViewModel();
-            model.CurrentUser = user;
-            model.UserStyle = style;
-            model.Posts = posts;
-
-            return View(model);
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            var users = context.User.ToList();
+            return users;
         }
 
         public IActionResult Error()
