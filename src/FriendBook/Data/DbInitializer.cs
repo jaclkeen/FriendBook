@@ -175,18 +175,31 @@ namespace FriendBook.Data
                 {
                     new Relationship
                     {
-                        UserId1 = 1,
-                        UserId2 = 2
+                        SenderUserId = 1,
+                        SenderUser = context.User.Where(u => u.UserId == 1).SingleOrDefault(),
+                        ReciverUserId = 2,
+                        ReceivingUser = context.User.Where(u => u.UserId == 2).SingleOrDefault(),
                     },
                     new Relationship
                     {
-                        UserId1 = 1,
-                        UserId2 = 3
+                        SenderUserId = 1,
+                        SenderUser = context.User.Where(u => u.UserId == 1).SingleOrDefault(),
+                        ReciverUserId = 3,
+                        ReceivingUser = context.User.Where(u => u.UserId == 3).SingleOrDefault(),
                     },
                     new Relationship
                     {
-                        UserId1 = 2,
-                        UserId2 = 3
+                        SenderUserId = 2,
+                        SenderUser = context.User.Where(u => u.UserId == 2).SingleOrDefault(),
+                        ReciverUserId = 3,
+                        ReceivingUser = context.User.Where(u => u.UserId == 3).SingleOrDefault(),
+                    },
+                    new Relationship
+                    {
+                        SenderUserId = 4,
+                        SenderUser = context.User.Where(u => u.UserId == 4).SingleOrDefault(),
+                        ReciverUserId = 1,
+                        ReceivingUser = context.User.Where(u => u.UserId == 1).SingleOrDefault(),
                     }
                 };
 

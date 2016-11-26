@@ -1,5 +1,35 @@
 ﻿$(document).ready(function () {
 
+    function AcceptFR(RelationshipId) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/Home/AcceptFR",
+                method: 'POST',
+                contentType: 'application/json',
+                data: RelationshipId
+            }).done(function (data) {
+                resolve(data)
+            }).error(function (er) {
+                reject(er)
+            })
+        })
+    }
+
+    function DeclineFR(RelationshipId) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/Home/DeclineFR",
+                method: 'POST',
+                contentType: 'application/json',
+                data: RelationshipId
+            }).done(function (data) {
+                resolve(data)
+            }).error(function (er) {
+                reject(er)
+            })
+        })
+    }
+
     function getUsers() {
         return new Promise(function (resolve, reject) {
             $.ajax({
@@ -56,4 +86,33 @@
             userSearchEvents();
         })
     })
+
+    $('.Notifications').on("click", function () {
+        $('.notificationArea').toggleClass("hidden");
+    })
+
+    $('.frButton').on("click", function () {
+        let frId = $(this).attr("id"),
+            frText = $(this).parent().parent().text(),
+            frHtml = $(this).parent().parent().html("")
+
+        frHtml = frText.split(" ")
+        frHtml.join("")
+
+        if ($(this).hasClass("declineFR")) {
+            DeclineFR(frId)
+            .then(function (data) {
+                frHtml = `<p class="successFR">You declined ${frHtml[76]} ${frHtml[77]}'s friend request!</p>`
+                //Materialize.Toast(frHtml);
+            })
+        }
+        else {
+            AcceptFR(frId)
+            .then(function (data) {
+                frHtml = `<p class="successFR">You and ${frHtml[76]} ${frHtml[77]} are now friends!</p>`
+                //Materialize.Toast(frHtml);
+            })
+        }
+    })
+
 })

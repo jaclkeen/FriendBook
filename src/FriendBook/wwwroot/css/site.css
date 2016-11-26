@@ -7,6 +7,23 @@
     width: 20%;
 }
 
+.Notifications{
+    margin-top: 5px!important;
+}
+
+.notificationArea{
+    margin-right: -13.5%;
+    float: right;
+    width: 20%;
+    border: 2px solid black;
+}
+
+.notificationProfileImg{
+    width: 35%;
+    float: left;
+    margin-right: 3%;
+}
+
 .bodyWrapper{
     margin-top: 6%;
 }
@@ -58,4 +75,31 @@
     border-bottom: 2px solid black;
     z-index: 3;
     margin-bottom: 0;
+}
+
+.hidden{
+    display: none;
+}
+
+.frButton{
+    margin-left: 5%;
+}
+
+.frButtonDiv{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 10%;
+}
+
+.colorContainer{
+    padding: 2%;
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+}
+
+.successFR p{
+    margin-bottom: 0;
+    width: 90%;
+    margin: auto;
 }

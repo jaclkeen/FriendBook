@@ -24,9 +24,11 @@
             background-color: lightblue;
             color: @Model.UserStyle.FontColor;
         }
+        .notificationArea{
+            background-color: @Model.UserStyle.NavColor;            
+        }
         .colorContainer{
             background-color: @Model.UserStyle.BackgroundColor;
-            padding: 2%;
             border-left: 2px solid @Model.UserStyle.DetailColor;
             border-right: 2px solid @Model.UserStyle.DetailColor;
             border-bottom: 2px solid @Model.UserStyle.DetailColor;
@@ -51,6 +53,9 @@
             border: 2px solid @Model.UserStyle.DetailColor;
             margin-top: 1%;
             padding: 1%;
+        }
+        .FR, .successFR{
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
         }
     </style>
 </head>
@@ -96,7 +101,7 @@
                         <a asp-action="Index" asp-controller="Home">Home</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">About</a>
+                        <a href="#" class="Notifications">Notifications</a>
                     </li>
                 </ul>
             </div>

@@ -23,25 +23,26 @@ namespace FriendBook.Controllers
             User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
             Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
-            List<Relationship> relationships = context.Relationship.ToList();
+            //LATER REPLACE WITH CURRENT USER
+            List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == 1 || r.SenderUserId == 1).ToList();
 
             UserProfileViewModel model = new UserProfileViewModel();
             model.AreFriends = "NoRelationship";
             foreach(Relationship r in relationships)
             {
-                if(r.UserId1 == id || r.UserId2 == id && r.UserId1 == 1 || r.UserId2 == 1)
+                if(r.SenderUserId == id || r.ReciverUserId == id)
                 {
                     if (r.Status == 0)
                     {
                         model.AreFriends = "Pending";
                         break;
                     }
-                    if (r.Status == 1)
+                    else if (r.Status == 1)
                     {
                         model.AreFriends = "yes";
                         break;
                     }
-                    if (r.Status == 2)
+                    else if (r.Status == 2)
                     {
                         model.AreFriends = "no";
                         break;
@@ -81,6 +82,34 @@ namespace FriendBook.Controllers
 
             context.SaveChanges();
             return RedirectToAction("Profile", new { id = userId });
+        }
+
+        public IActionResult AddFriend([FromRoute] int id)
+        {
+            //REPLACE WITH CURRENT USER LATER
+            User currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            User userBeingAdded = context.User.Where(u => u.UserId == id).SingleOrDefault();
+
+            Relationship ABeautifulRelationship = new Relationship
+            {
+                SenderUserId = currentUser.UserId,
+                SenderUser = context.User.Where(u => u.UserId == currentUser.UserId).SingleOrDefault(),
+                ReciverUserId = userBeingAdded.UserId,
+                ReceivingUser = context.User.Where(u => u.UserId == userBeingAdded.UserId).SingleOrDefault(),
+                Status = 0
+            };
+
+            context.Relationship.Add(ABeautifulRelationship);
+            try
+            {
+                context.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return RedirectToAction("Profile", new { id });
         }
     }
 }
