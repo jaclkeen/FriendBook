@@ -26,13 +26,6 @@ namespace FriendBook.Controllers
             var users = context.User.ToList();
             //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
             var currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
-            var FRsSentToUser = context.Relationship.Where(r => r.ReciverUserId == 1 && r.Status == 0).ToList();
-
-            foreach(Relationship r in FRsSentToUser)
-            {
-                r.SenderUser = context.User.Where(u => u.UserId == r.SenderUserId).SingleOrDefault();
-                r.ReceivingUser = context.User.Where(u => u.UserId == r.ReciverUserId).SingleOrDefault();
-            }
 
             foreach(Post p in posts)
             {
@@ -45,8 +38,7 @@ namespace FriendBook.Controllers
                 }
             }
 
-            HomePageViewModel model = new HomePageViewModel();
-            model.FriendRequests = FRsSentToUser;
+            HomePageViewModel model = new HomePageViewModel(context);
             model.Posts = posts;
             model.UserStyle = styling;
             model.CurrentUserStyle = styling;

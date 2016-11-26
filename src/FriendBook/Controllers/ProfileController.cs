@@ -25,7 +25,7 @@ namespace FriendBook.Controllers
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
             //LATER REPLACE WITH CURRENT USER
             List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == 1 || r.SenderUserId == 1).ToList();
-            UserProfileViewModel model = new UserProfileViewModel();
+            UserProfileViewModel model = new UserProfileViewModel(context);
             model.Friends = new List<User> { };
 
             foreach(Relationship r in relationships)
