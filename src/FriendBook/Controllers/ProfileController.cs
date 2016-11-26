@@ -25,8 +25,25 @@ namespace FriendBook.Controllers
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
             //LATER REPLACE WITH CURRENT USER
             List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == 1 || r.SenderUserId == 1).ToList();
-
             UserProfileViewModel model = new UserProfileViewModel();
+            model.Friends = new List<User> { };
+
+            foreach(Relationship r in relationships)
+            {
+                User friend;
+                //REPLACE WIH REAL USER ID LATER
+                if(r.ReciverUserId == id && r.Status == 1)
+                {
+                    friend = context.User.Where(u => u.UserId == r.SenderUserId).SingleOrDefault();
+                    model.Friends.Add(friend);
+                }
+                else if(r.SenderUserId == id && r.Status == 1)
+                {
+                    friend = context.User.Where(u => u.UserId == r.ReciverUserId).SingleOrDefault();
+                    model.Friends.Add(friend);
+                }
+            }
+            
             model.AreFriends = "NoRelationship";
             foreach(Relationship r in relationships)
             {
