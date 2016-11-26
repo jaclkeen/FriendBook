@@ -90,3 +90,16 @@
     margin-bottom: 2%;
     margin-left: 10%;
 }
+
+.colorContainer{
+    padding: 2%;
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+}
+
+.successFR p{
+    margin-bottom: 0;
+    width: 90%;
+    margin: auto;
+}

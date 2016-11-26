@@ -37,12 +37,12 @@ namespace FriendBook.Controllers
                         model.AreFriends = "Pending";
                         break;
                     }
-                    if (r.Status == 1)
+                    else if (r.Status == 1)
                     {
                         model.AreFriends = "yes";
                         break;
                     }
-                    if (r.Status == 2)
+                    else if (r.Status == 2)
                     {
                         model.AreFriends = "no";
                         break;
@@ -87,7 +87,7 @@ namespace FriendBook.Controllers
         public IActionResult AddFriend([FromRoute] int id)
         {
             //REPLACE WITH CURRENT USER LATER
-            User currentUser = context.User.Where(u => u.UserId == 5).SingleOrDefault();
+            User currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
             User userBeingAdded = context.User.Where(u => u.UserId == id).SingleOrDefault();
 
             Relationship ABeautifulRelationship = new Relationship
@@ -100,7 +100,14 @@ namespace FriendBook.Controllers
             };
 
             context.Relationship.Add(ABeautifulRelationship);
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
 
             return RedirectToAction("Profile", new { id });
         }

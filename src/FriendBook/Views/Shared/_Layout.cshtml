@@ -25,11 +25,10 @@
             color: @Model.UserStyle.FontColor;
         }
         .notificationArea{
-            background-color: @Model.UserStyle.DetailColor;            
+            background-color: @Model.UserStyle.NavColor;            
         }
         .colorContainer{
             background-color: @Model.UserStyle.BackgroundColor;
-            padding: 2%;
             border-left: 2px solid @Model.UserStyle.DetailColor;
             border-right: 2px solid @Model.UserStyle.DetailColor;
             border-bottom: 2px solid @Model.UserStyle.DetailColor;
@@ -54,6 +53,9 @@
             border: 2px solid @Model.UserStyle.DetailColor;
             margin-top: 1%;
             padding: 1%;
+        }
+        .FR, .successFR{
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
         }
     </style>
 </head>
