@@ -24,6 +24,9 @@
             background-color: lightblue;
             color: @Model.UserStyle.FontColor;
         }
+        .notificationArea{
+            background-color: @Model.UserStyle.DetailColor;            
+        }
         .colorContainer{
             background-color: @Model.UserStyle.BackgroundColor;
             padding: 2%;
@@ -96,7 +99,7 @@
                         <a asp-action="Index" asp-controller="Home">Home</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">About</a>
+                        <a href="#" class="Notifications">Notifications</a>
                     </li>
                 </ul>
             </div>

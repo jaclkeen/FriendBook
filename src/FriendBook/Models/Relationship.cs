@@ -14,8 +14,12 @@ namespace FriendBook.Models
         [Required]
         public int SenderUserId { get; set; }
 
+        public User SenderUser { get; set; }
+
         [Required]
         public int ReciverUserId { get; set; }
+
+        public User ReceivingUser { get; set;}
 
         [Required]
         public int Status { get; set; }

@@ -56,4 +56,9 @@
             userSearchEvents();
         })
     })
+
+    $('.Notifications').on("click", function () {
+        $('.notificationArea').toggleClass("hidden");
+    })
+
 })

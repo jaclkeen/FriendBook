@@ -23,14 +23,14 @@ namespace FriendBook.Controllers
             User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
             Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
-            List<Relationship> relationships = context.Relationship.ToList();
+            //LATER REPLACE WITH CURRENT USER
+            List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == 1 || r.SenderUserId == 1).ToList();
 
             UserProfileViewModel model = new UserProfileViewModel();
             model.AreFriends = "NoRelationship";
             foreach(Relationship r in relationships)
             {
-                //LATER REPLACE WITH CURRENT USER
-                if(r.SenderUserId == id || r.ReciverUserId == id && r.SenderUserId == 1 || r.ReciverUserId == 1)
+                if(r.SenderUserId == id || r.ReciverUserId == id)
                 {
                     if (r.Status == 0)
                     {
@@ -87,17 +87,19 @@ namespace FriendBook.Controllers
         public IActionResult AddFriend([FromRoute] int id)
         {
             //REPLACE WITH CURRENT USER LATER
-            User currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            User currentUser = context.User.Where(u => u.UserId == 5).SingleOrDefault();
             User userBeingAdded = context.User.Where(u => u.UserId == id).SingleOrDefault();
 
-            Relationship TheirRelationship = new Relationship
+            Relationship ABeautifulRelationship = new Relationship
             {
                 SenderUserId = currentUser.UserId,
+                SenderUser = context.User.Where(u => u.UserId == currentUser.UserId).SingleOrDefault(),
                 ReciverUserId = userBeingAdded.UserId,
+                ReceivingUser = context.User.Where(u => u.UserId == userBeingAdded.UserId).SingleOrDefault(),
                 Status = 0
             };
 
-            context.Relationship.Add(TheirRelationship);
+            context.Relationship.Add(ABeautifulRelationship);
             context.SaveChanges();
 
             return RedirectToAction("Profile", new { id });

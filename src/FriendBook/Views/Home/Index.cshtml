@@ -1,5 +1,31 @@
 ﻿@model FriendBook.ViewModels.HomePageViewModel
 
+<div class="notificationArea hidden">
+    @foreach(var fr in Model.FriendRequests)
+    {
+        @if(fr.SenderUser.ProfileImg == null)
+        {
+            <img class="notificationProfileImg" src="~/images/egg.png" />
+        }
+        else
+        {
+            <img class="notificationProfileImg" src="fr.SenderUser.ProfileImg" />
+        }
+
+        @if (fr.Status == 0)
+        {
+            <div class="receivedFR">
+                <p>@Html.DisplayFor(modelItem => fr.SenderUser.FirstName) @Html.DisplayFor(modelItem => fr.SenderUser.LastName)
+                sent you a friend request!</p>
+            </div>
+        }
+        <div class="frButtonDiv">
+            <a asp-action="AcceptFR" asp-controller="Home" asp-route-id=@fr.RelationshipId><input type="button" class="btn-success frButton" value="Accept"/></a>
+            <a asp-action="DeclineFR" asp-controller="Home" asp-route-id=@fr.RelationshipId><input type="button" class="btn-danger frButton" value="Decline"/></a>
+        </div>
+    }
+</div>
+
 <div class="colorContainer">
     <div class="row">
         <h2>Home</h2>

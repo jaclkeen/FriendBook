@@ -55,20 +55,26 @@ namespace FriendBook.Migrations
                 {
                     RelationshipId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
+                    ReceivingUserUserId = table.Column<int>(nullable: true),
                     ReciverUserId = table.Column<int>(nullable: false),
                     SenderUserId = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: true)
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Relationship", x => x.RelationshipId);
                     table.ForeignKey(
-                        name: "FK_Relationship_User_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Relationship_User_ReceivingUserUserId",
+                        column: x => x.ReceivingUserUserId,
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Relationship_User_SenderUserId",
+                        column: x => x.SenderUserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,9 +147,14 @@ namespace FriendBook.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Relationship_UserId",
+                name: "IX_Relationship_ReceivingUserUserId",
                 table: "Relationship",
-                column: "UserId");
+                column: "ReceivingUserUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Relationship_SenderUserId",
+                table: "Relationship",
+                column: "SenderUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Style_UserId",

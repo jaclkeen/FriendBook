@@ -70,17 +70,19 @@ namespace FriendBook.Migrations
                     b.Property<int>("RelationshipId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("ReceivingUserUserId");
+
                     b.Property<int>("ReciverUserId");
 
                     b.Property<int>("SenderUserId");
 
                     b.Property<int>("Status");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("RelationshipId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ReceivingUserUserId");
+
+                    b.HasIndex("SenderUserId");
 
                     b.ToTable("Relationship");
                 });
@@ -160,9 +162,14 @@ namespace FriendBook.Migrations
 
             modelBuilder.Entity("FriendBook.Models.Relationship", b =>
                 {
-                    b.HasOne("FriendBook.Models.User")
-                        .WithMany("Relationships")
-                        .HasForeignKey("UserId");
+                    b.HasOne("FriendBook.Models.User", "ReceivingUser")
+                        .WithMany()
+                        .HasForeignKey("ReceivingUserUserId");
+
+                    b.HasOne("FriendBook.Models.User", "SenderUser")
+                        .WithMany()
+                        .HasForeignKey("SenderUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FriendBook.Models.Style", b =>
