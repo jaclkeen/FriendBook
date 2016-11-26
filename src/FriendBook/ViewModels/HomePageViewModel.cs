@@ -7,9 +7,9 @@ using FriendBook.Data;
 
 namespace FriendBook.ViewModels
 {
-    public class HomePageViewModel
+    public class HomePageViewModel : BaseViewModel
     {
-        public List<Relationship> FriendRequests{ get; set; }
+        public HomePageViewModel(FriendBookContext ctx) : base(ctx) { }
         public User CurrentUser { get; set; }
         public List<Post> Posts { get; set; }
         public List<User> Users { get; set; }

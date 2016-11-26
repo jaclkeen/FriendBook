@@ -101,7 +101,7 @@
                         <a asp-action="Index" asp-controller="Home">Home</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#" class="Notifications">Notifications</a>
+                        <a href="#" class="Notifications">Notifications (@Model.FriendRequests.Count)</a>
                     </li>
                 </ul>
             </div>
@@ -110,6 +110,7 @@
 
     <div class="container body">
         <div class="bodyWrapper">
+            @{Html.RenderPartial("FriendRequests");}
             @RenderBody()
         </div>
     </div>

@@ -1,41 +1,11 @@
 ﻿@model FriendBook.ViewModels.HomePageViewModel
 
-<div class="notificationArea hidden">
-    @foreach (var fr in Model.FriendRequests)
-    {
-        <div class="FR">
-            @if (fr.SenderUser.ProfileImg == null)
-            {
-                <img class="notificationProfileImg" src="~/images/egg.png" />
-            }
-            else
-            {
-                <img class="notificationProfileImg" src="fr.SenderUser.ProfileImg" />
-            }
-
-            @if (fr.Status == 0)
-            {
-                <div class="receivedFR">
-                    <p>
-                        @Html.DisplayFor(modelItem => fr.SenderUser.FirstName) @Html.DisplayFor(modelItem => fr.SenderUser.LastName)
-                        sent you a friend request!
-                    </p>
-                </div>
-            }
-            <div class="frButtonDiv">
-                <input type="button" class="btn-success frButton acceptFR" id="@fr.RelationshipId" value="Accept" />
-                <input type="button" class="btn-danger frButton declineFR" id="@fr.RelationshipId" value="Decline" />
-            </div>
-        </div>
-    }
-</div>
-
 <div class="colorContainer">
     <div class="row">
         <h2>Home</h2>
         <div class="col-md-12">
             <form asp-action="NewStatus">
-                <textarea asp-for="@Model.Post.Text" class="newStatus"></textarea>
+                <textarea asp-for="@Model.Post.Text" class="newStatus" placeholder="What's on your mind?"></textarea>
                 <input type="submit" class="submitStatus" value="Submit" />
             </form>
         </div>

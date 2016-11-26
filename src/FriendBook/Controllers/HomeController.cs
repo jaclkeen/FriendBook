@@ -21,33 +21,56 @@ namespace FriendBook.Controllers
         public IActionResult Index()
         {
             //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
+            var relationships = context.Relationship.Where(r => r.ReciverUserId == 1 || r.SenderUserId == 1).ToList();
             var styling = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
-            var posts = context.Post.OrderByDescending(p => p.TimePosted).ToList();
+            //var posts = context.Post.OrderByDescending(p => p.TimePosted).ToList();
             var users = context.User.ToList();
             //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
             var currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
-            var FRsSentToUser = context.Relationship.Where(r => r.ReciverUserId == 1 && r.Status == 0).ToList();
 
-            foreach(Relationship r in FRsSentToUser)
-            {
-                r.SenderUser = context.User.Where(u => u.UserId == r.SenderUserId).SingleOrDefault();
-                r.ReceivingUser = context.User.Where(u => u.UserId == r.ReciverUserId).SingleOrDefault();
-            }
+            HomePageViewModel model = new HomePageViewModel(context);
+            model.Posts = new List<Post> { };
 
-            foreach(Post p in posts)
+            foreach (Relationship r in relationships)
             {
-                foreach(User u in users)
+                Post UserPost;
+                //REPLACE WITH REAL USER WHEN LOGIN IS AVAILABLE
+                if(r .ReciverUserId == 1 && r.Status == 1)
                 {
-                    if(p.UserId == u.UserId)
+                    UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).SingleOrDefault();
+                    if (UserPost != null)
                     {
-                        p.User = u;
+                        UserPost.User = context.User.Where(u => u.UserId == UserPost.UserId).SingleOrDefault();
+                        model.Posts.Add(UserPost);
+                    }
+                }
+                //REPLACE WITH REAL USER WHEN LOGIN IS AVAILABLE
+                else if (r.SenderUserId == 1 && r.Status == 1)
+                {
+                    UserPost = context.Post.Where(p => p.UserId == r.ReciverUserId).SingleOrDefault();
+                    if (UserPost != null)
+                    {
+                        UserPost.User = context.User.Where(u => u.UserId == UserPost.UserId).SingleOrDefault();
+                        model.Posts.Add(UserPost);
                     }
                 }
             }
 
-            HomePageViewModel model = new HomePageViewModel();
-            model.FriendRequests = FRsSentToUser;
-            model.Posts = posts;
+            //REPLACE WITH REAL USER WHEN LOGIN IS AVAILABLE
+            List<Post> UserPosts = context.Post.Where(p => p.UserId == 1).ToList();
+            if (UserPosts != null) { UserPosts.ForEach(up => model.Posts.Add(up)); }
+
+            if (model.Posts.Count == 0)
+            {
+                model.Posts.Add(new Post
+                {
+                    Text = "Welcome to FriendBook!",
+                    User = context.User.Where(u => u.UserId == 1).SingleOrDefault(),
+                    UserId = 1
+                });
+            }
+
+            model.Posts.OrderBy(p => p.TimePosted);
             model.UserStyle = styling;
             model.CurrentUserStyle = styling;
             model.CurrentUser = currentUser;
