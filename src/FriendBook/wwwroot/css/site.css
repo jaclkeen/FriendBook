@@ -15,7 +15,9 @@
     margin-right: -13.5%;
     float: right;
     width: 20%;
-    border: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
 }
 
 .notificationProfileImg{
@@ -83,12 +85,12 @@
 
 .frButton{
     margin-left: 5%;
+    width:41%;
 }
 
 .frButtonDiv{
     margin-top: 2%;
     margin-bottom: 2%;
-    margin-left: 10%;
 }
 
 .colorContainer{
@@ -102,4 +104,10 @@
     margin-bottom: 0;
     width: 90%;
     margin: auto;
+}
+
+.NoFR{
+    font-size: 1.3em;
+    text-align: center;
+    padding: 1%;
 }

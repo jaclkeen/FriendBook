@@ -13,6 +13,8 @@
             <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
         }
         <h3 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h3>
+        <span class="showPosts">Posts</span>
+        <span class="showFriends">Friends</span>
         @if(Model.AreFriends == "NoRelationship" || Model.AreFriends == "no")
         {
             <a class="addFriend" asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId"><span class="profileAddFriend">Add Friend!</span></a>
@@ -27,7 +29,8 @@
         }
     </div>
 
-    <div class="row">
+    <div class="row posts">
+        <h3>Posts (@Model.Posts.Count)</h3>
         <div class="col-md-12">
             @foreach (var s in Model.Posts)
             {
@@ -48,7 +51,8 @@
             }
         </div>
     </div>
-    <div class="friends">
+
+    <div class="row friends">
         <h3>Friends (@Model.Friends.Count)</h3>
         <div class="col-md-12">
             @foreach (var f in Model.Friends)

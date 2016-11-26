@@ -78,6 +78,18 @@
         })
     }
 
+    $('.friends').hide();
+
+    $('.showPosts').on("click", function () {
+        $('.friends').hide();
+        $('.posts').show();
+    })
+
+    $('.showFriends').on("click", function () {
+        $('.posts').hide();
+        $('.friends').show();
+    })
+
     $('.userSearch').on("input", function(){
         getUsers()
         .then(function (users)
