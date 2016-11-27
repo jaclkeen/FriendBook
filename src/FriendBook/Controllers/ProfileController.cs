@@ -108,5 +108,19 @@ namespace FriendBook.Controllers
 
             return RedirectToAction("Profile", new { id });
         }
+
+        public IActionResult Styling()
+        {
+            UserStylingViewModel model = new UserStylingViewModel(context);
+            //LATER REPLACE WITH CURRENT USER
+            model.UserStyle = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
+
+            return View(model);
+        }
+
+        public IActionResult UpdateUserStyling(Style UserStyle)
+        {
+            return RedirectToAction("Profile", "Profile", new { id = 1 });
+        }
     }
 }

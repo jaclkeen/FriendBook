@@ -137,12 +137,13 @@ namespace FriendBook.Data
                     new Style
                     {
                         UserId = 1,
-                        BackgroundColor = "Firebrick",
-                        FontColor = "white",
+                        WallBackgroundColor = "#839014",
+                        BackgroundColor = "#025256",
+                        FontColor = "#090807",
                         FontSize = 16,
                         FontFamily = "Times New Roman",
-                        NavColor = "lightgrey",
-                        DetailColor = "black"
+                        NavColor = "#130000",
+                        DetailColor = "#892718"
                     },
                     new Style
                     {

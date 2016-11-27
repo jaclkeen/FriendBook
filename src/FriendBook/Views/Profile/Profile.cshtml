@@ -44,11 +44,13 @@
                         <span class="postText">@Html.DisplayFor(modelItem => s.Text)</span>
                     </div>
 
-                    <div class="deleteEditDiv">
-                        <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@s.PostId"><span>Delete</span></a>
-                        <a><span id="@s.PostId" class="EditPost">Edit</span></a>
-                    </div>
-                        
+                    @if (s.UserId == Model.CurrentUser.UserId)
+                    {
+                        <div class="deleteEditDiv">
+                            <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@s.PostId"><span>Delete</span></a>
+                            <a><span id="@s.PostId" class="EditPost">Edit</span></a>
+                        </div>
+                    }
 
                     <div>
                         <a asp-action="AddProfileLike" asp-controller="Post" asp-route-id="@s.PostId"><span>Likes: @Html.DisplayFor(modelItem => s.Likes)</span></a>
