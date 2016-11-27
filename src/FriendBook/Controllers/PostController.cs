@@ -64,11 +64,14 @@ namespace FriendBook.Controllers
             return RedirectToAction("Profile", "Profile", new { id = userId });
         }
 
-        [HttpGet]
-        public Post GetSpecificPost([FromRoute] int id)
+        [HttpPost]
+        public void EditSpecificPost([FromBody] Post EditedPost)
         {
-            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
-            return (post);
+            Post post = context.Post.Where(p => p.PostId == EditedPost.PostId).SingleOrDefault();
+            post.Text = EditedPost.Text;
+
+            context.Post.Update(post);
+            context.SaveChanges();
         }
     }
 }

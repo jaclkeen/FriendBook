@@ -1,33 +1,20 @@
 ﻿$(document).ready(function () {
 
-    function GetSpecificPost(PostId) {
+    function EditSpecificPost(pID, PostText) {
         return new Promise(function (resolve, reject) {
             $.ajax({
-                url: `/Post/GetSpecificPost/${PostId}`,
-                method: "GET"
-            }).done(function (post) {
-                resolve(post)
+                url: "/Post/EditSpecificPost",
+                method: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({PostId: pID, text: PostText})
+            }).done(function (data) {
+                resolve(data)
             }).error(function (err) {
+                console.log(err)
                 reject(err)
             })
         })
     }
-
-    $(".EditPost").on("click", function (e) {
-        let postId = $(this).attr("id")
-        let postDiv = $(this).parent().parent().parent().find(".postText")
-        let postText = $(this).parent().parent().parent().find(".postText")[0].textContent
-        let edit = `<div class="${postText}">
-                        <textarea style="color: black; width: 50%;" class ="editInput">${postText}</textarea>
-                    </div>`
-
-        postDiv[0].outerHTML = edit
-        
-        GetSpecificPost(postId)
-        .then(function (post) {
-            
-        })
-    })
 
     function AcceptFR(RelationshipId) {
         return new Promise(function (resolve, reject) {
@@ -151,6 +138,38 @@
             .then(function (data) {
                 frHtml = `<p class="successFR">You and ${frHtml[76]} ${frHtml[77]} are now friends!</p>`
                 //Materialize.Toast(frHtml);
+            })
+        }
+    })
+
+    $(".post").on("click", function (e) {
+        if (e.target.classList.contains("EditPost")) {
+            let post = $(e.currentTarget),
+                editBtn = $(e.target),
+                postId = editBtn.attr("id"),
+                postTextDiv = post.children(".postTextDiv"),
+                postText = postTextDiv.children(".postText").html()
+
+            let editArea = `<div class="editInputArea">
+                    <textarea style="color: black; width: 50%;" class ="editInput">${postText}</textarea>
+                    <input type="button" value="Update" class ="btn-success EditBtn updatePost">
+                    <input type="button" value="Cancel" class ="btn-danger EditBtn cancelEdit">
+                </div>`
+
+            postTextDiv.html(editArea)
+
+            $('.updatePost').on("click", function () {
+                var updatedPostText = $(".editInput").val()
+                EditSpecificPost(postId, updatedPostText)
+                .then(function (post) {
+                    let p = `<span class="postText">${updatedPostText}</span>`
+                    postTextDiv.html(p)
+                })
+            })
+
+            $('.cancelEdit').on("click", function () {
+                let p = `<span class="postText">${postText}</span>`
+                postTextDiv.html(p)
             })
         }
     })
