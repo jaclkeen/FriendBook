@@ -1,5 +1,34 @@
 ﻿$(document).ready(function () {
 
+    function GetSpecificPost(PostId) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: `/Post/GetSpecificPost/${PostId}`,
+                method: "GET"
+            }).done(function (post) {
+                resolve(post)
+            }).error(function (err) {
+                reject(err)
+            })
+        })
+    }
+
+    $(".EditPost").on("click", function (e) {
+        let postId = $(this).attr("id")
+        let postDiv = $(this).parent().parent().parent().find(".postText")
+        let postText = $(this).parent().parent().parent().find(".postText")[0].textContent
+        let edit = `<div class="${postText}">
+                        <textarea style="color: black; width: 50%;" class ="editInput">${postText}</textarea>
+                    </div>`
+
+        postDiv[0].outerHTML = edit
+        
+        GetSpecificPost(postId)
+        .then(function (post) {
+            
+        })
+    })
+
     function AcceptFR(RelationshipId) {
         return new Promise(function (resolve, reject) {
             $.ajax({
@@ -62,7 +91,6 @@
                 || searchInput == firstName.toLowerCase() || searchInput == lastName.toLowerCase()
                 || searchInput == fullName.toLowerCase())
             {
-
                 $(".searchResults").append(`<div class="userInSearch" id="${userList[user].userId}">
                     <img class ="searchProfilePic" src=${userList[user].profileImg}>
                     <p class="searchProfileName">${fullName}</p></div>`);

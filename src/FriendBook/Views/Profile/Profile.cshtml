@@ -40,11 +40,12 @@
                         <span>@Html.DisplayFor(modelItem => s.Text)</span>
                     </p>
                     <div>
-                        <a asp-action="AddLike" asp-controller="Profile" asp-route-id="@s.PostId"><span>Likes: @Html.DisplayFor(modelItem => s.Likes)</span></a>
-                        <a asp-action="AddDislike" asp-controller="Profile" asp-route-id="@s.PostId"><span>Dislikes: @Html.DisplayFor(modelItem => s.Dislikes)</span></a>
+                        <a asp-action="AddProfileLike" asp-controller="Post" asp-route-id="@s.PostId"><span>Likes: @Html.DisplayFor(modelItem => s.Likes)</span></a>
+                        <a asp-action="AddProfileDislike" asp-controller="Post" asp-route-id="@s.PostId"><span>Dislikes: @Html.DisplayFor(modelItem => s.Dislikes)</span></a>
                         @if (s.UserId == Model.CurrentUser.UserId)
                         {
                             <a asp-action="DeletePost" asp-route-id="@s.PostId"><span>Delete</span></a>
+                            <a><span id="@s.PostId" class="EditPost">Edit</span></a>
                         }
                     </div>
                 </div>
