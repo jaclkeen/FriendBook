@@ -101,32 +101,6 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult AddLike([FromRoute] int id)
-        {
-            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
-            post.Likes++;
-
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult AddDislike([FromRoute] int id)
-        {
-            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
-            post.Dislikes++;
-
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult DeletePost([FromRoute] int id)
-        {
-            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
-            context.Post.Remove(post);
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         [HttpGet]
         public List<User> GetUsers()
         {
