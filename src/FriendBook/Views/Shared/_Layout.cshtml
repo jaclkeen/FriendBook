@@ -21,7 +21,7 @@
             color: black!important;
         }
         body{
-            background-color: lightblue;
+            background-color: @Model.UserStyle.WallBackgroundColor;
             color: @Model.UserStyle.FontColor;
         }
         .notificationArea{
@@ -42,14 +42,11 @@
         .NewStatus{
             color: black !important;
         }
-        .submitStatus{
-            background-color: @Model.UserStyle.DetailColor;
-        }
         hr{
             background-color: 1px solid @Model.UserStyle.DetailColor;
         }
         .post{
-            background-color: lightgray;
+            background-color: @Model.UserStyle.PostBackgroundColor;
             border: 2px solid @Model.UserStyle.DetailColor;
             margin-top: 1%;
             padding: 1%;

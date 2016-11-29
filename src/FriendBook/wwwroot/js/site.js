@@ -1,12 +1,26 @@
 ﻿$(document).ready(function () {
 
+    //function GetPostComments(PostId) {
+    //    return new Promise(function(resolve, reject){
+    //        $.ajax({
+    //            url: `/Post/GetComments/${PostId}`,
+    //            dataType: 'json'
+    //        }).done(function (data) {
+    //            console.log(data)
+    //            resolve(data)
+    //        }).error(function (err) {
+    //            reject(err)
+    //        })
+    //    })
+    //}
+
     function EditSpecificPost(pID, PostText) {
         return new Promise(function (resolve, reject) {
             $.ajax({
                 url: "/Post/EditSpecificPost",
                 method: 'POST',
                 contentType: "application/json",
-                data: JSON.stringify({PostId: pID, text: PostText})
+                data: JSON.stringify({ PostId: pID, text: PostText })
             }).done(function (data) {
                 resolve(data)
             }).error(function (err) {
@@ -142,36 +156,67 @@
         }
     })
 
-    $(".post").on("click", function (e) {
-        if (e.target.classList.contains("EditPost")) {
-            let post = $(e.currentTarget),
+    function AppendPostEdit(e) {
+        let post = $(e.currentTarget),
                 editBtn = $(e.target),
                 postId = editBtn.attr("id"),
                 postTextDiv = post.children(".postTextDiv"),
                 postText = postTextDiv.children(".postText").html()
 
-            let editArea = `<div class="editInputArea">
+        let editArea = `<div class="editInputArea">
                     <textarea style="color: black; width: 50%;" class ="editInput">${postText}</textarea>
                     <input type="button" value="Update" class ="btn-success EditBtn updatePost">
                     <input type="button" value="Cancel" class ="btn-danger EditBtn cancelEdit">
                 </div>`
 
-            postTextDiv.html(editArea)
+        postTextDiv.html(editArea)
 
-            $('.updatePost').on("click", function () {
-                var updatedPostText = $(".editInput").val()
-                EditSpecificPost(postId, updatedPostText)
-                .then(function (post) {
-                    let p = `<span class="postText">${updatedPostText}</span>`
-                    postTextDiv.html(p)
-                })
-            })
+        $('.cancelEdit').on("click", function () {
+            let p = `<span class="postText">${postText}</span>`
+            postTextDiv.html(p)
+        })
 
-            $('.cancelEdit').on("click", function () {
-                let p = `<span class="postText">${postText}</span>`
+        $('.updatePost').on("click", function () {
+            var updatedPostText = $(".editInput").val()
+            EditSpecificPost(postId, updatedPostText)
+            .then(function (post) {
+                let p = `<span class="postText">${updatedPostText}</span>`
                 postTextDiv.html(p)
             })
+        })
+    }
+
+    $(".post").on("click", function (e) {
+        if (e.target.classList.contains("EditPost")) {
+            AppendPostEdit(e);
         }
+
+        if (e.target.classList.contains("comments")) {
+            $('.CommentArea').toggleClass("hidden")
+        }
+
+
+        //if (e.target.classList.contains("comments")) {
+        //    let CurrentPost = $(e.currentTarget);
+
+        //    GetPostComments(CurrentPost.attr("id"))
+        //    .then(function (comments) {
+        //        comments.forEach(function(comment) {
+
+        //            if (comment.user.profileImg === null) {
+        //                comment.user.profileImg = "../images/egg.png"
+        //            }
+
+        //            let CommentDiv = $(`<div class="commentDiv" id="comment.commentId">
+        //                                    <img class="profile commentProfilePic" src=${comment.user.profileImg}>
+        //                                    <span>${comment.user.firstName} ${comment.user.lastName}</span>
+        //                                    <p>${comment.text}</p>
+        //                                </div>`)
+
+        //            CurrentPost.append(CommentDiv);
+        //        })
+        //    })
+        //}
     })
 
 })

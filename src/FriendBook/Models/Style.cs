@@ -10,10 +10,12 @@ namespace FriendBook.Models
     {
         [Key]
         public int StyleId { get; set; }
+
         [Required]
         public int UserId { get; set; }
         public User User { get; set; }
 
+        public string PostBackgroundColor { get; set; }
         public string WallBackgroundColor { get; set; }
         public string BackgroundColor { get; set; }
         public string FontColor { get; set; }
@@ -26,13 +28,14 @@ namespace FriendBook.Models
 
         public Style(int id){
             this.UserId = id;
-            this.BackgroundColor = "lightgrey";
-            this.WallBackgroundColor = "#6495ED";
-            this.FontColor = "black";
-            this.FontSize = 16;
+            this.BackgroundColor = "#0080c0";
+            this.WallBackgroundColor = "#004080";
+            this.PostBackgroundColor = "#808080";
+            this.FontColor = "#000000";
+            this.FontSize = 14;
             this.FontFamily = "Times New Roman";
-            this.NavColor = "darkgrey";
-            this.DetailColor = "lightblue";
+            this.NavColor = "#808080";
+            this.DetailColor = "#c0c0c0";
         }
     }
 }

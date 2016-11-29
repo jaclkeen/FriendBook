@@ -11,14 +11,9 @@
         @foreach (var fr in Model.FriendRequests)
         {
             <div class="FR">
-                @if (fr.SenderUser.ProfileImg == null)
-                {
-                    <img class="notificationProfileImg" src="~/images/egg.png" />
-                }
-                else
-                {
-                    <img class="notificationProfileImg" src="fr.SenderUser.ProfileImg" />
-                }
+               
+                <img class="notificationProfileImg" src="@fr.SenderUser.ProfileImg" />
+                
 
                 @if (fr.Status == 0)
                 {

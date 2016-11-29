@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161126011815_InitialCreate")]
+    [Migration("20161129214520_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,8 @@ namespace FriendBook.Migrations
                     b.Property<int>("FontSize");
 
                     b.Property<string>("NavColor");
+
+                    b.Property<string>("PostBackgroundColor");
 
                     b.Property<int>("UserId");
 

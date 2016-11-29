@@ -89,6 +89,7 @@ namespace FriendBook.Migrations
                     FontFamily = table.Column<string>(nullable: true),
                     FontSize = table.Column<int>(nullable: false),
                     NavColor = table.Column<string>(nullable: true),
+                    PostBackgroundColor = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
                     WallBackgroundColor = table.Column<string>(nullable: true)
                 },

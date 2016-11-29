@@ -11,7 +11,11 @@ namespace FriendBook.ViewModels
     {
         public List<Relationship> FriendRequests { get; set; }
 
-        public BaseViewModel() { }
+        public User CurrentUser { get; set; }
+
+        public Style CurrentUserStyle { get; set; }
+
+        public BaseViewModel() {}
 
         public BaseViewModel(FriendBookContext context) {
 
@@ -24,6 +28,10 @@ namespace FriendBook.ViewModels
             }
 
             FriendRequests = FRsSentToUser;
+
+            //REPLACE LATER WITH REAL USERID
+            CurrentUserStyle = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
+            CurrentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
         }
     }
 }

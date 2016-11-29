@@ -70,6 +70,7 @@ namespace FriendBook.Controllers
                 });
             }
 
+            model.Posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
             model.Posts.OrderBy(p => p.TimePosted);
             model.UserStyle = styling;
             model.CurrentUserStyle = styling;
