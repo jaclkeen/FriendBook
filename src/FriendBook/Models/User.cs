@@ -25,5 +25,10 @@ namespace FriendBook.Models
         public string Password { get; set; }
 
         public string ProfileImg { get; set; }
+
+        public User()
+        {
+            this.ProfileImg = "/images/egg.png";
+        }
     }
 }

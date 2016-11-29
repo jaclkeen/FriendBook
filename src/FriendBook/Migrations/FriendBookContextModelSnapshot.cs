@@ -104,6 +104,8 @@ namespace FriendBook.Migrations
 
                     b.Property<string>("NavColor");
 
+                    b.Property<string>("PostBackgroundColor");
+
                     b.Property<int>("UserId");
 
                     b.Property<string>("WallBackgroundColor");

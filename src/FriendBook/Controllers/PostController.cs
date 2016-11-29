@@ -64,6 +64,15 @@ namespace FriendBook.Controllers
             return RedirectToAction("Profile", "Profile", new { id = userId });
         }
 
+        [HttpGet]
+        public List<Comment> GetComments([FromRoute] int id)
+        {
+            List<Comment> comments = context.Comment.Where(p => p.PostId == id).ToList();
+            comments.ForEach(c => c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault());
+
+            return comments;
+        }
+
         [HttpPost]
         public void EditSpecificPost([FromBody] Post EditedPost)
         {

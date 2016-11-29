@@ -2,6 +2,11 @@
 
 <div class="colorContainer">
     <h2>My Profile</h2>
+    
+    <form asp-action="Test">
+        <input type="file" asp-for="@Model.CurrentUser.ProfileImg" name="@Model.CurrentUser.ProfileImg" />
+        <input type="submit" />
+    </form>
 
     <div class="row profileHead">
         @if (Model.UserProfile.ProfileImg == null)
@@ -15,6 +20,12 @@
         <h3 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h3>
         <span class="showPosts">Posts</span>
         <span class="showFriends">Friends</span>
+
+        @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+        {
+            <a asp-controller="Profile" asp-action="Styling" asp-route-id="@Model.CurrentUser.UserId"><span class="updateStyling">Styling</span></a>
+        }
+
         @if(Model.AreFriends == "NoRelationship" || Model.AreFriends == "no")
         {
             <a class="addFriend" asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId"><span class="profileAddFriend">Add Friend!</span></a>

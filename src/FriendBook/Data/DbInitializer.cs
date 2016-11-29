@@ -134,37 +134,7 @@ namespace FriendBook.Data
 
                 var styles = new Style[]
                 {
-                    new Style
-                    {
-                        UserId = 1,
-                        WallBackgroundColor = "#839014",
-                        BackgroundColor = "#025256",
-                        FontColor = "#090807",
-                        FontSize = 16,
-                        FontFamily = "Times New Roman",
-                        NavColor = "#130000",
-                        DetailColor = "#892718"
-                    },
-                    new Style
-                    {
-                        UserId = 2,
-                        BackgroundColor = "black",
-                        FontColor = "red",
-                        FontSize = 12,
-                        FontFamily = "Times New Roman",
-                        NavColor = "firebrick",
-                        DetailColor = "black"
-                    },
-                    new Style
-                    {
-                        UserId = 3,
-                        BackgroundColor = "blue",
-                        FontColor = "red",
-                        FontSize = 20,
-                        NavColor = "black",
-                        DetailColor = "green"
-                    },
-                    new Style(4), new Style(5), new Style(6)
+                    new Style(1), new Style(2), new Style(3), new Style(4), new Style(5), new Style(6)
                 };
 
                 foreach (Style s in styles)

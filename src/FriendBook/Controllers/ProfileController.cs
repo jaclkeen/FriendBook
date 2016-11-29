@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FriendBook.ViewModels;
 using FriendBook.Data;
 using FriendBook.Models;
+using System.IO;
 
 namespace FriendBook.Controllers
 {
@@ -109,7 +110,7 @@ namespace FriendBook.Controllers
             return RedirectToAction("Profile", new { id });
         }
 
-        public IActionResult Styling()
+        public IActionResult Styling(int id)
         {
             UserStylingViewModel model = new UserStylingViewModel(context);
             //LATER REPLACE WITH CURRENT USER
@@ -118,9 +119,20 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
-        public IActionResult UpdateUserStyling(Style UserStyle)
+        public IActionResult UpdateUserStyling([FromRoute] int id, Style UserStyle)
         {
-            return RedirectToAction("Profile", "Profile", new { id = 1 });
+            Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
+            style.BackgroundColor = UserStyle.BackgroundColor;
+            style.DetailColor = UserStyle.DetailColor;
+            style.FontColor = UserStyle.FontColor;
+            style.FontFamily = UserStyle.FontFamily;
+            style.FontSize = UserStyle.FontSize;
+            style.NavColor = UserStyle.NavColor;
+            style.WallBackgroundColor = UserStyle.WallBackgroundColor;
+            style.PostBackgroundColor = UserStyle.PostBackgroundColor;
+
+            context.SaveChanges();
+            return RedirectToAction("Profile", "Profile", new { id });
         }
     }
 }

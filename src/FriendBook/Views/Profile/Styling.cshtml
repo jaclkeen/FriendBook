@@ -3,7 +3,7 @@
 <div class="colorContainer">
     <h2>Edit your styling!</h2><br />
 
-    <form asp-action="UpdateUserStyling">
+    <form asp-route-id="@Model.CurrentUser.UserId" asp-action="UpdateUserStyling">
         <div class="form-horizontal">
             <div class="form-group">
                 <label asp-for="@Model.UserStyle.WallBackgroundColor" class="col-lg-2 control-label">Wall Background Color: </label>
@@ -16,6 +16,13 @@
                 <label asp-for="@Model.UserStyle.BackgroundColor" class="col-md-2 control-label">Background Color: </label>
                 <div class="col-md-10">
                     <input type="color" asp-for="@Model.UserStyle.BackgroundColor" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.UserStyle.PostBackgroundColor" class="col-md-2 control-label">Post Background Color: </label>
+                <div class="col-md-10">
+                    <input type="color" asp-for="@Model.UserStyle.PostBackgroundColor" class="form-control" />
                 </div>
             </div>
 
