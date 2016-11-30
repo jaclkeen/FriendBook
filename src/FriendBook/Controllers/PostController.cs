@@ -64,6 +64,26 @@ namespace FriendBook.Controllers
             return RedirectToAction("Profile", "Profile", new { id = userId });
         }
 
+        [HttpPost]
+        public void CreateNewCommentOnPost([FromBody] Comment comment)
+        {
+            //LATER REPLACE WITH ACTIVE USER
+            comment.UserId = 1;
+            comment.User = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            comment.TimePosted = DateTime.Now;
+
+            context.Comment.Add(comment);
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         [HttpGet]
         public List<Comment> GetComments([FromRoute] int id)
         {

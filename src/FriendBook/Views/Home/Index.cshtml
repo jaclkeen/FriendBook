@@ -48,14 +48,25 @@
                         @foreach (var c in s.Comments)
                         {
                         <div class="CommentArea hidden">
-                            <img src="@c.User.ProfileImg" />
-                            <span>@c.User.FirstName @c.User.LastName</span>
-                            <p>@c.Text</p>
+                            <div class="comment">
+                                <img src="@c.User.ProfileImg" />
+                                <span>@c.User.FirstName @c.User.LastName</span>
+                                <p>@c.Text</p>
+                                @if (c.UserId == Model.CurrentUser.UserId)
+                                {
+                                    <div class="EditOrDeleteComment">
+                                        <a class="EditComment">Edit</a>
+                                        <a class="DeleteComment">Delete</a>
+                                    </div>
+                                }
+                            </div>
                         </div>
                         }
                     }
 
                     <textarea class="AddNewComment" placeholder="Add Comment..."></textarea>
+                    <input type="button" class="btn-success submitComment" value="Comment" />
+
                 </div>
             }
         </div>

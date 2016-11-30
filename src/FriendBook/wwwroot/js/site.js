@@ -1,18 +1,32 @@
 ﻿$(document).ready(function () {
 
-    //function GetPostComments(PostId) {
-    //    return new Promise(function(resolve, reject){
-    //        $.ajax({
-    //            url: `/Post/GetComments/${PostId}`,
-    //            dataType: 'json'
-    //        }).done(function (data) {
-    //            console.log(data)
-    //            resolve(data)
-    //        }).error(function (err) {
-    //            reject(err)
-    //        })
-    //    })
-    //}
+    function GetCurrentUser(){
+        return new Promise(function(resolve, reject){
+            $.ajax({
+                url: "/Home/GetCurrentUser",
+            }).done(function(currentUser){
+                resolve(currentUser)
+            }).error(function(err){
+                reject(err)
+            })
+        })
+    }
+
+    function CreateNewComment(pId, CommentText) {
+        console.log(pId, CommentText)
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/Post/CreateNewCommentOnPost",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ PostId: pId, text: CommentText })
+            }).done(function (data) {
+                resolve(data)
+            }).error(function (err) {
+                reject(err)
+            })
+        })
+    }
 
     function EditSpecificPost(pID, PostText) {
         return new Promise(function (resolve, reject) {
@@ -187,36 +201,33 @@
     }
 
     $(".post").on("click", function (e) {
+        let CurrentPost = $(e.currentTarget);
+        let CurrentPostId = CurrentPost.attr("id")
+
         if (e.target.classList.contains("EditPost")) {
             AppendPostEdit(e);
         }
 
         if (e.target.classList.contains("comments")) {
-            $('.CommentArea').toggleClass("hidden")
+            CurrentPost.children(".CommentArea").toggleClass("hidden")
         }
 
-
-        //if (e.target.classList.contains("comments")) {
-        //    let CurrentPost = $(e.currentTarget);
-
-        //    GetPostComments(CurrentPost.attr("id"))
-        //    .then(function (comments) {
-        //        comments.forEach(function(comment) {
-
-        //            if (comment.user.profileImg === null) {
-        //                comment.user.profileImg = "../images/egg.png"
-        //            }
-
-        //            let CommentDiv = $(`<div class="commentDiv" id="comment.commentId">
-        //                                    <img class="profile commentProfilePic" src=${comment.user.profileImg}>
-        //                                    <span>${comment.user.firstName} ${comment.user.lastName}</span>
-        //                                    <p>${comment.text}</p>
-        //                                </div>`)
-
-        //            CurrentPost.append(CommentDiv);
-        //        })
-        //    })
-        //}
+        if (e.target.classList.contains("submitComment")) {
+            let ClickedCommentButtonTextArea = CurrentPost.children(".AddNewComment")
+            let CommentTextValue = ClickedCommentButtonTextArea.val()
+            
+            CreateNewComment(CurrentPostId, CommentTextValue)
+            .then(function () {
+                GetCurrentUser()
+                .then(function(user){
+                    let NewCommentDiv = $(`<div class="comment"><img src=${user.profileImg} /><span>${user.firstName} ${user.lastName}</span><p>${CommentTextValue}</p></div>`)
+                    let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div>`
+                    NewCommentDiv.append(EditOrDeleteComment)
+                    CurrentPost.children(".CommentArea").append(NewCommentDiv)
+                    ClickedCommentButtonTextArea.val("")
+                })
+            })
+        }
     })
 
 })
