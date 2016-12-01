@@ -238,16 +238,17 @@
         }
 
         if (e.target.classList.contains("submitComment")) {
-            let ClickedCommentButtonTextArea = CurrentPost.children(".AddNewComment")
-            let CommentTextValue = ClickedCommentButtonTextArea.val()
+            let ClickedCommentButtonTextArea = CurrentPost.children(".AddNewComment"),
+                CommentTextValue = ClickedCommentButtonTextArea.val()
             
             CreateNewComment(CurrentPostId, CommentTextValue)
             .then(function (comment) {
                 GetCurrentUser()
                 .then(function (user) {
-                    let CommentDiv = CurrentPost.children(".LikeDislikeCommentDiv")[0]
-                    let CommentTag = $(CommentDiv)[0].children[2]
-                    let CommentCount = 0
+                    let CommentDiv = CurrentPost.children(".LikeDislikeCommentDiv")[0],
+                        CommentTag = $(CommentDiv)[0].children[2],
+                        CommentCount = 0
+
                     GetAllCommentsFromSpecificPost(CurrentPostId)
                     .then(function (comments) {
                         CurrentPost.children(".CommentArea").html("")
@@ -269,17 +270,25 @@
 
     function CommentEventListenersForDeleteAndEdit(Post) {
         $(".comment").on("click", function (e) {
-            let CurrentComment = $(e.currentTarget)
-            let CommentId = CurrentComment.attr("id")
-            let EditOrDelete = $(e.target)
-            console.log(CommentId)
+            let CurrentComment = $(e.currentTarget),
+                CurrentPostId = CurrentComment.parent().parent(".post"),//.attr("id"),
+                CommentCountHTML = CurrentPostId.children(".LikeDislikeCommentDiv").children(".comments"),
+                CommentId = CurrentComment.attr("id"),
+                EditOrDelete = $(e.target)
 
             if (EditOrDelete.hasClass("DeleteComment")) {
                 CurrentComment.remove();
                 DeleteComment(CommentId)
+                .then(function () {
+                    GetAllCommentsFromSpecificPost(CurrentPostId.attr("id"))
+                    .then(function (comments) {
+                        CommentCountHTML.html(`Comments (${comments.length})`)
+                    })
+                })
             }
+
             if (EditOrDelete.hasClass("EditComment")) {
-                
+
             }
         })
     }
