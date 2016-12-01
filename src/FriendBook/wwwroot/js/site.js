@@ -1,5 +1,30 @@
 ﻿$(document).ready(function () {
 
+    function DeleteComment(CommentId) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: `/Post/DeleteComment/${CommentId}`,
+                method: 'DELETE'
+            }).done(function (deleted) {
+                resolve(deleted)
+            }).error(function (err) {
+                reject(error)
+            })
+        })
+    }
+
+    function GetAllCommentsFromSpecificPost(PostId){
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: `/Post/GetAllCommentsFromSpecificPost/${PostId}`
+            }).done(function(comments) {
+                resolve(comments)
+            }).error(function (err) {
+                reject(err)
+            })
+        })
+    }
+
     function GetCurrentUser(){
         return new Promise(function(resolve, reject){
             $.ajax({
@@ -217,17 +242,48 @@
             let CommentTextValue = ClickedCommentButtonTextArea.val()
             
             CreateNewComment(CurrentPostId, CommentTextValue)
-            .then(function () {
+            .then(function (comment) {
                 GetCurrentUser()
-                .then(function(user){
-                    let NewCommentDiv = $(`<div class="comment"><img src=${user.profileImg} /><span>${user.firstName} ${user.lastName}</span><p>${CommentTextValue}</p></div>`)
-                    let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div>`
-                    NewCommentDiv.append(EditOrDeleteComment)
-                    CurrentPost.children(".CommentArea").append(NewCommentDiv)
-                    ClickedCommentButtonTextArea.val("")
+                .then(function (user) {
+                    let CommentDiv = CurrentPost.children(".LikeDislikeCommentDiv")[0]
+                    let CommentTag = $(CommentDiv)[0].children[2]
+                    let CommentCount = 0
+                    GetAllCommentsFromSpecificPost(CurrentPostId)
+                    .then(function (comments) {
+                        CurrentPost.children(".CommentArea").html("")
+                        comments.forEach(function (comment) {
+                            CommentCount = comments.length;
+                            let NewCommentDiv = $(`<div class="comment" id=${comment.commentId}><img src=${user.profileImg} /><span>${user.firstName} ${user.lastName}</span><p>${comment.text}</p></div>`)
+                            let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div>`
+                            NewCommentDiv.append(EditOrDeleteComment)
+                            CurrentPost.children(".CommentArea").append(NewCommentDiv)
+                            CommentEventListenersForDeleteAndEdit()
+                            ClickedCommentButtonTextArea.val("")
+                        })
+                        $(CommentTag).html(`Comments (${CommentCount})`)
+                    })
                 })
             })
         }
     })
+
+    function CommentEventListenersForDeleteAndEdit(Post) {
+        $(".comment").on("click", function (e) {
+            let CurrentComment = $(e.currentTarget)
+            let CommentId = CurrentComment.attr("id")
+            let EditOrDelete = $(e.target)
+            console.log(CommentId)
+
+            if (EditOrDelete.hasClass("DeleteComment")) {
+                CurrentComment.remove();
+                DeleteComment(CommentId)
+            }
+            if (EditOrDelete.hasClass("EditComment")) {
+                
+            }
+        })
+    }
+
+    CommentEventListenersForDeleteAndEdit()
 
 })

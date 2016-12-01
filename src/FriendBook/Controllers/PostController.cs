@@ -84,15 +84,6 @@ namespace FriendBook.Controllers
             }
         }
 
-        [HttpGet]
-        public List<Comment> GetComments([FromRoute] int id)
-        {
-            List<Comment> comments = context.Comment.Where(p => p.PostId == id).ToList();
-            comments.ForEach(c => c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault());
-
-            return comments;
-        }
-
         [HttpPost]
         public void EditSpecificPost([FromBody] Post EditedPost)
         {
@@ -100,6 +91,23 @@ namespace FriendBook.Controllers
             post.Text = EditedPost.Text;
 
             context.Post.Update(post);
+            context.SaveChanges();
+        }
+
+        [HttpGet]
+        public List<Comment> GetAllCommentsFromSpecificPost([FromRoute] int id)
+        {
+            List<Comment> comments = context.Comment.Where(p => p.PostId == id).ToList();
+            comments.ForEach(c => c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault());
+
+            return comments;
+        }
+
+        [HttpDelete]
+        public void DeleteComment([FromRoute] int id)
+        {
+            Comment DeletedComment = context.Comment.Where(c => c.CommentId == id).SingleOrDefault();
+            context.Comment.Remove(DeletedComment);
             context.SaveChanges();
         }
     }
