@@ -1,18 +1,72 @@
 ﻿$(document).ready(function () {
 
-    //function GetPostComments(PostId) {
-    //    return new Promise(function(resolve, reject){
-    //        $.ajax({
-    //            url: `/Post/GetComments/${PostId}`,
-    //            dataType: 'json'
-    //        }).done(function (data) {
-    //            console.log(data)
-    //            resolve(data)
-    //        }).error(function (err) {
-    //            reject(err)
-    //        })
-    //    })
-    //}
+    function DeleteComment(CommentId) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: `/Post/DeleteComment/${CommentId}`,
+                method: 'DELETE'
+            }).done(function (deleted) {
+                resolve(deleted)
+            }).error(function (err) {
+                reject(error)
+            })
+        })
+    }
+
+    function GetAllCommentsFromSpecificPost(PostId){
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: `/Post/GetAllCommentsFromSpecificPost/${PostId}`
+            }).done(function(comments) {
+                resolve(comments)
+            }).error(function (err) {
+                reject(err)
+            })
+        })
+    }
+
+    function GetCurrentUser(){
+        return new Promise(function(resolve, reject){
+            $.ajax({
+                url: "/Home/GetCurrentUser",
+            }).done(function(currentUser){
+                resolve(currentUser)
+            }).error(function(err){
+                reject(err)
+            })
+        })
+    }
+
+    function CreateNewComment(pId, CommentText) {
+        console.log(pId, CommentText)
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/Post/CreateNewCommentOnPost",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ PostId: pId, text: CommentText })
+            }).done(function (data) {
+                resolve(data)
+            }).error(function (err) {
+                reject(err)
+            })
+        })
+    }
+
+    function EditSpecificComment(cId, CommentText) {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                url: "/Post/EditSpecificCommentOnPost",
+                method: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({CommentId: cId, text: CommentText})
+            }).done(function (updatedComment) {
+                resolve(updatedComment)
+            }).error(function (err) {
+                reject(err)
+            })
+        })
+    }
 
     function EditSpecificPost(pID, PostText) {
         return new Promise(function (resolve, reject) {
@@ -187,36 +241,94 @@
     }
 
     $(".post").on("click", function (e) {
+        let CurrentPost = $(e.currentTarget);
+        let CurrentPostId = CurrentPost.attr("id")
+
         if (e.target.classList.contains("EditPost")) {
             AppendPostEdit(e);
         }
 
         if (e.target.classList.contains("comments")) {
-            $('.CommentArea').toggleClass("hidden")
+            CurrentPost.children(".CommentArea").toggleClass("hidden")
         }
 
+        if (e.target.classList.contains("submitComment")) {
+            let ClickedCommentButtonTextArea = CurrentPost.children(".AddNewComment"),
+                CommentTextValue = ClickedCommentButtonTextArea.val()
+            
+            CreateNewComment(CurrentPostId, CommentTextValue)
+            .then(function (comment) {
+                GetCurrentUser()
+                .then(function (user) {
+                    let CommentDiv = CurrentPost.children(".LikeDislikeCommentDiv")[0],
+                        CommentTag = $(CommentDiv)[0].children[2],
+                        CommentCount = 0
 
-        //if (e.target.classList.contains("comments")) {
-        //    let CurrentPost = $(e.currentTarget);
-
-        //    GetPostComments(CurrentPost.attr("id"))
-        //    .then(function (comments) {
-        //        comments.forEach(function(comment) {
-
-        //            if (comment.user.profileImg === null) {
-        //                comment.user.profileImg = "../images/egg.png"
-        //            }
-
-        //            let CommentDiv = $(`<div class="commentDiv" id="comment.commentId">
-        //                                    <img class="profile commentProfilePic" src=${comment.user.profileImg}>
-        //                                    <span>${comment.user.firstName} ${comment.user.lastName}</span>
-        //                                    <p>${comment.text}</p>
-        //                                </div>`)
-
-        //            CurrentPost.append(CommentDiv);
-        //        })
-        //    })
-        //}
+                    GetAllCommentsFromSpecificPost(CurrentPostId)
+                    .then(function (comments) {
+                        CurrentPost.children(".CommentArea").html("")
+                        comments.forEach(function (comment) {
+                            CommentCount = comments.length;
+                            let NewCommentDiv = $(`<div class="comment" id=${comment.commentId}><img src=${user.profileImg} /><span>${user.firstName} ${user.lastName}</span><p>${comment.text}</p></div>`)
+                            let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div>`
+                            NewCommentDiv.append(EditOrDeleteComment)
+                            CurrentPost.children(".CommentArea").append(NewCommentDiv)
+                            CommentEventListenersForDeleteAndEdit()
+                            ClickedCommentButtonTextArea.val("")
+                        })
+                        $(CommentTag).html(`Comments (${CommentCount})`)
+                    })
+                })
+            })
+        }
     })
 
+    function CommentEventsForDeleteAndEdit(Post) {
+        $(".comment").on("click", function (e) {
+            let CurrentComment = $(e.currentTarget),
+                CurrentPostId = CurrentComment.parent().parent(".post"),
+                CommentCountHTML = CurrentPostId.children(".LikeDislikeCommentDiv").children(".comments"),
+                CommentTextDiv = CurrentComment.children()[2],
+                CommentText = $(CommentTextDiv).text(),
+                CommentId = CurrentComment.attr("id"),
+                EditOrDelete = $(e.target)
+
+            if (EditOrDelete.hasClass("DeleteComment")) {
+                CurrentComment.remove();
+                DeleteComment(CommentId)
+                .then(function () {
+                    GetAllCommentsFromSpecificPost(CurrentPostId.attr("id"))
+                    .then(function (comments) {
+                        CommentCountHTML.html(`Comments (${comments.length})`)
+                    })
+                })
+            }
+
+            if (EditOrDelete.hasClass("EditComment")) {
+                let EditCommentTextDiv = `<div class="editInputArea">
+                    <textarea style="color: black; width: 50%;" class ="editInput">${CommentText}</textarea>
+                    <input type="button" value="Update" class ="btn-success EditBtn updateComment">
+                    <input type="button" value="Cancel" class ="btn-danger EditBtn cancelEdit">
+                </div>`
+
+                $(CommentTextDiv).html(EditCommentTextDiv)
+
+                $('.cancelEdit').on("click", function () {
+                    let canceledText = `<p>${CommentText}</p>`
+                    $(CommentTextDiv).html(canceledText)
+                })
+
+                $(".updateComment").on("click", function () {
+                    let UpdatedCommentText = $(".editInput").val()
+                    EditSpecificComment(CommentId, UpdatedCommentText)
+                    .then(function (success) {
+                        let newComment = `<p>${UpdatedCommentText}</p>`
+                        $(CommentTextDiv).html(newComment)
+                    })
+                })
+            }
+        })
+    }
+
+    CommentEventsForDeleteAndEdit()
 })

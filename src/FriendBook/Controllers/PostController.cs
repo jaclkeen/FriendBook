@@ -64,13 +64,24 @@ namespace FriendBook.Controllers
             return RedirectToAction("Profile", "Profile", new { id = userId });
         }
 
-        [HttpGet]
-        public List<Comment> GetComments([FromRoute] int id)
+        [HttpPost]
+        public void CreateNewCommentOnPost([FromBody] Comment comment)
         {
-            List<Comment> comments = context.Comment.Where(p => p.PostId == id).ToList();
-            comments.ForEach(c => c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault());
+            //LATER REPLACE WITH ACTIVE USER
+            comment.UserId = 1;
+            comment.User = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            comment.TimePosted = DateTime.Now;
 
-            return comments;
+            context.Comment.Add(comment);
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         [HttpPost]
@@ -80,6 +91,31 @@ namespace FriendBook.Controllers
             post.Text = EditedPost.Text;
 
             context.Post.Update(post);
+            context.SaveChanges();
+        }
+
+        [HttpGet]
+        public List<Comment> GetAllCommentsFromSpecificPost([FromRoute] int id)
+        {
+            List<Comment> comments = context.Comment.Where(p => p.PostId == id).ToList();
+            comments.ForEach(c => c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault());
+
+            return comments;
+        }
+
+        [HttpDelete]
+        public void DeleteComment([FromRoute] int id)
+        {
+            Comment DeletedComment = context.Comment.Where(c => c.CommentId == id).SingleOrDefault();
+            context.Comment.Remove(DeletedComment);
+            context.SaveChanges();
+        }
+
+        [HttpPost]
+        public void EditSpecificCommentOnPost([FromBody] Comment comment)
+        {
+            Comment OldComment = context.Comment.Where(c => c.CommentId == comment.CommentId).SingleOrDefault();
+            OldComment.Text = comment.Text;
             context.SaveChanges();
         }
     }

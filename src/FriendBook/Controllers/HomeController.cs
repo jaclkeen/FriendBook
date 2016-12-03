@@ -103,6 +103,14 @@ namespace FriendBook.Controllers
         }
 
         [HttpGet]
+        public User GetCurrentUser()
+        {
+            //REPLACE WITH REAL USER WHEN LOGIN IS CREATED
+            User CurrentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            return CurrentUser;
+        }
+
+        [HttpGet]
         public List<User> GetUsers()
         {
             var users = context.User.ToList();

@@ -37,25 +37,36 @@
                             </div>
                         }
 
-                    <div>
+                    <div class="LikeDislikeCommentDiv">
                         <a asp-action="AddLike" asp-controller="Post" asp-route-id="@s.PostId"><span>Likes: @Html.DisplayFor(modelItem => s.Likes)</span></a>
                         <a asp-action="AddDislike" asp-controller="Post" asp-route-id="@s.PostId"><span>Dislikes: @Html.DisplayFor(modelItem => s.Dislikes)</span></a>
-                        <a><span class="comments">Comments (@s.Comments.Count)</span></a>
+                        <span class="comments">Comments (@s.Comments.Count)</span>
                     </div>
 
-                    @if (s.Comments != null)
-                    {
-                        @foreach (var c in s.Comments)
+                    <div class="CommentArea hidden">
+                        @if (s.Comments != null)
                         {
-                        <div class="CommentArea hidden">
-                            <img src="@c.User.ProfileImg" />
-                            <span>@c.User.FirstName @c.User.LastName</span>
-                            <p>@c.Text</p>
-                        </div>
+                            @foreach (var c in s.Comments)
+                            {
+                                <div class="comment" id="@c.CommentId">
+                                    <img src="@c.User.ProfileImg" />
+                                    <span>@c.User.FirstName @c.User.LastName</span>
+                                    <p>@c.Text</p>
+                                    @if (c.UserId == Model.CurrentUser.UserId)
+                                    {
+                                        <div class="EditOrDeleteComment">
+                                            <a class="EditComment">Edit</a>
+                                            <a class="DeleteComment">Delete</a>
+                                        </div>
+                                    }
+                                </div>
+                            }
                         }
-                    }
+                    </div>
 
                     <textarea class="AddNewComment" placeholder="Add Comment..."></textarea>
+                    <input type="button" class="btn-success submitComment" value="Comment" />
+
                 </div>
             }
         </div>
