@@ -59,10 +59,13 @@
 
 <body id="page-top" class="index">
 
-    <div class="userSearchArea">
-        <input type="text" class="userSearch" placeholder="User Search..." />
-        <div class="searchResults"></div>
-    </div>
+    @if (Model.CurrentUser != null)
+    {
+        <div class="userSearchArea">
+            <input type="text" class="userSearch" placeholder="User Search..." />
+            <div class="searchResults"></div>
+        </div>
+    }
 
     <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
@@ -81,25 +84,10 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="page-scroll">
-                        <a asp-action="Profile" asp-controller="Profile" asp-route-id="@Model.CurrentUser.UserId">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</a>
-                    </li>
-                    <li class="page-scroll">
-                        @if (@Model.CurrentUser.ProfileImg == null)
-                        {
-                            <span><img src="~/images/egg.png" class="profileImg" /></span>
-                        }
-                        else
-                        {
-                            <span><img src="@Model.CurrentUser.ProfileImg" class="profileImg"></span>
-                        }
-                    </li>
-                    <li class="page-scroll">
-                        <a asp-action="Index" asp-controller="Home">Home</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#" class="Notifications">Notifications (@Model.FriendRequests.Count)</a>
-                    </li>
+                    @if (Model.CurrentUser != null)
+                    {
+                        Html.RenderPartial("UserNavInfo");
+                    }
                 </ul>
             </div>
         </div>
@@ -107,7 +95,12 @@
 
     <div class="container body">
         <div class="bodyWrapper">
-            @{Html.RenderPartial("FriendRequests");}
+            @if (Model.CurrentUser != null)
+            {
+                Html.RenderPartial("FriendRequests");
+                @*@{Html.RenderPartial("FriendRequests");}*@
+            }
+
             @RenderBody()
         </div>
     </div>
@@ -115,7 +108,9 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
         <script src="~/js/Factory.js" asp-append-version="true"></script>
+        <script src="~/js/Login.js" asp-append-version="true"></script>
         <script src="~/js/Comment.js" asp-append-version="true"></script>
         <script src="~/js/Post.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -130,6 +125,7 @@
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>
         <script src="~/js/Factory.js" asp-append-version="true"></script>
+        <script src="~/js/Login.js" asp-append-version="true"></script>
         <script src="~/js/Comment.js" asp-append-version="true"></script>
         <script src="~/js/Post.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>

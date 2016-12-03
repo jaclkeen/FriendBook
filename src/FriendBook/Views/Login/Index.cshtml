@@ -1,0 +1,65 @@
+﻿@model FriendBook.ViewModels.LoginViewModel
+
+    <div class="LoginOrRegister">
+        <form class="Login" asp-action="LoginUser">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="@Model.User.Email" class="col-lg-2 control-label">Email: </label>
+                    <div class="col-md-10">
+                        <input type="text" asp-for="@Model.User.Email" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.User.Password" class="col-lg-2 control-label">Password: </label>
+                    <div class="col-md-10">
+                        <input type="password" asp-for="@Model.User.Password" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Login" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form class="Register" asp-action="CreateUser">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="@Model.User.FirstName" class="col-lg-2 control-label">First Name: </label>
+                    <div class="col-md-10">
+                        <input type="text" asp-for="@Model.User.FirstName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.User.LastName" class="col-lg-2 control-label">Last Name: </label>
+                    <div class="col-md-10">
+                        <input type="text" asp-for="@Model.User.LastName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.User.Email" class="col-lg-2 control-label">Email: </label>
+                    <div class="col-md-10">
+                        <input type="text" asp-for="@Model.User.Email" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.User.Password" class="col-lg-2 control-label">Password: </label>
+                    <div class="col-md-10">
+                        <input type="password" asp-for="@Model.User.Password" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Login" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>

@@ -14,9 +14,9 @@
                 userList[user].profileImg = "/images/egg.png"
             }
 
-            if (searchInput == firstName || searchInput == lastName || searchInput == fullName
-                || searchInput == firstName.toLowerCase() || searchInput == lastName.toLowerCase()
-                || searchInput == fullName.toLowerCase())
+            if (searchInput === firstName || searchInput === lastName || searchInput === fullName
+                || searchInput === firstName.toLowerCase() || searchInput === lastName.toLowerCase()
+                || searchInput === fullName.toLowerCase())
             {
                 $(".searchResults").append(`<div class="userInSearch" id="${userList[user].userId}">
                     <img class ="searchProfilePic" src=${userList[user].profileImg}>

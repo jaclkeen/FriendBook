@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FriendBook.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class UpdatedMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

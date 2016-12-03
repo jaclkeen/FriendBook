@@ -1,6 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="js/comment.js" />
 /// <reference path="js/factory.js" />
+/// <reference path="js/login.js" />
 /// <reference path="js/post.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />
