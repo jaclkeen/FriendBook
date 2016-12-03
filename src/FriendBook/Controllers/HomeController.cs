@@ -20,13 +20,14 @@ namespace FriendBook.Controllers
 
         public IActionResult Index()
         {
+            int UserId = ActiveUser.Instance.User.UserId;
             //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
-            var relationships = context.Relationship.Where(r => r.ReciverUserId == 1 || r.SenderUserId == 1).ToList();
-            var styling = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
+            var relationships = context.Relationship.Where(r => r.ReciverUserId == UserId || r.SenderUserId == UserId).ToList();
+            var styling = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
             //var posts = context.Post.OrderByDescending(p => p.TimePosted).ToList();
             var users = context.User.ToList();
             //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
-            var currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            var currentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
 
             HomePageViewModel model = new HomePageViewModel(context);
             model.Posts = new List<Post> { };
@@ -35,7 +36,7 @@ namespace FriendBook.Controllers
             {
                 Post UserPost;
                 //REPLACE WITH REAL USER WHEN LOGIN IS AVAILABLE
-                if(r .ReciverUserId == 1 && r.Status == 1)
+                if(r.ReciverUserId == UserId && r.Status == UserId)
                 {
                     UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).SingleOrDefault();
                     if (UserPost != null)
@@ -45,7 +46,7 @@ namespace FriendBook.Controllers
                     }
                 }
                 //REPLACE WITH REAL USER WHEN LOGIN IS AVAILABLE
-                else if (r.SenderUserId == 1 && r.Status == 1)
+                else if (r.SenderUserId == UserId && r.Status == 1)
                 {
                     UserPost = context.Post.Where(p => p.UserId == r.ReciverUserId).SingleOrDefault();
                     if (UserPost != null)
@@ -57,7 +58,7 @@ namespace FriendBook.Controllers
             }
 
             //REPLACE WITH REAL USER WHEN LOGIN IS AVAILABLE
-            List<Post> UserPosts = context.Post.Where(p => p.UserId == 1).ToList();
+            List<Post> UserPosts = context.Post.Where(p => p.UserId == UserId).ToList();
             if (UserPosts != null) { UserPosts.ForEach(up => model.Posts.Add(up)); }
 
             if (model.Posts.Count == 0)
@@ -81,8 +82,9 @@ namespace FriendBook.Controllers
 
         public IActionResult NewStatus(Post post)
         {
+            int UserId = ActiveUser.Instance.User.UserId;
             //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
-            post.UserId = 1;
+            post.UserId = UserId;
             post.TimePosted = DateTime.Now;
 
             if (!ModelState.IsValid)
@@ -105,8 +107,9 @@ namespace FriendBook.Controllers
         [HttpGet]
         public User GetCurrentUser()
         {
+            int UserId = ActiveUser.Instance.User.UserId;
             //REPLACE WITH REAL USER WHEN LOGIN IS CREATED
-            User CurrentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            User CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
             return CurrentUser;
         }
 

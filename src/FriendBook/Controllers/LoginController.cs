@@ -5,11 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FriendBook.Models;
 using FriendBook.ViewModels;
+using FriendBook.Data;
 
 namespace FriendBook.Controllers
 {
     public class LoginController : Controller
     {
+        private FriendBookContext context;
+
+        public LoginController(FriendBookContext ctx)
+        {
+            context = ctx;
+        }
+
         public IActionResult Index()
         {
             LoginViewModel model = new LoginViewModel();
@@ -32,6 +40,14 @@ namespace FriendBook.Controllers
 
 
             return View(model);
+        }
+
+        public IActionResult LoginUser([FromRoute]int id)
+        {
+            User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
+            ActiveUser.Instance.User = user;
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

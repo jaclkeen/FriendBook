@@ -119,3 +119,57 @@
 a{
     color: black!important;
 }
+
+.LoginNav{
+    width: 100%;
+    margin: auto;
+    background-color: lightgray;
+    /*border-bottom: 2px solid black;*/
+}
+
+.LoginNav a{
+    padding-top: 1%;
+    margin-left: .5%;
+    display: inline-block;
+    width: 49%;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding-bottom: 1%;
+}
+
+.active{
+    background-color: dodgerblue;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.LoginNav h3{
+    text-align: center;
+}
+
+.LoginOrRegister{
+    background-color: dodgerblue;
+    width: 65%;
+    margin: auto;
+    padding: 0 0 5% 0;
+    border: 3px solid black;
+    box-shadow: 4px 4px 4px black;
+    opacity: .8;
+}
+
+.Login{
+    padding: 5% 5% 0 5%;
+}
+
+.Register{
+    padding: 5% 5% 0 5%;
+}
+
+.val{
+    color: red;
+    font-weight: bold;
+}
