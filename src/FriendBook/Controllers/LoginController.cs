@@ -49,5 +49,24 @@ namespace FriendBook.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpPost]
+        public int RegisterNewUser([FromBody]User user)
+        {
+            context.User.Add(user);
+
+            if (ModelState.IsValid)
+            {
+                context.SaveChanges();
+            }
+
+            User CreatedUser = context.User.Where(u => u.UserId == user.UserId).SingleOrDefault();
+
+            Style NewUserStyle = new Style(CreatedUser.UserId);
+            context.Style.Add(NewUserStyle);
+            context.SaveChanges();
+
+            return CreatedUser.UserId;
+        }
     }
 }

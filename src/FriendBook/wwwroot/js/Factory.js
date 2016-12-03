@@ -37,7 +37,6 @@ function GetCurrentUser() {
 }
 
 function CreateNewComment(pId, CommentText) {
-    console.log(pId, CommentText)
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/Post/CreateNewCommentOnPost",
