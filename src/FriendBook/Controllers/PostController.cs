@@ -110,5 +110,13 @@ namespace FriendBook.Controllers
             context.Comment.Remove(DeletedComment);
             context.SaveChanges();
         }
+
+        [HttpPost]
+        public void EditSpecificCommentOnPost([FromBody] Comment comment)
+        {
+            Comment OldComment = context.Comment.Where(c => c.CommentId == comment.CommentId).SingleOrDefault();
+            OldComment.Text = comment.Text;
+            context.SaveChanges();
+        }
     }
 }
