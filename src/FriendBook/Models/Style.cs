@@ -11,7 +11,6 @@ namespace FriendBook.Models
         [Key]
         public int StyleId { get; set; }
 
-        [Required]
         public int UserId { get; set; }
         public User User { get; set; }
 
@@ -28,8 +27,8 @@ namespace FriendBook.Models
 
         public Style(int id){
             this.UserId = id;
-            this.BackgroundColor = "#0080c0";
-            this.WallBackgroundColor = "#004080";
+            this.BackgroundColor = "#004080";
+            this.WallBackgroundColor = "#0080c0";
             this.PostBackgroundColor = "#808080";
             this.FontColor = "#000000";
             this.FontSize = 14;

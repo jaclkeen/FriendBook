@@ -21,11 +21,13 @@ namespace FriendBook.Controllers
 
         public IActionResult Profile([FromRoute] int id)
         {
+            int UserId = ActiveUser.Instance.User.UserId;
+
             User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
             Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
             //LATER REPLACE WITH CURRENT USER
-            List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == 1 || r.SenderUserId == 1).ToList();
+            List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == UserId || r.SenderUserId == UserId).ToList();
             UserProfileViewModel model = new UserProfileViewModel(context);
             model.Friends = new List<User> { };
 
@@ -72,8 +74,8 @@ namespace FriendBook.Controllers
             }
 
             //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
-            model.CurrentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
-            model.CurrentUserStyle = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
+            model.CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
+            model.CurrentUserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
 
             model.UserProfile = user;
             model.UserStyle = style;
@@ -84,8 +86,9 @@ namespace FriendBook.Controllers
 
         public IActionResult AddFriend([FromRoute] int id)
         {
+            int UserId = ActiveUser.Instance.User.UserId;
             //REPLACE WITH CURRENT USER LATER
-            User currentUser = context.User.Where(u => u.UserId == 1).SingleOrDefault();
+            User currentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
             User userBeingAdded = context.User.Where(u => u.UserId == id).SingleOrDefault();
 
             Relationship ABeautifulRelationship = new Relationship
@@ -112,9 +115,11 @@ namespace FriendBook.Controllers
 
         public IActionResult Styling(int id)
         {
+            int UserId = ActiveUser.Instance.User.UserId;
+
             UserStylingViewModel model = new UserStylingViewModel(context);
             //LATER REPLACE WITH CURRENT USER
-            model.UserStyle = context.Style.Where(s => s.UserId == 1).SingleOrDefault();
+            model.UserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
 
             return View(model);
         }
