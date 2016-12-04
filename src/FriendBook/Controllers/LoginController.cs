@@ -50,6 +50,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult LogoutUser()
+        {
+            ActiveUser.Instance.User = null;
+
+            return RedirectToAction("Index", "Login");
+        }
+
         [HttpPost]
         public int RegisterNewUser([FromBody]User user)
         {
