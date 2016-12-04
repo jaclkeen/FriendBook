@@ -1,7 +1,7 @@
-﻿<li class="page-scroll">
-    <a asp-action="Profile" asp-controller="Profile" asp-route-id="@Model.CurrentUser.UserId">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</a>
-</li>
-<li class="page-scroll">
+﻿<li class="page-scroll pInfo">
+    <a class ="navNamePic" asp-action="Profile" asp-controller="Profile" asp-route-id="@Model.CurrentUser.UserId">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</a>
+
+@*<li class="page-scroll">*@
     @if (@Model.CurrentUser.ProfileImg == null)
     {
         <span><img src="~/images/egg.png" class="profileImg" /></span>
