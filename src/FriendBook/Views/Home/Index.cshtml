@@ -7,12 +7,13 @@
             <form asp-action="NewStatus">
                 <textarea asp-for="@Model.Post.Text" class="newStatus" placeholder="What's on your mind?"></textarea>
                 <input type="submit" class="submitStatus btn-success" value="Submit" />
+                <input type="button" class="clearStatus btn-danger" value="Clear" />
             </form>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 startPosts">
             @foreach (var s in Model.Posts)
             {
                 <div class="post" id="@s.PostId">
@@ -22,26 +23,26 @@
                     </div>
 
                     <div class="postUser">
-                        <a asp-action="Profile" asp-controller="Profile" asp-route-id="@s.UserId"><span>@Html.DisplayFor(modelItem => s.User.FirstName) @Html.DisplayFor(modelItem => s.User.LastName)</span></a>:
+                        <a asp-action="Profile" asp-controller="Profile" asp-route-id="@s.UserId"><span>@Html.DisplayFor(modelItem => s.User.FirstName) @Html.DisplayFor(modelItem => s.User.LastName)</span></a>
                     </div>
 
                     <div class="postTextDiv">
                         <span class="postText">@Html.DisplayFor(modelItem => s.Text)</span>
-                    </div>
+                    </div><hr />
 
                         @if (s.UserId == Model.CurrentUser.UserId)
                         {
                             <div class="deleteEditDiv">
-                                <a asp-action="DeletePost" asp-controller="Post" asp-route-id="@s.PostId"><span>Delete</span></a>
+                                <a class="deletePost" asp-action="DeletePost" asp-controller="Post" asp-route-id="@s.PostId"><span>Delete</span></a>
                                 <a><span id="@s.PostId" class="EditPost">Edit</span></a>
                             </div>
                         }
 
                     <div class="LikeDislikeCommentDiv">
-                        <a asp-action="AddLike" asp-controller="Post" asp-route-id="@s.PostId"><span>Likes: @Html.DisplayFor(modelItem => s.Likes)</span></a>
-                        <a asp-action="AddDislike" asp-controller="Post" asp-route-id="@s.PostId"><span>Dislikes: @Html.DisplayFor(modelItem => s.Dislikes)</span></a>
-                        <span class="comments">Comments (@s.Comments.Count)</span>
-                    </div>
+                        <a asp-action="AddLike" asp-controller="Post" asp-route-id="@s.PostId" class="addSpaceRight like"><i class="fa fa-thumbs-up statusIcon"></i>(@Html.DisplayFor(modelItem => s.Likes))</a>
+                        <a asp-action="AddDislike" asp-controller="Post" asp-route-id="@s.PostId" class="addSpaceRight dislike"><i class="fa fa-thumbs-down statusIcon"></i>(@Html.DisplayFor(modelItem => s.Dislikes))</a>
+                        <span class="comments addSpaceRight"><i class="fa fa-comments statusIcon CSI"></i>(@s.Comments.Count)</span>
+                    </div><hr />
 
                     <div class="CommentArea hidden">
                         @if (s.Comments != null)
@@ -55,11 +56,11 @@
                                     @if (c.UserId == Model.CurrentUser.UserId)
                                     {
                                         <div class="EditOrDeleteComment">
-                                            <a class="EditComment">Edit</a>
                                             <a class="DeleteComment">Delete</a>
+                                            <a class="EditComment">Edit</a>
                                         </div>
                                     }
-                                </div>
+                                </div><hr />
                             }
                         }
                     </div>

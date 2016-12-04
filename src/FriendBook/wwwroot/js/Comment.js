@@ -14,7 +14,7 @@
             .then(function () {
                 GetAllCommentsFromSpecificPost(CurrentPostId.attr("id"))
                 .then(function (comments) {
-                    CommentCountHTML.html(`Comments (${comments.length})`)
+                    CommentCountHTML.html(`<span class="comments addSpaceRight"><i class="fa fa-comments statusIcon CSI"></i>(${comments.length})</span>`)
                 })
             })
         }
@@ -23,7 +23,6 @@
             let EditCommentTextDiv = `<div class="editInputArea">
                     <textarea style="color: black; width: 50%;" class ="editInput">${CommentText}</textarea>
                     <input type="button" value="Update" class ="btn-success EditBtn updateComment">
-                    <input type="button" value="Cancel" class ="btn-danger EditBtn cancelEdit">
                 </div>`
 
             $(CommentTextDiv).html(EditCommentTextDiv)
