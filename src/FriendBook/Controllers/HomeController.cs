@@ -34,25 +34,24 @@ namespace FriendBook.Controllers
 
             foreach (Relationship r in relationships)
             {
-                Post UserPost;
-                //REPLACE WITH REAL USER WHEN LOGIN IS AVAILABLE
-                if(r.ReciverUserId == UserId && r.Status == UserId)
+                List<Post> UserPost = new List<Post>();
+                if(r.ReciverUserId == UserId && r.Status == 1)
                 {
-                    UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).SingleOrDefault();
+                    UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).ToList();
                     if (UserPost != null)
                     {
-                        UserPost.User = context.User.Where(u => u.UserId == UserPost.UserId).SingleOrDefault();
-                        model.Posts.Add(UserPost);
+                        UserPost.ForEach(up => up.User = context.User.Where(user => user.UserId == up.UserId).SingleOrDefault());
+                        UserPost.ForEach(up => model.Posts.Add(up));
                     }
                 }
-                //REPLACE WITH REAL USER WHEN LOGIN IS AVAILABLE
                 else if (r.SenderUserId == UserId && r.Status == 1)
                 {
-                    UserPost = context.Post.Where(p => p.UserId == r.ReciverUserId).SingleOrDefault();
+                    UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).ToList();
+
                     if (UserPost != null)
                     {
-                        UserPost.User = context.User.Where(u => u.UserId == UserPost.UserId).SingleOrDefault();
-                        model.Posts.Add(UserPost);
+                        UserPost.ForEach(up => up.User = context.User.Where(user => user.UserId == up.UserId).SingleOrDefault());
+                        UserPost.ForEach(up => model.Posts.Add(up));
                     }
                 }
             }

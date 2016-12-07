@@ -97,6 +97,26 @@
         .comment span{
             background-color: @Model.UserStyle.BackgroundColor;
         }
+        .navTab{
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
+            border-top: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .navTab:hover{
+            background-color: @Model.UserStyle.NavColor;
+        }
+
+        .navTab:hover .profileNavItem{
+            color: @Model.UserStyle.WallBackgroundColor;
+        }
+
+        .navTab:hover .profileNavIcon{
+            color: @Model.UserStyle.WallBackgroundColor;
+        }
+        .actualFriend{
+            box-shadow: 4px 4px 4px @Model.UserStyle.DetailColor;
+            border: 2px solid @Model.UserStyle.DetailColor;
+            background-color: @Model.UserStyle.NavColor;
+        }
     </style>
 </head>
 
@@ -118,7 +138,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" asp-action="Index" asp-controller="Home">FriendBook</a>
+                <span><a class="navbar-brand" asp-action="Index" asp-controller="Home">FriendBook</a></span>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

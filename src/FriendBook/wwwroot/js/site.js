@@ -32,16 +32,16 @@
         })
     }
 
-    $('.friends').hide();
+    $('.friendDiv').hide();
 
     $('.showPosts').on("click", function () {
-        $('.friends').hide();
+        $('.friendDiv').hide();
         $('.posts').show();
     })
 
     $('.showFriends').on("click", function () {
         $('.posts').hide();
-        $('.friends').show();
+        $('.friendDiv').show();
     })
 
     $('.userSearch').on("input", function(){
