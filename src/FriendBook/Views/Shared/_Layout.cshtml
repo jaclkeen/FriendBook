@@ -6,10 +6,12 @@
     <title>@ViewData["Title"] - FriendBook</title>
 
     <environment names="Development">
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
@@ -20,9 +22,19 @@
         .navbar-brand{
             color: black!important;
         }
+        .submitStatus, .clearStatus{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
         body{
             background-color: @Model.UserStyle.WallBackgroundColor;
             color: @Model.UserStyle.FontColor;
+        }
+        .navGlyph:hover{
+            color: @Model.UserStyle.WallBackgroundColor!important;
+            cursor: pointer;
+        }
+        .postUser a{
+            background-color: @Model.UserStyle.BackgroundColor;
         }
         .notificationArea{
             background-color: @Model.UserStyle.NavColor;            
@@ -36,11 +48,39 @@
         .navbar, .nav li{
             background-color: @Model.CurrentUserStyle.NavColor;
         }
+        .editInput{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
         .navbar{
             border-bottom: 2px solid @Model.UserStyle.DetailColor;
         }
-        .NewStatus{
+        .userSearch{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .userInSearch{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .deletePost, .EditPost, .DeleteComment, .EditComment{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .AddNewComment{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .submitComment{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .startPosts{
+            border-top: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .updatePost, .updateComment{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .comments:hover{
+            color: @Model.UserStyle.BackgroundColor;
+        }
+        .newStatus{
             color: black !important;
+            border: 2px solid @Model.UserStyle.DetailColor;
         }
         hr{
             background-color: 1px solid @Model.UserStyle.DetailColor;
@@ -53,6 +93,29 @@
         }
         .FR, .successFR{
             border-bottom: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .comment span{
+            background-color: @Model.UserStyle.BackgroundColor;
+        }
+        .navTab{
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
+            border-top: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .navTab:hover{
+            background-color: @Model.UserStyle.NavColor;
+        }
+
+        .navTab:hover .profileNavItem{
+            color: @Model.UserStyle.WallBackgroundColor;
+        }
+
+        .navTab:hover .profileNavIcon{
+            color: @Model.UserStyle.WallBackgroundColor;
+        }
+        .actualFriend{
+            box-shadow: 4px 4px 4px @Model.UserStyle.DetailColor;
+            border: 2px solid @Model.UserStyle.DetailColor;
+            background-color: @Model.UserStyle.NavColor;
         }
     </style>
 </head>
@@ -75,7 +138,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" asp-action="Index" asp-controller="Home">FriendBook</a>
+                <span><a class="navbar-brand" asp-action="Index" asp-controller="Home">FriendBook</a></span>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

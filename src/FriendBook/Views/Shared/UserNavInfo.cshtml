@@ -1,20 +1,16 @@
-﻿<li class="page-scroll pInfo">
-    <a class ="navNamePic" asp-action="Profile" asp-controller="Profile" asp-route-id="@Model.CurrentUser.UserId">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</a>
-    @if (@Model.CurrentUser.ProfileImg == null)
-    {
-        <span><img src="~/images/egg.png" class="profileImg" /></span>
-    }
-    else
-    {
-        <span><img src="@Model.CurrentUser.ProfileImg" class="profileImg"></span>
-    }
+﻿<li class="page-scroll pInfo navThing">
+    <a class ="navNamePic navGlyph" asp-action="Profile" asp-controller="Profile" asp-route-id="@Model.CurrentUser.UserId">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</a>
+    <span><img src="@Model.CurrentUser.ProfileImg" class="profileImg"></span>
 </li>
-<li class="page-scroll">
-    <a asp-action="Index" asp-controller="Home">Home</a>
+<li class="page-scroll navThing">
+    <a asp-action="Index" asp-controller="Home" class="HomeLink glyphicon glyphicon-home navGlyph"></a>
 </li>
-<li class="page-scroll">
-    <a href="#" class="Notifications">Notifications (@Model.FriendRequests.Count)</a>
+<li class="page-scroll navThing">  
+    <i class="fa fa-globe icon navGlyph"></i>
 </li>
-<li class="page-scroll">
-    <a class="Logout" asp-action="LogoutUser" asp-controller="Login">Logout</a>
+<li class="page-scroll navThing">
+    <a class="Notifications glyphicon glyphicon-user navGlyph">(@Model.FriendRequests.Count)</a>
+</li>
+<li class="page-scroll navThing">
+    <a class="Logout navGlyph logout" asp-action="LogoutUser" asp-controller="Login">Logout</a>
 </li>

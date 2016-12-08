@@ -8,7 +8,6 @@
     let editArea = `<div class="editInputArea">
                     <textarea style="color: black; width: 50%;" class ="editInput">${postText}</textarea>
                     <input type="button" value="Update" class ="btn-success EditBtn updatePost">
-                    <input type="button" value="Cancel" class ="btn-danger EditBtn cancelEdit">
                 </div>`
 
     postTextDiv.html(editArea)
@@ -36,7 +35,7 @@ $(".post").on("click", function (e) {
         AppendPostEdit(e);
     }
 
-    if (e.target.classList.contains("comments")) {
+    if (e.target.classList.contains("comments") || e.target.classList.contains("CSI")) {
         CurrentPost.children(".CommentArea").toggleClass("hidden")
     }
 
@@ -58,15 +57,19 @@ $(".post").on("click", function (e) {
                     comments.forEach(function (comment) {
                         CommentCount = comments.length;
                         let NewCommentDiv = $(`<div class="comment" id=${comment.commentId}><img src=${user.profileImg} /><span>${user.firstName} ${user.lastName}</span><p>${comment.text}</p></div>`)
-                        let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div>`
+                        let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div><hr>`
                         NewCommentDiv.append(EditOrDeleteComment)
                         CurrentPost.children(".CommentArea").append(NewCommentDiv)
                         CommentEventsForDeleteAndEdit()
                         ClickedCommentButtonTextArea.val("")
                     })
-                    $(CommentTag).html(`Comments (${CommentCount})`)
+                    $(CommentTag).html(`<span class="comments addSpaceRight"><i class="fa fa-comments statusIcon CSI"></i>(${CommentCount})</span>`)
                 })
             })
         })
     }
+})
+
+$(".clearStatus").on("click", function () {
+    $(".newStatus").val("");
 })

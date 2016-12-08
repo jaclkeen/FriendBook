@@ -1,34 +1,35 @@
 ﻿@model FriendBook.ViewModels.UserStylingViewModel
 
 <div class="colorContainer">
-    <h2>Edit your styling!</h2><br />
+    <i class="fa fa-hand-peace-o postIcon"></i>
+    <h2 class="stylingHead">Styling</h2><br />
 
     <form asp-route-id="@Model.CurrentUser.UserId" asp-action="UpdateUserStyling">
         <div class="form-horizontal">
             <div class="form-group">
-                <label asp-for="@Model.UserStyle.WallBackgroundColor" class="col-lg-2 control-label">Wall Background Color: </label>
-                <div class="col-md-10">
+                <label asp-for="@Model.UserStyle.WallBackgroundColor" class="col-lg-4 control-label">Wall Background Color: </label>
+                <div class="col-md-8">
                     <input type="color" asp-for="@Model.UserStyle.WallBackgroundColor" class="form-control" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.UserStyle.BackgroundColor" class="col-md-2 control-label">Background Color: </label>
-                <div class="col-md-10">
+                <label asp-for="@Model.UserStyle.BackgroundColor" class="col-md-4 control-label">Background Color: </label>
+                <div class="col-md-8">
                     <input type="color" asp-for="@Model.UserStyle.BackgroundColor" class="form-control" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.UserStyle.PostBackgroundColor" class="col-md-2 control-label">Post Background Color: </label>
-                <div class="col-md-10">
+                <label asp-for="@Model.UserStyle.PostBackgroundColor" class="col-md-4 control-label">Post Background Color: </label>
+                <div class="col-md-8">
                     <input type="color" asp-for="@Model.UserStyle.PostBackgroundColor" class="form-control" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.UserStyle.FontColor" class="col-md-2 control-label">Font Color: </label>
-                <div class="col-md-10">
+                <label asp-for="@Model.UserStyle.FontColor" class="col-md-4 control-label">Font Color: </label>
+                <div class="col-md-8">
                     <input type="color" asp-for="@Model.UserStyle.FontColor" class="form-control" />
                 </div>
             </div>
@@ -48,21 +49,21 @@
                 </div>*@
 
             <div class="form-group">
-                <label asp-for="@Model.UserStyle.NavColor" class="col-md-2 control-label">Nav Color: </label>
-                <div class="col-md-10">
+                <label asp-for="@Model.UserStyle.NavColor" class="col-md-4 control-label">Nav Color: </label>
+                <div class="col-md-8">
                     <input type="color" asp-for="@Model.UserStyle.NavColor" class="form-control" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.UserStyle.DetailColor" class="col-md-2 control-label">Detail Color: </label>
-                <div class="col-md-10">
+                <label asp-for="@Model.UserStyle.DetailColor" class="col-md-4 control-label">Detail Color: </label>
+                <div class="col-md-8">
                     <input type="color" asp-for="@Model.UserStyle.DetailColor" class="form-control" />
                 </div>
             </div>
-
+            <br /><br />
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="col-md-offset-4 col-md-8">
                     <input type="submit" value="Submit Changes!" class="btn btn-default" />
                 </div>
             </div>

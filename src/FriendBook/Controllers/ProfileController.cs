@@ -73,10 +73,10 @@ namespace FriendBook.Controllers
                 }
             }
 
-            //REPLACE WITH REAL CURRENT USER WHEN LOGIN IS CREATED
+            posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
+            
             model.CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
             model.CurrentUserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
-
             model.UserProfile = user;
             model.UserStyle = style;
             model.Posts = posts;

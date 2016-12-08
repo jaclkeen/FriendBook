@@ -16,6 +16,7 @@ namespace FriendBook
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                //.UseUrls("http://localhost:5050", "http://localhost:5000")
                 .Build();
 
             host.Run();

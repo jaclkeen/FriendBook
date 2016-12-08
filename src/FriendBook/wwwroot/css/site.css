@@ -1,10 +1,15 @@
 ﻿.navbar{
-    position: absolute;
+    /*position: absolute;*/
+    position: fixed;
     z-index: -1;
 }
 
+.brand{
+
+}
+
 .nav img{
-    width: 20%;
+    width: 24%;
 }
 
 .Notifications{
@@ -12,9 +17,11 @@
 }
 
 .notificationArea{
-    margin-right: -13.5%;
+    position: fixed;
+    margin-top: 1%;
+    margin-left: 57%;
     float: right;
-    width: 20%;
+    width: 16%;
     border-left: 2px solid black;
     border-right: 2px solid black;
     border-bottom: 2px solid black;
@@ -27,7 +34,8 @@
 }
 
 .bodyWrapper{
-    margin-top: 6%;
+    margin-top: 3%;
+    padding-bottom: 5%;
 }
 
 .body{
@@ -43,17 +51,94 @@
 }
 
 .newStatus{
-    width: 50%;
+    font-size: 1.5em;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
     height: 130px;
-    max-width: 50%;
     max-height: 130px;
+    min-height: 130px;
     color: black;
 }
 
+.postTextDiv{
+    font-size: 1.3em;
+}
+
+.deletePost{
+    font-size: 1.1em;
+    padding-left: 10%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-right: 10%;
+    background: #c9302c;
+    border-radius: 20px;
+    margin-right: 5%;
+}
+
+.deletePost:hover{
+    border: 2px solid red;
+}
+
+hr{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.deleteEditDiv{
+    float: right;
+    width: 40%;
+    margin-bottom: 1%;
+}
+
+.EditPost{
+    font-size: 1.1em;
+    padding-left: 16%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-right: 16%;
+    background: #449d44;
+    border-radius: 20px
+}
+
+.EditPost:hover{
+    cursor: pointer;
+    border: 2px solid green;
+}
+
+.submitStatus, .clearStatus{
+    padding-left: 5%;
+    padding-right: 5%;
+    border-radius: 30px;
+    margin-right: 2%;
+}
+
+.postUser{
+    display: inline-block;
+    width: 52%;
+}
+
+.postProfileImg{
+    display: inline-block;
+    width: 14%;
+    height: 70px;
+    margin-bottom: 2%;
+}
+
+.postUser a{
+    margin-left: 5%;
+    padding: 4%;
+    font-size: 1.5em;
+    border-radius: 31px;
+}
+
+.postProfileImg img{
+    width: 100%;
+}
+
 .userSearchArea{
-    margin-top: 1.3%;
+    margin-top: -.8%;
     margin-left: 17%;
-    float: left;
     width: 40%;
 }
 
@@ -71,12 +156,48 @@
     border-bottom: 2px solid black;
 }
 
+.searchResults{
+    margin-top: 5%;
+    width: 50%;
+}
+
+.searchProfilePic{
+    margin-left: -10%;
+    width: 25%;
+    display: inline-block;
+}
+
+.searchProfileName{
+    display: inline-block;
+    font-size: 1.3em;
+    margin-left: 15%;
+}
+
+.icon{
+    font-size: 2.2em;
+    margin-top: 58%;
+}
+
+.navThing{
+    margin-left: 3%;
+}
+
+.Notifications, .HomeLink{
+    font-size: 1.7em;
+}
+
 .userInSearch{
+    cursor: pointer;
+    position: fixed;
+    padding-top: .5%;
+    padding-bottom: .5%;
+    width: 20%;
     background-color: lightgrey;
     text-align: center;
     border-bottom: 2px solid black;
     z-index: 3;
     margin-bottom: 0;
+    margin-top: 2%;
 }
 
 .hidden{
@@ -94,10 +215,11 @@
 }
 
 .colorContainer{
+    min-height: 600px;
     padding: 2%;
     z-index: -1;
     position: absolute;
-    width: 100%;
+    width: 60%;
 }
 
 .successFR p{
@@ -109,7 +231,7 @@
 .NoFR{
     font-size: 1.3em;
     text-align: center;
-    padding: 1%;
+    padding: 8%;
 }
 
 .receivedFR{
@@ -147,11 +269,18 @@ a{
     border-top-right-radius: 20px;
 }
 
-.LoginNav h3{
+.LoginNav h2{
     text-align: center;
 }
 
+.userSearch{
+    padding-left: .3%;
+    position: fixed;
+    width: 20%;
+}
+
 .LoginOrRegister{
+    font-size: 1.3em;
     background-color: dodgerblue;
     width: 65%;
     margin: auto;
@@ -175,12 +304,261 @@ a{
 }
 
 .pInfo{
-    width: 50%;
-    margin-left: 7%;
+    z-index: 3;
+    width: 30%;
+    margin-left: 3%;
 }
 
 .navNamePic{
     display: inline!important;
     width: 50%;
     margin-left: 0%;
+}
+
+.submitLogin, .submitRegister{
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.navbar-right{
+    margin-right: 0!important;
+    width: 65%;
+}
+
+.submitComment{
+    vertical-align: text-top;
+    margin-top: -4.5%;
+    margin-left: 3%;
+    border-radius: 20px;
+}
+
+.submitComment:hover{
+    border: 2px solid green;
+}
+
+.AddNewComment{
+    width: 80%;
+    max-width: 80%;
+    min-width: 80%;
+    height: 50px;
+    min-height: 50px;
+    max-height: 50px;
+}
+
+.startPosts{
+    margin-top: 2%;
+    padding-top: 2%;
+}
+
+.statusIcon{
+    font-size: 2em;
+}
+
+.addSpaceRight{
+    margin-right: 3%;
+}
+
+.like:hover{
+    color: green!important;
+}
+
+.dislike:hover{
+    color: red!important;
+}
+
+.comments{
+    cursor: pointer;
+}
+
+.editInput{
+    width: 80%!important;
+    min-width: 80%;
+    max-width: 80%;
+    height: 110px;
+    min-height: 110px;
+    max-height: 110px;
+}
+
+.updatePost{
+    margin-top: 8%;
+    margin-right: 1%;
+    float: right;
+    border-radius: 20px;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.updatePost:hover{
+    border: 2px solid green;
+}
+
+.comment img{
+    width: 15%;
+}
+
+.comment span{
+    margin-left: 2%;
+    padding: 3%;
+    font-size: 1.5em;
+    border-radius: 31px;
+}
+
+.comment p{
+    font-size: 1.1em;
+    margin-top: 1%;
+}
+
+.DeleteComment{
+    font-size: 1.1em;
+    padding-left: 5%;
+    padding-top: .5%;
+    padding-bottom: .5%;
+    padding-right: 5%;
+    background: #c9302c;
+    border-radius: 20px;
+    margin-right: 3%;
+    cursor: pointer;
+}
+
+.DeleteComment:hover{
+    border: 2px solid red;
+}
+
+.EditComment{
+    cursor: pointer;
+    font-size: 1.1em;
+    padding-left: 7%;
+    padding-top: .5%;
+    padding-bottom: .5%;
+    padding-right: 7%;
+    background: #449d44;
+    border-radius: 20px;
+    margin-right: 5%;
+}
+
+.EditComment:hover {
+    border: 2px solid green;
+}
+
+.comment{
+    margin-left: 4%;
+}
+
+.updateComment{
+    float: right;
+    margin-right: 1.5%;
+    padding-right: 2%;
+    padding-left: 2%;
+    border-radius: 20px;
+    margin-top: 8%;
+}
+
+.updateComment:hover{
+    border: 2px solid green;
+}
+
+.logout{
+    margin-left: 290%;
+}
+
+.brandImg{
+    color: white;
+    font-size: 5em;
+    display: table;
+    margin: auto;
+    margin-bottom: 2%;
+    margin-top: 1%;
+}
+
+.brandName{
+    color:white;
+    text-align:center;
+    margin-top: 0;
+}
+
+.profileHeadImg{
+    width: 38%;
+    margin-left: 31%;
+    margin-top: 3%;
+    border-radius: 122px;
+}
+
+.profileHeadName{
+    text-align:center;
+}
+
+.navTab{
+    padding: 1%;
+    text-align:center;
+    width: 24%;
+    float: left;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.updateStyling :hover{
+    text-decoration: none!important;
+}
+
+.profileNav{
+    margin-left: 1%;
+}
+
+.profileNavIcon{
+    font-size: 2.5em;
+    width: 100%;
+}
+
+.friends{
+    display: block!important;
+}
+
+.datePosted{
+    float: right;
+}
+
+.friendImg{
+    display: inline-block;
+    width: 18%;
+    height: 103px;
+}
+
+.friendArea{
+    padding: 1%;
+}
+
+.friendHeadImg{
+    width: 100%;
+}
+
+.friendName{
+    width: 40%;
+    margin-left: 5%;
+    display: inline-block;
+}
+.friendFriends{
+    display: inline-block;
+    width: 10%;
+}
+
+.actualFriend{
+    margin-bottom: 1.4%;
+    padding: 1%;
+    border: 2px solid black;
+}
+
+.friendHead, .postHead{
+    display: inline-block;
+}
+
+.friendIcon, .postIcon{
+    font-size: 3.5em;
+    margin-top: 3%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.stylingHead{
+    display: inline-block;
+    margin-bottom: 7%
 }
