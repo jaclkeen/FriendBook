@@ -21,21 +21,7 @@ namespace FriendBook.ViewModels
         {
             get
             {
-                // Get the current value of the customer property of our singleton
                 User user = singleton.User;
-
-                // If no customer has been chosen yet, it's value will be null
-                //if (user == null)
-                //{
-                //    // Return fake customer for now
-                //    return new User()
-                //    {
-                //        FirstName = "Create",
-                //        LastName = "Account"
-                //    };
-                //}
-
-                // If there is a customer chosen, return it
                 return user;
             }
             set
@@ -63,7 +49,6 @@ namespace FriendBook.ViewModels
 
             FriendRequests = FRsSentToUser;
 
-            //REPLACE LATER WITH REAL USERID
             CurrentUserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
             CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
         }

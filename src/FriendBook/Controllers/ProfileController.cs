@@ -26,7 +26,7 @@ namespace FriendBook.Controllers
             User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
             Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
-            //LATER REPLACE WITH CURRENT USER
+
             List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == UserId || r.SenderUserId == UserId).ToList();
             UserProfileViewModel model = new UserProfileViewModel(context);
             model.Friends = new List<User> { };
@@ -127,6 +127,7 @@ namespace FriendBook.Controllers
         public IActionResult UpdateUserStyling([FromRoute] int id, Style UserStyle)
         {
             Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
+
             style.BackgroundColor = UserStyle.BackgroundColor;
             style.DetailColor = UserStyle.DetailColor;
             style.FontColor = UserStyle.FontColor;

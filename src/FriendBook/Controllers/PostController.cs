@@ -68,7 +68,7 @@ namespace FriendBook.Controllers
         public void CreateNewCommentOnPost([FromBody] Comment comment)
         {
             int UserId = ActiveUser.Instance.User.UserId;
-            //LATER REPLACE WITH ACTIVE USER
+
             comment.UserId = UserId;
             comment.User = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
             comment.TimePosted = DateTime.Now;

@@ -1,13 +1,13 @@
 ﻿@model FriendBook.ViewModels.UserProfileViewModel
 
-<div class="colorContainer">  
-    @*<form asp-action="Test">
-        <input type="file" asp-for="@Model.CurrentUser.ProfileImg" name="@Model.CurrentUser.ProfileImg" />
-        <input type="submit" />
-    </form>*@
+<div class="colorContainer">
 
     <div class="row profileHead">
-        <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
+            <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
+        @*<label for="profileImgUpload">
+        </label>*@
+        @*<input type="file" id="profileImgUpload" />*@
+
         <h1 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h1>
     </div>
 
