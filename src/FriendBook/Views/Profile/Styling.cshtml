@@ -1,7 +1,8 @@
 ﻿@model FriendBook.ViewModels.UserStylingViewModel
 
 <div class="colorContainer">
-    <h2>Edit your styling!</h2><br />
+    <i class="fa fa-hand-peace-o postIcon"></i>
+    <h2 class="stylingHead">Styling</h2><br />
 
     <form asp-route-id="@Model.CurrentUser.UserId" asp-action="UpdateUserStyling">
         <div class="form-horizontal">
