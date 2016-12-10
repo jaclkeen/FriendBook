@@ -533,6 +533,7 @@ a{
 
 .friendHeadImg{
     width: 100%;
+    height:inherit;
 }
 
 .friendName{
@@ -569,4 +570,12 @@ a{
 
 .profileImgUpload{
     display: none!important;
+}
+
+.profileImgUploadLabel{
+    min-width: 100%;
+}
+
+.notYours{
+    cursor: auto!important;
 }
