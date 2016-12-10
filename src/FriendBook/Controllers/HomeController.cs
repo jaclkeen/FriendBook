@@ -6,15 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using FriendBook.Data;
 using FriendBook.ViewModels;
 using FriendBook.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace FriendBook.Controllers
 {
     public class HomeController : Controller
     {
         private FriendBookContext context;
+        private IHostingEnvironment _environment;
 
-        public HomeController(FriendBookContext ctx)
+        public HomeController(FriendBookContext ctx, IHostingEnvironment environment)
         {
+            _environment = environment;
             context = ctx;
         }
 
@@ -77,18 +82,30 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
-        public IActionResult NewStatus(Post post)
+        public async Task<IActionResult> NewStatus(HomePageViewModel model)
         {
-            int UserId = ActiveUser.Instance.User.UserId;
-
-            post.UserId = UserId;
-            post.TimePosted = DateTime.Now;
+            var uploads = Path.Combine(_environment.WebRootPath, "images");
+            User u = ActiveUser.Instance.User;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            context.Post.Add(post);
+
+            model.Post.UserId = u.UserId;
+            model.Post.TimePosted = DateTime.Now;
+
+            if (model.PostImgUpload != null && model.PostImgUpload.ContentType.Contains("image"))
+            {
+                using (var fileStream = new FileStream(Path.Combine(uploads, model.PostImgUpload.FileName), FileMode.Create))
+                {
+                    await model.PostImgUpload.CopyToAsync(fileStream);
+                    model.Post.ImgUrl = $"/images/{model.PostImgUpload.FileName}";
+                    context.SaveChanges();
+                }
+            }
+
+            context.Post.Add(model.Post);
             try
             {
                 context.SaveChanges();

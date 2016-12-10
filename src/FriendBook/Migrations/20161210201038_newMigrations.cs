@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FriendBook.Migrations
 {
-    public partial class UpdatedStylingModel : Migration
+    public partial class newMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
