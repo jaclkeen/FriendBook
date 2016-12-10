@@ -62,6 +62,7 @@
 }
 
 .postTextDiv{
+    margin-top: 2%;
     font-size: 1.3em;
 }
 
@@ -583,4 +584,34 @@ a{
 
 .FR{
     margin-top: 6%;
+}
+
+.addPToStatus{
+    display: none!important;
+}
+
+.addPhotoToStatusDiv{
+    display: inline-block;
+    cursor: pointer;
+    width: 20%;
+    padding-left: 3%;
+    padding-right: 3%;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-top: 2px solid black;
+}
+
+.addPToStatusLabel{
+    width: 100%;
+    margin-bottom: 0!important;
+}
+.photoSelectedArea{
+    display: inline-block;
+}
+
+.postImage{
+    max-width: 74%;
+    min-width: 74%;
+    width: 74%;
+    margin-left: 13%;
 }

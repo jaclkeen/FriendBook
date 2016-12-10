@@ -82,5 +82,11 @@
         $(".changeProfileImg").submit();
     })
 
+    $(".addPToStatus").on("change", function () {
+        let selectedFile = $(this).val().replace(/^.*\\/, "");
+        $(".photoSelectedArea").html("")
+        $(".photoSelectedArea").append(`Selected file: ${selectedFile}`)
+    })
+
     CommentEventsForDeleteAndEdit()
 })

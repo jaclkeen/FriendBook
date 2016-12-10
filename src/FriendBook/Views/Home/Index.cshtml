@@ -5,10 +5,18 @@
         <i class="fa fa-users brandImg" aria-hidden="true"></i>
         <h2 class="brandName">FriendBook</h2>
         <div class="col-md-12">
-            <form asp-action="NewStatus">
+            <form asp-action="NewStatus" enctype="multipart/form-data">
+
+                <label for="addPToStatus" class="addPToStatusLabel">
+                    <div class="addPhotoToStatusDiv">Add Photo</div>
+                    <div class="photoSelectedArea"></div>
+                </label>
+                <input type="file" asp-for="@Model.PostImgUpload" name="PostImgUpload" id="addPToStatus" class="addPToStatus"/>
+
                 <textarea asp-for="@Model.Post.Text" class="newStatus" placeholder="What's on your mind?"></textarea>
                 <input type="submit" class="submitStatus btn-success" value="Submit" />
                 <input type="button" class="clearStatus btn-danger" value="Clear" />
+
             </form>
         </div>
     </div>
@@ -30,6 +38,13 @@
                     <div class="datePosted">
                         <span>@s.TimePosted</span>
                     </div>
+
+                    @if (s.ImgUrl != null)
+                    {
+                        <div class="postImageDiv">
+                            <img src="@s.ImgUrl"  class="postImage"/>
+                        </div>
+                    }
 
                     <div class="postTextDiv">
                         <span class="postText">@Html.DisplayFor(modelItem => s.Text)</span>

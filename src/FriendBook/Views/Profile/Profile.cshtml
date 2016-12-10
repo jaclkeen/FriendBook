@@ -101,6 +101,13 @@
                         <span>@s.TimePosted</span>
                     </div>
 
+                    @if (s.ImgUrl != null)
+                    {
+                        <div class="postImageDiv">
+                            <img src="@s.ImgUrl" class="postImage" />
+                        </div>
+                    }
+
                     <div class="postTextDiv">
                         <span class="postText">@Html.DisplayFor(modelItem => s.Text)</span>
                     </div><hr />
