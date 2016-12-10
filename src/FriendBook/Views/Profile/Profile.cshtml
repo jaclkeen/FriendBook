@@ -3,14 +3,21 @@
 <div class="colorContainer">
     <div class="row profileHead">
 
-        <form class="changeProfileImg" asp-controller="Profile" asp-action="UploadImg" enctype="multipart/form-data">
-            <label for="profileImgUpload">
-                <div class="imgContainer">
-                    <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
-                </div>
-            </label>
-            <input type="file" name="file" id="profileImgUpload" class="profileImgUpload" />
-        </form>
+        @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+        {
+            <form class="changeProfileImg" asp-controller="Profile" asp-action="UploadImg" enctype="multipart/form-data">
+                <label for="profileImgUpload" class="profileImgUploadLabel">
+                    <div class="imgContainer">
+                        <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
+                    </div>
+                </label>
+                <input type="file" name="file" id="profileImgUpload" class="profileImgUpload" />
+            </form>
+        }
+        else
+        {
+            <img class="profileHeadImg notYours" src="@Model.UserProfile.ProfileImg" />
+        }
 
         <h1 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h1>
     </div>

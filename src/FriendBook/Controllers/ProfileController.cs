@@ -143,7 +143,6 @@ namespace FriendBook.Controllers
             int UserId = ActiveUser.Instance.User.UserId;
 
             UserStylingViewModel model = new UserStylingViewModel(context);
-            //LATER REPLACE WITH CURRENT USER
             model.UserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
 
             return View(model);
