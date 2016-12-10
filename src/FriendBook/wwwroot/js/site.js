@@ -3,21 +3,19 @@
     function addUsersSearchToDom(userList) {
         let searchInput = $('.userSearch').val();
         $(".searchResults").html("");
-        for (var user in userList)
-        {
+        for (var user in userList) {
             let firstName = userList[user].firstName,
                 lastName = userList[user].lastName,
                 fullName = `${userList[user].firstName} ${userList[user].lastName}`
 
-            if (userList[user].profileImg === null)
-            {
+            if (userList[user].profileImg === null) {
                 userList[user].profileImg = "/images/egg.png"
             }
 
             if (searchInput === firstName || searchInput === lastName || searchInput === fullName
                 || searchInput === firstName.toLowerCase() || searchInput === lastName.toLowerCase()
-                || searchInput === fullName.toLowerCase())
-            {
+                || searchInput === fullName.toLowerCase()) {
+
                 $(".searchResults").append(`<div class="userInSearch" id="${userList[user].userId}">
                     <img class ="searchProfilePic" src=${userList[user].profileImg}>
                     <p class="searchProfileName">${fullName}</p></div>`);
@@ -78,6 +76,10 @@
                 //Materialize.Toast(frHtml);
             })
         }
+    })
+
+    $(".profileImgUpload").on("change", function () {
+        $(".changeProfileImg").submit();
     })
 
     CommentEventsForDeleteAndEdit()
