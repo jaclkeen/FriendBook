@@ -1,5 +1,4 @@
-﻿
-function DeleteComment(CommentId) {
+﻿function DeleteComment(CommentId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: `/Post/DeleteComment/${CommentId}`,

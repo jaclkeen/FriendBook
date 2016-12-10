@@ -31,9 +31,9 @@ namespace FriendBook.Controllers
             HomePageViewModel model = new HomePageViewModel(context);
             model.Posts = new List<Post> { };
 
+            List<Post> UserPost = new List<Post>();
             foreach (Relationship r in relationships)
             {
-                List<Post> UserPost = new List<Post>();
                 if(r.ReciverUserId == UserId && r.Status == 1)
                 {
                     UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).ToList();
@@ -45,7 +45,7 @@ namespace FriendBook.Controllers
                 }
                 else if (r.SenderUserId == UserId && r.Status == 1)
                 {
-                    UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).ToList();
+                    UserPost = context.Post.Where(p => p.UserId == r.ReciverUserId).ToList();
 
                     if (UserPost != null)
                     {
