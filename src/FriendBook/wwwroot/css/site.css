@@ -25,6 +25,7 @@
 
 .notificationProfileImg{
     width: 35%;
+    min-height: 65px;
     float: left;
     margin-right: 3%;
 }
@@ -578,4 +579,8 @@ a{
 
 .notYours{
     cursor: auto!important;
+}
+
+.FR{
+    margin-top: 6%;
 }

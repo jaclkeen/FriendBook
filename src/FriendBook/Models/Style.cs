@@ -27,14 +27,14 @@ namespace FriendBook.Models
 
         public Style(int id){
             this.UserId = id;
-            this.BackgroundColor = "#004080";
-            this.WallBackgroundColor = "#0080c0";
+            this.BackgroundColor = "#0080c0";
+            this.WallBackgroundColor = "#004080";
             this.PostBackgroundColor = "#808080";
             this.FontColor = "#000000";
             this.FontSize = 14;
             this.FontFamily = "Times New Roman";
             this.NavColor = "#808080";
-            this.DetailColor = "#c0c0c0";
+            this.DetailColor = "#000000";
         }
     }
 }
