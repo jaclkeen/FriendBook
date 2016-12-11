@@ -22,6 +22,7 @@ namespace FriendBook.Models
         public string FontFamily { get; set; }
         public string NavColor { get; set; }
         public string DetailColor { get; set; }
+        public string PostHeaderColor { get; set; }
 
         public Style() { }
 
@@ -35,6 +36,7 @@ namespace FriendBook.Models
             this.FontFamily = "Times New Roman";
             this.NavColor = "#808080";
             this.DetailColor = "#000000";
+            this.PostHeaderColor = "#696969";
         }
     }
 }

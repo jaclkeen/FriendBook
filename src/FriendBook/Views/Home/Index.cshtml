@@ -27,16 +27,18 @@
             {
                 <div class="post" id="@s.PostId">
 
-                    <div class="postProfileImg">
-                       <img src="@s.User.ProfileImg" />
-                    </div>
+                    <div class="postHeadDiv">
+                        <div class="postProfileImg">
+                           <img src="@s.User.ProfileImg" />
+                        </div>
 
-                    <div class="postUser">
-                        <a asp-action="Profile" asp-controller="Profile" asp-route-id="@s.UserId"><span>@Html.DisplayFor(modelItem => s.User.FirstName) @Html.DisplayFor(modelItem => s.User.LastName)</span></a>
-                    </div>
+                        <div class="postUser">
+                            <a asp-action="Profile" asp-controller="Profile" asp-route-id="@s.UserId"><span>@Html.DisplayFor(modelItem => s.User.FirstName) @Html.DisplayFor(modelItem => s.User.LastName)</span></a>
+                        </div>
 
-                    <div class="datePosted">
-                        <span>@s.TimePosted</span>
+                        <div class="datePosted">
+                            <span>@s.TimePosted</span>
+                        </div>
                     </div>
 
                     @if (s.ImgUrl != null)

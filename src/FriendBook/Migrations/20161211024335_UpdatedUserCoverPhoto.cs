@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FriendBook.Migrations
 {
-    public partial class newMigrations : Migration
+    public partial class UpdatedUserCoverPhoto : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,6 +14,7 @@ namespace FriendBook.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
+                    CoverImg = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
@@ -90,6 +91,7 @@ namespace FriendBook.Migrations
                     FontSize = table.Column<int>(nullable: false),
                     NavColor = table.Column<string>(nullable: true),
                     PostBackgroundColor = table.Column<string>(nullable: true),
+                    PostHeaderColor = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
                     WallBackgroundColor = table.Column<string>(nullable: true)
                 },

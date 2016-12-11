@@ -5,18 +5,35 @@
 
         @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
         {
+            <form class="changeBannerImg" asp-controller="Profile" asp-action="UploadCoverImg" enctype="multipart/form-data">
+                <label for="profileBannerUpload" class="profileBannerUploadLabel">
+                    <img class="profileBannerImg" src="@Model.UserProfile.CoverImg" />
+                    <input type="file" name="file" id="profileBannerUpload" class="profileBannerUpload" />
+                </label>
+            </form>
+
             <form class="changeProfileImg" asp-controller="Profile" asp-action="UploadImg" enctype="multipart/form-data">
                 <label for="profileImgUpload" class="profileImgUploadLabel">
-                    <div class="imgContainer">
-                        <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
-                    </div>
-                </label>
-                <input type="file" name="file" id="profileImgUpload" class="profileImgUpload" />
+                    <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
+                    <input type="file" name="file" id="profileImgUpload" class="profileImgUpload" />
+                </label>                    
             </form>
         }
         else
         {
-            <img class="profileHeadImg notYours" src="@Model.UserProfile.ProfileImg" />
+            <form class="changeBannerImg">
+                <label for="profileBannerUpload" class="profileBannerUploadLabel">
+                    <img class="notYourProfileBannerImg" src="@Model.UserProfile.CoverImg" />
+                    <input id="profileBannerUpload" class="profileBannerUpload" />
+                </label>
+            </form>
+
+            <form class="changeProfileImg">
+                <label for="profileImgUpload" class="profileImgUploadLabel">
+                    <img class="notYourProfileHeadImg" src="@Model.UserProfile.ProfileImg" />
+                    <input id="profileImgUpload" class="profileImgUpload" />
+                </label>
+            </form>
         }
 
         <h1 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h1>
@@ -89,16 +106,18 @@
             {
                 <div class="post" id="@s.PostId">
 
-                    <div class="postProfileImg">
-                        <img src="@s.User.ProfileImg" />
-                    </div>
+                    <div class="postHeadDiv">
+                        <div class="postProfileImg">
+                            <img src="@s.User.ProfileImg" />
+                        </div>
 
-                    <div class="postUser">
-                        <a asp-action="Profile" asp-controller="Profile" asp-route-id="@s.UserId"><span>@Html.DisplayFor(modelItem => s.User.FirstName) @Html.DisplayFor(modelItem => s.User.LastName)</span></a>
-                    </div>
+                        <div class="postUser">
+                            <a asp-action="Profile" asp-controller="Profile" asp-route-id="@s.UserId"><span>@Html.DisplayFor(modelItem => s.User.FirstName) @Html.DisplayFor(modelItem => s.User.LastName)</span></a>
+                        </div>
 
-                    <div class="datePosted">
-                        <span>@s.TimePosted</span>
+                        <div class="datePosted">
+                            <span>@s.TimePosted</span>
+                        </div>
                     </div>
 
                     @if (s.ImgUrl != null)
