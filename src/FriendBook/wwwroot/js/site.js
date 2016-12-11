@@ -2,25 +2,26 @@
 
     function addUsersSearchToDom(userList) {
         let searchInput = $('.userSearch').val();
+        let listOfSelectedUsers = []
         $(".searchResults").html("");
         for (var user in userList) {
             let firstName = userList[user].firstName,
                 lastName = userList[user].lastName,
                 fullName = `${userList[user].firstName} ${userList[user].lastName}`
 
-            if (userList[user].profileImg === null) {
-                userList[user].profileImg = "/images/egg.png"
-            }
-
             if (searchInput === firstName || searchInput === lastName || searchInput === fullName
                 || searchInput === firstName.toLowerCase() || searchInput === lastName.toLowerCase()
                 || searchInput === fullName.toLowerCase()) {
-
-                $(".searchResults").append(`<div class="userInSearch" id="${userList[user].userId}">
-                    <img class ="searchProfilePic" src=${userList[user].profileImg}>
-                    <p class="searchProfileName">${fullName}</p></div>`);
+                
+                listOfSelectedUsers.push(userList[user])
             }
         }
+
+        listOfSelectedUsers.forEach(function (u) {
+            $(".searchResults").append(`<div class="userInSearch" id="${u.userId}">
+                <img class ="searchProfilePic" src=${u.profileImg}>
+                <p class ="searchProfileName">${u.firstName} ${u.lastName}</p></div>`);
+        })
     }
 
     function userSearchEvents() {
@@ -76,6 +77,10 @@
                 //Materialize.Toast(frHtml);
             })
         }
+    })
+
+    $(".profileBannerUpload").on("change", function () {
+        $(".changeBannerImg").submit();
     })
 
     $(".profileImgUpload").on("change", function () {

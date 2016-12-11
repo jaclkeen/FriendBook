@@ -106,6 +106,8 @@ namespace FriendBook.Migrations
 
                     b.Property<string>("PostBackgroundColor");
 
+                    b.Property<string>("PostHeaderColor");
+
                     b.Property<int>("UserId");
 
                     b.Property<string>("WallBackgroundColor");
@@ -121,6 +123,8 @@ namespace FriendBook.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CoverImg");
 
                     b.Property<string>("Email")
                         .IsRequired();

@@ -117,6 +117,18 @@
         .addPhotoToStatusDiv{
             background-color: @Model.UserStyle.NavColor;       
         }
+        .postHeadDiv{
+            background-color: @Model.UserStyle.PostHeaderColor;
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .profileHeadImg, .notYourProfileHeadImg{
+            box-shadow: 8px 8px 8px @Model.UserStyle.DetailColor;
+        }
+        .profileBannerImg, .notYourProfileBannerImg{
+            border-left: 3px solid @Model.UserStyle.DetailColor;
+            border-right: 3px solid @Model.UserStyle.DetailColor;
+            border-bottom: 3px solid @Model.UserStyle.DetailColor;
+        }
     </style>
 </head>
 

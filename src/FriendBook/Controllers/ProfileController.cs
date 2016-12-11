@@ -185,5 +185,25 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public async Task<IActionResult> UploadCoverImg(IFormFile file)
+        {
+            var uploads = Path.Combine(_environment.WebRootPath, "images");
+            User u = ActiveUser.Instance.User;
+            User CurrentDbUser = context.User.Where(us => us.UserId == u.UserId).SingleOrDefault();
+
+            if (file != null && file.ContentType.Contains("image"))
+            {
+                using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                    CurrentDbUser.CoverImg = $"/images/{file.FileName}";
+                    context.SaveChanges();
+                }
+                return RedirectToAction("Profile", "Profile", new { id = u.UserId });
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

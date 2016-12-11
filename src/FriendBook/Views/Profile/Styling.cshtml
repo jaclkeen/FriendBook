@@ -6,19 +6,10 @@
 
     <form asp-route-id="@Model.CurrentUser.UserId" asp-action="UpdateUserStyling">
         <div class="form-horizontal">
-
-
             <div class="form-group">
                 <label asp-for="@Model.UserStyle.WallBackgroundColor" class="col-lg-4 control-label">Wall Background Color: </label>
                 <div class="col-md-8">
                     <input type="color" asp-for="@Model.UserStyle.WallBackgroundColor" class="form-control" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="@Model.UserStyle.BackgroundColor" class="col-md-4 control-label">Background Color: </label>
-                <div class="col-md-8">
-                    <input type="color" asp-for="@Model.UserStyle.BackgroundColor" class="form-control" />
                 </div>
             </div>
 
@@ -30,20 +21,29 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="@Model.UserStyle.PostHeaderColor" class="col-md-4 control-label">Post Header Color: </label>
+                <div class="col-md-8">
+                    <input type="color" asp-for="@Model.UserStyle.PostHeaderColor" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.UserStyle.BackgroundColor" class="col-md-4 control-label">Background Color: </label>
+                <div class="col-md-8">
+                    <input type="color" asp-for="@Model.UserStyle.BackgroundColor" class="form-control" />
+                </div>
+            </div>
+
+
+            <div class="form-group">
                 <label asp-for="@Model.UserStyle.FontColor" class="col-md-4 control-label">Font Color: </label>
                 <div class="col-md-8">
                     <input type="color" asp-for="@Model.UserStyle.FontColor" class="form-control" />
                 </div>
             </div>
 
-            @*<div class="form-group">
-                    <label asp-for="@Model.UserStyle.FontSize">Wall Background Color: </label>
-                    <div class="col-md-12">
-                        <input type="color" asp-for="@Model.UserStyle.FontSize" class="form-control" />
-                    </div>
-                </div>
 
-                <div class="form-group">
+                @*<div class="form-group">
                     <label asp-for="@Model.UserStyle.FontFamily">Wall Background Color: </label>
                     <div class="col-md-12">
                         <input type="color" asp-for="@Model.UserStyle.FontFamily" class="form-control" />
@@ -63,6 +63,7 @@
                     <input type="color" asp-for="@Model.UserStyle.DetailColor" class="form-control" />
                 </div>
             </div>
+
             <br /><br />
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">

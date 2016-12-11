@@ -8,8 +8,8 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161210201038_newMigrations")]
-    partial class newMigrations
+    [Migration("20161211024335_UpdatedUserCoverPhoto")]
+    partial class UpdatedUserCoverPhoto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,6 +107,8 @@ namespace FriendBook.Migrations
 
                     b.Property<string>("PostBackgroundColor");
 
+                    b.Property<string>("PostHeaderColor");
+
                     b.Property<int>("UserId");
 
                     b.Property<string>("WallBackgroundColor");
@@ -122,6 +124,8 @@ namespace FriendBook.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CoverImg");
 
                     b.Property<string>("Email")
                         .IsRequired();
