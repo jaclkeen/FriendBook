@@ -40,54 +40,51 @@
     </div>
 
     <div class="row profileNav">
-            @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
-            {
+        @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+        {
+            <div class="navTab">
+                <i class="fa fa-user-circle profileNavIcon"></i>
+                <span class="pending profileNavItem">Me</span>
+            </div>
+        }
+        @if (Model.AreFriends == "NoRelationship" || Model.AreFriends == "no")
+        {
+            <a asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId">
                 <div class="navTab">
-                    <i class="fa fa-user-circle profileNavIcon"></i>
-                    <span class="pending profileNavItem">Me</span>
+                    <i asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId" class="fa fa-user-plus profileNavIcon"></i>
+                    <a class="addFriend profileNavItem" asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId"><span class="profileAddFriend">Add Friend!</span></a>
                 </div>
-            }
-            @if (Model.AreFriends == "NoRelationship" || Model.AreFriends == "no")
-            {
-                <a asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId">
-                    <div class="navTab">
-                        <i asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId" class="fa fa-user-plus profileNavIcon"></i>
-                        <a class="addFriend profileNavItem" asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId"><span class="profileAddFriend">Add Friend!</span></a>
-                    </div>
-                </a>
-            }
-            @if (Model.AreFriends == "Pending" && Model.UserProfile.UserId != Model.CurrentUser.UserId)
-            {
-                <div class="navTab">
-                    <i class="fa fa-user-o profileNavIcon"></i>
-                    <span class="pending profileNavItem">Pending</span>
-                </div>
-            }
-            @if (Model.AreFriends == "yes")
-            {
-                <div class="navTab">
-                    <i class="fa fa-check-square profileNavIcon"></i>
-                    <span class="friends profileNavItem">Friends</span>
-                </div>
-            }
+            </a>
+        }
+        @if (Model.AreFriends == "Pending" && Model.UserProfile.UserId != Model.CurrentUser.UserId)
+        {
+            <div class="navTab">
+                <i class="fa fa-user-o profileNavIcon"></i>
+                <span class="pending profileNavItem">Pending</span>
+            </div>
+        }
+        @if (Model.AreFriends == "yes")
+        {
+            <div class="navTab">
+                <i class="fa fa-check-square profileNavIcon"></i>
+                <span class="friends profileNavItem">Friends</span>
+            </div>
+        }
 
         <div class="navTab showPosts">
             <i class="fa fa-book profileNavIcon"></i>
             <span class="profileNavItem">Posts</span>
         </div>
 
+        <div class="navTab showAlbums">
+            <i class="fa fa-photo profileNavIcon"></i>
+            <span class="profileNavItem">Photos</span>
+        </div>
+
         <div class="navTab showFriends">
             <i class="fa fa-users profileNavIcon"></i>
             <span class="profileNavItem">Friends</span>
         </div>
-
-        @if (Model.UserProfile.UserId != Model.CurrentUser.UserId)
-        {
-            <div class="navTab showAbout">
-                <i class="fa fa-users profileNavIcon"></i>
-                <span class="profileNavItem">About</span>
-            </div>
-        }
 
         @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
         {
@@ -195,5 +192,57 @@
                 </div>
             }
         </div>
+    </div>
+
+    <div class="row imagesDiv">
+        <i class="fa fa-photo friendIcon"></i>
+        <h3 class="friendHead">Albums</h3>
+        <i class="fa fa-plus-circle addAlbum"></i>   
+        
+        <div class="createNewAlbum hidden">
+            <h3>Create New Album</h3>
+
+            <form>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Album Name: </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control albumNameInput" />
+                            <span class="albumNameValidation"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Description: </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control albumDescription" />
+                            <span class="albumDescriptionValidation"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="button" value="Create Album" class="btn btn-default createAlbum" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div> 
+        
+        <div class="albumShowArea">
+            @foreach (var a in Model.UserAlbums)
+            {
+                <a asp-action="ViewAlbum" asp-controller="Album" asp-route-id="@a.AlbumId">
+                    <div class="ImageArea">
+                        <h3 class="albumName">@a.AlbumName</h3>
+                        @foreach (var i in a.AlbumImages)
+                        {
+                            <img src="@i.ImagePath" class="albumImg" />
+                        }
+                    </div>
+                </a>
+            }
+        </div>
+
     </div>
 </div>

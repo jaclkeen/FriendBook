@@ -512,7 +512,7 @@ a{
 .navTab{
     padding: 1%;
     text-align:center;
-    width: 24%;
+    width: 19%;
     float: left;
     display: inline-block;
     cursor: pointer;
@@ -676,4 +676,39 @@ a{
 .changeBannerImg{
     min-width: 100%;
     max-width: 100%;
+}
+
+.addAlbum{
+    font-size: 4em;
+    float: right;
+    margin-top: 2%;
+    margin-right: 3%
+}
+
+.albumImg{
+    width: 100%;
+}
+
+.ImageArea{
+    width: 30%;
+    display: inline-block;
+}
+
+.albumName{
+    text-align: center;
+}
+
+.createNewAlbum h3{
+    margin-left: 2%;
+}
+
+.createNewAlbum{
+    padding: 1%;
+    border-radius: 30px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.albumNameValidation, .albumDescriptionValidation{
+    color: red;
 }

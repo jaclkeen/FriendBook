@@ -15,5 +15,7 @@ namespace FriendBook.ViewModels
         public User UserProfile { get; set; }
         public Style UserStyle { get; set; }
         public string AreFriends { get; set; }
+        public List<Album> UserAlbums { get; set; }
+        public Album NewAlbum { get; set; }
     }
 }

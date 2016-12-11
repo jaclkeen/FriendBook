@@ -1,4 +1,19 @@
-﻿function DeleteComment(CommentId) {
+﻿function CreateAlbum(Album) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "Album/CreateNewAlbum",
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(Album)
+        }).done(function (data) {
+            resolve(data)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function DeleteComment(CommentId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: `/Post/DeleteComment/${CommentId}`,

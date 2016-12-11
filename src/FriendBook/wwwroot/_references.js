@@ -1,4 +1,5 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="js/album.js" />
 /// <reference path="js/comment.js" />
 /// <reference path="js/factory.js" />
 /// <reference path="js/login.js" />
