@@ -756,6 +756,6 @@ a{
     cursor: pointer;
 }
 
-.AddImageToAlbum{
+.AddImageToAlbum, .formArea{
     display: inline-block;
 }

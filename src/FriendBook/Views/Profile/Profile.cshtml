@@ -247,7 +247,7 @@
             }
         </div>
 
-        @*<div class="SelectedAlbumDetailsArea hidden">
+        <div class="SelectedAlbumDetailsArea hidden">
             <i class="fa fa-arrow-left addimg BackToAlbums">  </i><span class="BackToAlbums backSpan">   Back</span>
 
             <div class="albumDetailDiv">
@@ -258,7 +258,9 @@
                         <label for="AddIToA">
                             <i class="fa fa-plus-square-o addimg"></i>
                         </label>
-                        <input type="file" id="AddIToA" name="file" class="hidden AddIToA" />
+                        <input type="file" id="AddIToA" name="image" asp-for="@Model.image" class="hidden AddIToA" />
+                        <input type="text" class="hidden albumId" asp-for="@Model.AlbumId" />
+                        <input type="submit" class="hidden submitAddImg"/>
                     </form>
                 </div>
 
@@ -268,7 +270,7 @@
             <div class="SelectedAlbumImages">
 
             </div>
-        </div>*@
+        </div>
 
     </div>
 </div>

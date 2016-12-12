@@ -1,5 +1,6 @@
 ﻿using FriendBook.Data;
 using FriendBook.Models;
+using FriendBook.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -42,8 +43,7 @@ namespace FriendBook.Controllers
             return FoundImages;
         }
 
-        [HttpPost]
-        public IActionResult AddImageToAlbum([FromRoute] int id, IFormFile file)
+        public IActionResult AddImageToAlbum(UserProfileViewModel model)
         {
             return RedirectToAction("Index", "Home");
         }
