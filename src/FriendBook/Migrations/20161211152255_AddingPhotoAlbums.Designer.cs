@@ -8,13 +8,31 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161211024335_UpdatedUserCoverPhoto")]
-    partial class UpdatedUserCoverPhoto
+    [Migration("20161211152255_AddingPhotoAlbums")]
+    partial class AddingPhotoAlbums
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
+
+            modelBuilder.Entity("FriendBook.Models.Album", b =>
+                {
+                    b.Property<int>("AlbumId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AlbumDescription");
+
+                    b.Property<string>("AlbumName");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("AlbumId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Album");
+                });
 
             modelBuilder.Entity("FriendBook.Models.Comment", b =>
                 {
@@ -38,6 +56,29 @@ namespace FriendBook.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comment");
+                });
+
+            modelBuilder.Entity("FriendBook.Models.Image", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AlbumId");
+
+                    b.Property<string>("ImageDescription");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired();
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("AlbumId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("FriendBook.Models.Post", b =>
@@ -146,6 +187,14 @@ namespace FriendBook.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("FriendBook.Models.Album", b =>
+                {
+                    b.HasOne("FriendBook.Models.User", "AlbumUser")
+                        .WithMany("UserAlbums")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("FriendBook.Models.Comment", b =>
                 {
                     b.HasOne("FriendBook.Models.Post", "Post")
@@ -155,6 +204,19 @@ namespace FriendBook.Migrations
 
                     b.HasOne("FriendBook.Models.User", "User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FriendBook.Models.Image", b =>
+                {
+                    b.HasOne("FriendBook.Models.Album", "album")
+                        .WithMany("AlbumImages")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.User", "ImageUser")
+                        .WithMany("UserImages")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -87,7 +87,6 @@ namespace FriendBook.Controllers
             }
 
             posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
-
             foreach (Post p in posts)
             {
                 if (p.Comments != null)
@@ -99,6 +98,11 @@ namespace FriendBook.Controllers
                 }
             }
 
+            //mind blowing magic going on here
+            List<Album> albums = context.Album.Where(a => a.UserId == id).ToList();
+            List<Image> images = context.Image.Where(i => i.UserId == id).ToList();
+
+            model.UserAlbums = albums;
             model.Friends.OrderBy(f => f.FirstName);
             model.CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
             model.CurrentUserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
@@ -160,6 +164,7 @@ namespace FriendBook.Controllers
             style.NavColor = UserStyle.NavColor;
             style.WallBackgroundColor = UserStyle.WallBackgroundColor;
             style.PostBackgroundColor = UserStyle.PostBackgroundColor;
+            style.PostHeaderColor = UserStyle.PostHeaderColor;
 
             context.SaveChanges();
             return RedirectToAction("Profile", "Profile", new { id });
@@ -170,9 +175,31 @@ namespace FriendBook.Controllers
             var uploads = Path.Combine(_environment.WebRootPath, "images");
             User u = ActiveUser.Instance.User;
             User CurrentDbUser = context.User.Where(us => us.UserId == u.UserId).SingleOrDefault();
+            Album UserUploadAlbum = context.Album.Where(a => a.UserId == u.UserId && a.AlbumName == "Uploads").SingleOrDefault();
 
             if (file != null && file.ContentType.Contains("image"))
             {
+                if(UserUploadAlbum == null)
+                {
+                    UserUploadAlbum = new Album
+                    {
+                        UserId = u.UserId,
+                        AlbumName = "Uploads",
+                        AlbumDescription = "Album used for all uploads!"
+                    };
+                    context.Album.Add(UserUploadAlbum);
+                    context.SaveChanges();
+                }
+
+                Album UploadsAlbum = context.Album.Where(a => a.AlbumName == "Uploads").SingleOrDefault();
+                Image UploadedImage = new Image
+                {
+                    ImagePath = $"/images/{file.FileName}",
+                    UserId = u.UserId,
+                    AlbumId = UploadsAlbum.AlbumId
+                };
+                context.Image.Add(UploadedImage);
+
                 using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);

@@ -1,4 +1,44 @@
-﻿function DeleteComment(CommentId) {
+﻿function GetAParticularAlbumImages(id) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: `/Album/GetAlbumImages/${id}`
+        }).done(function (images) {
+            resolve(images)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetAParticularAlbum(id) {
+    return new Promise(function(resolve, reject){
+        $.ajax({
+            url: `/Album/GetSpecificAlbum/${id}`
+        }).done(function (albums) {
+            resolve(albums)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function CreateAlbum(Album) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Album/CreateNewAlbum",
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(Album)
+        }).done(function (data) {
+            resolve(data)
+            location.reload()
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function DeleteComment(CommentId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: `/Post/DeleteComment/${CommentId}`,

@@ -512,7 +512,7 @@ a{
 .navTab{
     padding: 1%;
     text-align:center;
-    width: 24%;
+    width: 19%;
     float: left;
     display: inline-block;
     cursor: pointer;
@@ -627,11 +627,11 @@ a{
 }
 
 .postImage{
-    max-width: 64%;
-    min-width: 64%;
-    width: 64%;
+    max-width: 54%;
+    min-width: 54%;
+    width: 54%;
     margin-top: 3%;
-    margin-left: 18%;
+    margin-left: 23%;
 }
 
 .postHeadDiv{
@@ -676,4 +676,92 @@ a{
 .changeBannerImg{
     min-width: 100%;
     max-width: 100%;
+}
+
+.addAlbum{
+    cursor: pointer;
+    font-size: 4em;
+    float: right;
+    margin-top: 2%;
+    margin-right: 3%
+}
+
+.albumImg{
+    min-height: 150px;
+    max-height: 150px;
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
+}
+
+.ImageArea{
+    cursor: pointer;
+    margin-left: 2%;
+    margin-bottom: 2%;
+    width: 30%;
+    display: inline-block;
+}
+
+.albumName{
+    text-align: center;
+}
+
+.createNewAlbum h3{
+    margin-left: 2%;
+}
+
+.createNewAlbum{
+    padding: 1%;
+    border-radius: 30px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.albumNameValidation, .albumDescriptionValidation{
+    color: red;
+}
+
+.AlbumImageDiv{
+    display: inline-block;
+    margin-left: 2%;
+    width: 30.5%;
+}
+
+.SelectedAlbumName{
+    margin-right: 5%;
+    display: inline-block;
+}
+
+.addimg{
+    cursor: pointer;
+    font-size: 2em;
+    margin-left: 2%;
+}
+
+/*.selectedAlbumDescription{
+
+}*/
+
+.albumDetailDiv{
+    width: 96%;
+    margin-left: 2%;
+    padding-left: 1%;
+    margin-top: 1%;
+    border-radius: 10px;
+    padding-bottom: .5%;
+    margin-bottom: 2%;
+}
+
+.AlbumImage{
+    height: 170px;
+    width: 100%;
+}
+
+.backSpan{
+    vertical-align: super;
+    cursor: pointer;
+}
+
+.AddImageToAlbum, .formArea{
+    display: inline-block;
 }

@@ -14,5 +14,7 @@ namespace FriendBook.Data
         public DbSet<Post> Post { get; set; }
         public DbSet<Style> Style { get; set; }
         public DbSet<Relationship> Relationship { get; set; }
+        public DbSet<Album> Album { get; set; }
+        public DbSet<Image> Image { get; set; }
     }
 }
