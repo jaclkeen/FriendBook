@@ -52,7 +52,6 @@
         $('.friendDiv').hide();
     })
 
-
     $('.userSearch').on("input", function(){
         getUsers()
         .then(function(users){

@@ -627,11 +627,11 @@ a{
 }
 
 .postImage{
-    max-width: 64%;
-    min-width: 64%;
-    width: 64%;
+    max-width: 54%;
+    min-width: 54%;
+    width: 54%;
     margin-top: 3%;
-    margin-left: 18%;
+    margin-left: 23%;
 }
 
 .postHeadDiv{
@@ -679,6 +679,7 @@ a{
 }
 
 .addAlbum{
+    cursor: pointer;
     font-size: 4em;
     float: right;
     margin-top: 2%;
@@ -686,10 +687,15 @@ a{
 }
 
 .albumImg{
+    min-height: 150px;
+    max-height: 150px;
+    min-width: 100%;
     width: 100%;
+    max-width: 100%;
 }
 
 .ImageArea{
+    cursor: pointer;
     margin-left: 2%;
     margin-bottom: 2%;
     width: 30%;
