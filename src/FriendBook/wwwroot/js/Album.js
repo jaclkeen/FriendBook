@@ -15,6 +15,42 @@ $(".createAlbum").on("click", function () {
     description === "" || description === "" || description.length > 40 ? descriptionValidation.html("<span>An album description is required and must be less than 40 characters</span>")
         : album.AlbumDescription = description
 
-    console.log(album)
+    CreateAlbum(album)
+    .then(function (success) {
+        
+    })
 })
-    //CreateAlbum();
+
+//$(".BackToAlbums").on("click", function () {
+//    $(".SelectedAlbumDetailsArea").toggleClass("hidden");
+//    $(".albumShowArea").show();
+//})
+
+//$(".AddIToA").on("change", function () {
+//    $(".AddImageToAlbum").submit()
+//})
+
+//$(".ImageArea").on("click", function () {
+//    let albumId = $(this).attr("id")
+//    GetAParticularAlbum(albumId)
+//    .then(function (album) {
+//        GetAParticularAlbumImages(albumId)
+//        .then(function (images) {
+//            $(".AddImageToAlbum").attr("asp-route-id", album.albumId)
+//            $(".SelectedAlbumImages").html("")
+//            $(".albumShowArea").hide()
+//            $(".SelectedAlbumDetailsArea").toggleClass("hidden");
+//            $(".SelectedAlbumName").text(album.albumName)
+//            $(".selectedAlbumDescription").text(album.albumDescription)
+//            $(".AddImageToAlbum").attr("asp-route-id", albumId)
+            
+//            images.forEach(function (image) {
+//                image.imageDescription === null ? image.imageDescription = "" : false
+//                $(".SelectedAlbumImages").append(`<div id=${image.imageId} class='AlbumImageDiv'>
+//                    <img class ='AlbumImage' src="${image.imagePath}">
+//                    <p class ='ImageDescription'>${image.imageDescription}</p>
+//                    </div>`)
+//            })
+//        })
+//    })
+//})

@@ -1,5 +1,6 @@
 ﻿using FriendBook.Data;
 using FriendBook.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,26 @@ namespace FriendBook.Controllers
 
             context.Album.Add(album);
             context.SaveChanges();
+        }
+
+        [HttpGet]
+        public Album GetSpecificAlbum([FromRoute] int id)
+        {
+            Album SelectedAlbum = context.Album.Where(a => a.AlbumId == id).SingleOrDefault();
+            return SelectedAlbum;
+        }
+
+        [HttpGet]
+        public List<Image> GetAlbumImages([FromRoute] int id)
+        {
+            List<Image> FoundImages = context.Image.Where(i => i.AlbumId == id).ToList();
+            return FoundImages;
+        }
+
+        [HttpPost]
+        public IActionResult AddImageToAlbum([FromRoute] int id, IFormFile file)
+        {
+            return RedirectToAction("Index", "Home");
         }
     }
 }

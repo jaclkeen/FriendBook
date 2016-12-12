@@ -690,6 +690,8 @@ a{
 }
 
 .ImageArea{
+    margin-left: 2%;
+    margin-bottom: 2%;
     width: 30%;
     display: inline-block;
 }
@@ -711,4 +713,49 @@ a{
 
 .albumNameValidation, .albumDescriptionValidation{
     color: red;
+}
+
+.AlbumImageDiv{
+    display: inline-block;
+    margin-left: 2%;
+    width: 30.5%;
+}
+
+.SelectedAlbumName{
+    margin-right: 5%;
+    display: inline-block;
+}
+
+.addimg{
+    cursor: pointer;
+    font-size: 2em;
+    margin-left: 2%;
+}
+
+/*.selectedAlbumDescription{
+
+}*/
+
+.albumDetailDiv{
+    width: 96%;
+    margin-left: 2%;
+    padding-left: 1%;
+    margin-top: 1%;
+    border-radius: 10px;
+    padding-bottom: .5%;
+    margin-bottom: 2%;
+}
+
+.AlbumImage{
+    height: 170px;
+    width: 100%;
+}
+
+.backSpan{
+    vertical-align: super;
+    cursor: pointer;
+}
+
+.AddImageToAlbum{
+    display: inline-block;
 }
