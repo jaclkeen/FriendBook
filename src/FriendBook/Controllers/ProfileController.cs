@@ -191,12 +191,11 @@ namespace FriendBook.Controllers
                     context.SaveChanges();
                 }
 
-                Album UploadsAlbum = context.Album.Where(a => a.AlbumName == "Uploads").SingleOrDefault();
                 Image UploadedImage = new Image
                 {
                     ImagePath = $"/images/{file.FileName}",
                     UserId = u.UserId,
-                    AlbumId = UploadsAlbum.AlbumId
+                    AlbumId = UserUploadAlbum.AlbumId
                 };
                 context.Image.Add(UploadedImage);
 
