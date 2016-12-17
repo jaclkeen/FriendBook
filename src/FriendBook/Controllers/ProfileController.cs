@@ -25,16 +25,36 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
-        public IActionResult Profile([FromRoute] int id)
+        public IActionResult Index([FromRoute] int id)
         {
             int UserId = ActiveUser.Instance.User.UserId;
 
-            User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
-            Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
 
+            ProfileIndexViewModel model = new ProfileIndexViewModel(context, id);
+
+            posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
+            foreach (Post p in posts)
+            {
+                if (p.Comments != null)
+                {
+                    foreach (Comment c in p.Comments)
+                    {
+                        c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault();
+                    }
+                }
+            }
+
+            model.Posts = posts.OrderByDescending(p => p.TimePosted).ToList();
+
+            return View(model);
+        }
+
+        public IActionResult Friends([FromRoute] int id)
+        {
+            ProfileFriendsViewModel model = new ProfileFriendsViewModel(context, id);
+
             List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == id || r.SenderUserId == id).ToList();
-            UserProfileViewModel model = new UserProfileViewModel(context);
             model.Friends = new List<User> { };
 
             foreach (Relationship r in relationships)
@@ -52,63 +72,20 @@ namespace FriendBook.Controllers
                 }
             }
 
-            if (UserId != id)
-            {
-                foreach (Relationship r in relationships)
-                {
-                    if (r.SenderUserId == UserId || r.ReciverUserId == UserId)
-                    {
-                        if (r.Status == 0)
-                        {
-                            model.AreFriends = "Pending";
-                            break;
-                        }
-                        else if (r.Status == 1)
-                        {
-                            model.AreFriends = "yes";
-                            break;
-                        }
-                        else if (r.Status == 2)
-                        {
-                            model.AreFriends = "no";
-                            break;
-                        }
-                        else
-                        {
-                            model.AreFriends = "blocked";
-                        }
-                    }
-                }
+            model.Friends.OrderBy(f => f.FirstName);
 
-                if(model.AreFriends == null)
-                {
-                    model.AreFriends = "NoRelationship";
-                }
-            }
+            return View(model);
+        }
 
-            posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
-            foreach (Post p in posts)
-            {
-                if (p.Comments != null)
-                {
-                    foreach (Comment c in p.Comments)
-                    {
-                        c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault();
-                    }
-                }
-            }
+        public IActionResult Albums([FromRoute] int id)
+        {
+            ProfileAlbumViewModel model = new ProfileAlbumViewModel(context, id);
 
             //mind blowing magic going on here
             List<Album> albums = context.Album.Where(a => a.UserId == id).ToList();
             List<Image> images = context.Image.Where(i => i.UserId == id).ToList();
 
             model.UserAlbums = albums;
-            model.Friends.OrderBy(f => f.FirstName);
-            model.CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
-            model.CurrentUserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
-            model.UserProfile = user;
-            model.Posts = posts;
-            model.UserStyle = style;
 
             return View(model);
         }
@@ -139,15 +116,15 @@ namespace FriendBook.Controllers
                 throw;
             }
 
-            return RedirectToAction("Profile", new { id });
+            return RedirectToAction("Index", "Profile", new { id });
         }
 
         public IActionResult Styling(int id)
         {
-            int UserId = ActiveUser.Instance.User.UserId;
+            User CurrentUser = ActiveUser.Instance.User;
 
-            UserStylingViewModel model = new UserStylingViewModel(context);
-            model.UserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
+            ProfileStylingViewModel model = new ProfileStylingViewModel(context, id);
+            model.UserStyle = context.Style.Where(s => s.UserId == CurrentUser.UserId).SingleOrDefault();
 
             return View(model);
         }
@@ -167,7 +144,7 @@ namespace FriendBook.Controllers
             style.PostHeaderColor = UserStyle.PostHeaderColor;
 
             context.SaveChanges();
-            return RedirectToAction("Profile", "Profile", new { id });
+            return RedirectToAction("Index", "Profile", new { id });
         }
 
         public async Task<IActionResult> UploadImg(IFormFile file)
@@ -205,7 +182,7 @@ namespace FriendBook.Controllers
                     CurrentDbUser.ProfileImg = $"/images/{file.FileName}";
                     context.SaveChanges();
                 }
-                    return RedirectToAction("Profile", "Profile", new { id = u.UserId });
+                    return RedirectToAction("Index", "Profile", new { id = u.UserId });
             }
 
             return RedirectToAction("Index", "Home");
@@ -225,7 +202,7 @@ namespace FriendBook.Controllers
                     CurrentDbUser.CoverImg = $"/images/{file.FileName}";
                     context.SaveChanges();
                 }
-                return RedirectToAction("Profile", "Profile", new { id = u.UserId });
+                return RedirectToAction("Index", "Profile", new { id = u.UserId });
             }
 
             return RedirectToAction("Index", "Home");

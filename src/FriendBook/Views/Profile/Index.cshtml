@@ -1,0 +1,17 @@
+﻿@model FriendBook.ViewModels.ProfileIndexViewModel
+
+<div class="colorContainer">
+
+    <div class="row profileHead">
+        @{Html.RenderPartial("ProfileHeadPartial");}
+    </div>
+
+    <div class="row posts" id="posts">
+        <i class="fa fa-book postIcon"></i>
+        <h3 class="postHead">Posts (@Model.Posts.Count)</h3>
+        <div class="col-md-12">
+            @{Html.RenderPartial("PostsPartial");}
+        </div>
+    </div>
+
+</div>

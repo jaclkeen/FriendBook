@@ -7,10 +7,8 @@ using FriendBook.Data;
 
 namespace FriendBook.ViewModels
 {
-    public class UserStylingViewModel : BaseViewModel
+    public class ProfileStylingViewModel : ProfileBaseViewModel
     {
-        public UserStylingViewModel(FriendBookContext ctx) : base(ctx) { }
-
-        public Style UserStyle { get; set; }
+        public ProfileStylingViewModel(FriendBookContext ctx, int UserId) : base(ctx, UserId) { }
     }
 }

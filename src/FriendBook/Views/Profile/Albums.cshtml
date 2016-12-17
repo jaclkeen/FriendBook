@@ -1,0 +1,94 @@
+﻿@model FriendBook.ViewModels.ProfileAlbumViewModel
+
+<div class="colorContainer">
+    <div class="row profileHead">
+        @{Html.RenderPartial("ProfileHeadPartial");}
+    </div>
+
+    <div class="row imagesDiv" id="images">
+        <i class="fa fa-photo friendIcon"></i>
+        <h3 class="friendHead">Albums</h3>
+
+        @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+        {
+            <i class="fa fa-plus-circle addAlbum"></i>
+        }
+
+        <div class="createNewAlbum hidden">
+            <h3>Create New Album</h3>
+
+            <form>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Album Name: </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control albumNameInput" />
+                            <span class="albumNameValidation"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Description: </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control albumDescription" />
+                            <span class="albumDescriptionValidation"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="button" value="Create Album" class="btn btn-default createAlbum" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="albumShowArea">
+            @foreach (var a in Model.UserAlbums)
+            {
+                <div class="ImageArea" id="@a.AlbumId">
+                    <h3 class="albumName">@a.AlbumName</h3>
+                    @if (a.AlbumImages != null)
+                {
+                        <img src="@a.AlbumImages[0].ImagePath" class="albumImg" />
+                    }
+                    else
+                    {
+                        <img src="~/images/egg.png" class="albumImg" />
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="SelectedAlbumDetailsArea hidden">
+            <i class="fa fa-arrow-left addimg BackToAlbums">  </i><span class="BackToAlbums backSpan">   Back</span>
+
+            <div class="albumDetailDiv">
+                <h2 class="SelectedAlbumName"></h2>
+
+                @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+            {
+                    <div class="formArea">
+                        <form asp-action="AddImageToAlbum" asp-controller="Album" class="AddImageToAlbum" enctype="multipart/form-data">
+                            <label for="AddIToA">
+                                <i class="fa fa-plus-square-o addimg"></i>
+                            </label>
+                            <input type="file" id="AddIToA" name="image" asp-for="@Model.image" class="hidden AddIToA" />
+                            <input type="text" class="hidden albumId" asp-for="@Model.AlbumId" />
+                            <input type="submit" class="hidden submitAddImg" />
+                        </form>
+                    </div>
+                }
+
+                <p class="selectedAlbumDescription"></p>
+            </div>
+
+            <div class="SelectedAlbumImages">
+
+            </div>
+        </div>
+
+    </div>
+</div>

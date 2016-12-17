@@ -1,6 +1,9 @@
-﻿@model FriendBook.ViewModels.UserStylingViewModel
+﻿@model FriendBook.ViewModels.ProfileStylingViewModel
 
 <div class="colorContainer">
+    <div class="row profileHead">
+        @{Html.RenderPartial("ProfileHeadPartial");}
+    </div>
     <i class="fa fa-hand-peace-o postIcon"></i>
     <h2 class="stylingHead">Styling</h2><br />
 
