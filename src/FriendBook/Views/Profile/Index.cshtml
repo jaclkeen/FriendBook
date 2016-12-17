@@ -13,30 +13,7 @@
         </div>
     </div>
 
-    <div class="row friendDiv">
-        <i class="fa fa-users friendIcon" aria-hidden="true"></i>
-        <h3 class="friendHead">Friends (@Model.Friends.Count)</h3>
-        <div class="col-md-12 friendArea">
-            @foreach (var f in Model.Friends)
-            {
-                <div class="actualFriend">
-                    <div class="friendImg">
-                        <img class="friendHeadImg" src="@f.ProfileImg" />
-                    </div>
-
-                    <div class="friendName">
-                        <a asp-action="Profile" asp-route-id="@f.UserId" class="aFriendName"><h3>@Html.DisplayFor(modelItem => f.FirstName) @Html.DisplayFor(modelItem => f.LastName)</h3></a>
-                    </div>
-
-                    <div class="friendFriends">
-                        <h4 class="friendFriendsNumber">(futurefriendcount)</h4>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-
-    <div class="row imagesDiv">
+    @*<div class="row imagesDiv">
         <i class="fa fa-photo friendIcon"></i>
         <h3 class="friendHead">Albums</h3>
 
@@ -121,5 +98,5 @@
             </div>
         </div>
 
-    </div>
+    </div>*@
 </div>

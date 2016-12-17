@@ -7,12 +7,12 @@
         </label>
     </form>
 
-            <form class="changeProfileImg" asp-controller="Profile" asp-action="UploadImg" enctype="multipart/form-data">
-                <label for="profileImgUpload" class="profileImgUploadLabel">
-                    <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
-                    <input type="file" name="file" id="profileImgUpload" class="profileImgUpload" />
-                </label>
-            </form>
+    <form class="changeProfileImg" asp-controller="Profile" asp-action="UploadImg" enctype="multipart/form-data">
+        <label for="profileImgUpload" class="profileImgUploadLabel">
+            <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
+            <input type="file" name="file" id="profileImgUpload" class="profileImgUpload" />
+        </label>
+    </form>
 }
 else
 {
@@ -23,16 +23,15 @@ else
         </label>
     </form>
 
-            <form class="changeProfileImg">
-                <label for="profileImgUpload" class="profileImgUploadLabel">
-                    <img class="notYourProfileHeadImg" src="@Model.UserProfile.ProfileImg" />
-                    <input id="profileImgUpload" class="profileImgUpload" />
-                </label>
-            </form>
+    <form class="changeProfileImg">
+        <label for="profileImgUpload" class="profileImgUploadLabel">
+            <img class="notYourProfileHeadImg" src="@Model.UserProfile.ProfileImg" />
+            <input id="profileImgUpload" class="profileImgUpload" />
+        </label>
+    </form>
 }
 
 <h1 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h1>
-    </div>
 
 <div class="row profileNav">
     @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
@@ -88,3 +87,4 @@ else
             <a asp-controller="Profile" asp-action="Styling" asp-route-id="@Model.CurrentUser.UserId"><span class="updateStyling profileNavItem">Styling</span></a>
         </div>
     }
+</div>

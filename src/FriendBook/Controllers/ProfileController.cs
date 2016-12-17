@@ -25,7 +25,7 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
-        public IActionResult Profile([FromRoute] int id)
+        public IActionResult Index([FromRoute] int id)
         {
             int UserId = ActiveUser.Instance.User.UserId;
 
@@ -34,7 +34,7 @@ namespace FriendBook.Controllers
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
 
             List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == id || r.SenderUserId == id).ToList();
-            UserProfileViewModel model = new UserProfileViewModel(context);
+            UserProfileViewModel model = new UserProfileViewModel(context, id);
             model.Friends = new List<User> { };
 
             foreach (Relationship r in relationships)
@@ -52,39 +52,39 @@ namespace FriendBook.Controllers
                 }
             }
 
-            if (UserId != id)
-            {
-                foreach (Relationship r in relationships)
-                {
-                    if (r.SenderUserId == UserId || r.ReciverUserId == UserId)
-                    {
-                        if (r.Status == 0)
-                        {
-                            model.AreFriends = "Pending";
-                            break;
-                        }
-                        else if (r.Status == 1)
-                        {
-                            model.AreFriends = "yes";
-                            break;
-                        }
-                        else if (r.Status == 2)
-                        {
-                            model.AreFriends = "no";
-                            break;
-                        }
-                        else
-                        {
-                            model.AreFriends = "blocked";
-                        }
-                    }
-                }
+            //if (UserId != id)
+            //{
+            //    foreach (Relationship r in relationships)
+            //    {
+            //        if (r.SenderUserId == UserId || r.ReciverUserId == UserId)
+            //        {
+            //            if (r.Status == 0)
+            //            {
+            //                model.AreFriends = "Pending";
+            //                break;
+            //            }
+            //            else if (r.Status == 1)
+            //            {
+            //                model.AreFriends = "yes";
+            //                break;
+            //            }
+            //            else if (r.Status == 2)
+            //            {
+            //                model.AreFriends = "no";
+            //                break;
+            //            }
+            //            else
+            //            {
+            //                model.AreFriends = "blocked";
+            //            }
+            //        }
+            //    }
 
-                if(model.AreFriends == null)
-                {
-                    model.AreFriends = "NoRelationship";
-                }
-            }
+            //    if(model.AreFriends == null)
+            //    {
+            //        model.AreFriends = "NoRelationship";
+            //    }
+            //}
 
             posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
             foreach (Post p in posts)
@@ -106,9 +106,7 @@ namespace FriendBook.Controllers
             model.Friends.OrderBy(f => f.FirstName);
             model.CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
             model.CurrentUserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
-            model.UserProfile = user;
             model.Posts = posts;
-            model.UserStyle = style;
 
             return View(model);
         }
@@ -144,10 +142,10 @@ namespace FriendBook.Controllers
 
         public IActionResult Styling(int id)
         {
-            int UserId = ActiveUser.Instance.User.UserId;
+            User CurrentUser = ActiveUser.Instance.User;
 
-            UserStylingViewModel model = new UserStylingViewModel(context);
-            model.UserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
+            UserStylingViewModel model = new UserStylingViewModel(context, id);
+            model.UserStyle = context.Style.Where(s => s.UserId == CurrentUser.UserId).SingleOrDefault();
 
             return View(model);
         }
@@ -167,7 +165,7 @@ namespace FriendBook.Controllers
             style.PostHeaderColor = UserStyle.PostHeaderColor;
 
             context.SaveChanges();
-            return RedirectToAction("Profile", "Profile", new { id });
+            return RedirectToAction("Index", "Profile", new { id });
         }
 
         public async Task<IActionResult> UploadImg(IFormFile file)

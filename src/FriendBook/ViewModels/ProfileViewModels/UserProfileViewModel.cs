@@ -8,15 +8,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace FriendBook.ViewModels
 {
-    public class UserProfileViewModel : BaseViewModel
+    public class UserProfileViewModel : ProfileBaseViewModel
     {
-        public UserProfileViewModel(FriendBookContext ctx) : base(ctx) { }
+        public UserProfileViewModel(FriendBookContext ctx, int id) : base(ctx, id) { }
         public UserProfileViewModel() { }
         public List<User> Friends { get; set; }
         public List<Post> Posts { get; set; }
-        public User UserProfile { get; set; }
-        public Style UserStyle { get; set; }
-        public string AreFriends { get; set; }
         public List<Album> UserAlbums { get; set; }
         public Album NewAlbum { get; set; }
         public int AlbumId { get; set; }
