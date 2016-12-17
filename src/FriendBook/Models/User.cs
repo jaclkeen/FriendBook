@@ -26,9 +26,16 @@ namespace FriendBook.Models
 
         public string ProfileImg { get; set; }
 
+        public string CoverImg { get; set; }
+
+        public List<Album> UserAlbums { get; set; }
+
+        public List<Image> UserImages { get; set; }
+
         public User()
         {
             this.ProfileImg = "/images/egg.png";
+            this.CoverImg = "/images/mountains.jpg";
         }
     }
 }

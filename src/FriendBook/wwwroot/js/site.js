@@ -2,27 +2,26 @@
 
     function addUsersSearchToDom(userList) {
         let searchInput = $('.userSearch').val();
+        let listOfSelectedUsers = []
         $(".searchResults").html("");
-        for (var user in userList)
-        {
+        for (var user in userList) {
             let firstName = userList[user].firstName,
                 lastName = userList[user].lastName,
                 fullName = `${userList[user].firstName} ${userList[user].lastName}`
 
-            if (userList[user].profileImg === null)
-            {
-                userList[user].profileImg = "/images/egg.png"
-            }
-
             if (searchInput === firstName || searchInput === lastName || searchInput === fullName
                 || searchInput === firstName.toLowerCase() || searchInput === lastName.toLowerCase()
-                || searchInput === fullName.toLowerCase())
-            {
-                $(".searchResults").append(`<div class="userInSearch" id="${userList[user].userId}">
-                    <img class ="searchProfilePic" src=${userList[user].profileImg}>
-                    <p class="searchProfileName">${fullName}</p></div>`);
+                || searchInput === fullName.toLowerCase()) {
+                
+                listOfSelectedUsers.push(userList[user])
             }
         }
+
+        listOfSelectedUsers.forEach(function (u) {
+            $(".searchResults").append(`<div class="userInSearch" id="${u.userId}">
+                <img class ="searchProfilePic" src=${u.profileImg}>
+                <p class ="searchProfileName">${u.firstName} ${u.lastName}</p></div>`);
+        })
     }
 
     function userSearchEvents() {
@@ -33,15 +32,24 @@
     }
 
     $('.friendDiv').hide();
+    $(".imagesDiv").hide();
 
     $('.showPosts').on("click", function () {
+        $(".imagesDiv").hide();
         $('.friendDiv').hide();
         $('.posts').show();
     })
 
     $('.showFriends').on("click", function () {
+        $(".imagesDiv").hide();
         $('.posts').hide();
         $('.friendDiv').show();
+    })
+
+    $('.showAlbums').on("click", function () {
+        $(".imagesDiv").show();
+        $('.posts').hide();
+        $('.friendDiv').hide();
     })
 
     $('.userSearch').on("input", function(){
@@ -78,6 +86,20 @@
                 //Materialize.Toast(frHtml);
             })
         }
+    })
+
+    $(".profileBannerUpload").on("change", function () {
+        $(".changeBannerImg").submit();
+    })
+
+    $(".profileImgUpload").on("change", function () {
+        $(".changeProfileImg").submit();
+    })
+
+    $(".addPToStatus").on("change", function () {
+        let selectedFile = $(this).val().replace(/^.*\\/, "");
+        $(".photoSelectedArea").html("")
+        $(".photoSelectedArea").append(`Selected file: ${selectedFile}`)
     })
 
     CommentEventsForDeleteAndEdit()

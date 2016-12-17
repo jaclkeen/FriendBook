@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FriendBook.Migrations
 {
-    public partial class UpdatedMigrations : Migration
+    public partial class AddingPhotoAlbums : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,6 +14,7 @@ namespace FriendBook.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
+                    CoverImg = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
@@ -23,6 +24,27 @@ namespace FriendBook.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Album",
+                columns: table => new
+                {
+                    AlbumId = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    AlbumDescription = table.Column<string>(nullable: true),
+                    AlbumName = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Album", x => x.AlbumId);
+                    table.ForeignKey(
+                        name: "FK_Album_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,6 +112,7 @@ namespace FriendBook.Migrations
                     FontSize = table.Column<int>(nullable: false),
                     NavColor = table.Column<string>(nullable: true),
                     PostBackgroundColor = table.Column<string>(nullable: true),
+                    PostHeaderColor = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
                     WallBackgroundColor = table.Column<string>(nullable: true)
                 },
@@ -98,6 +121,34 @@ namespace FriendBook.Migrations
                     table.PrimaryKey("PK_Style", x => x.StyleId);
                     table.ForeignKey(
                         name: "FK_Style_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Image",
+                columns: table => new
+                {
+                    ImageId = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    AlbumId = table.Column<int>(nullable: false),
+                    ImageDescription = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Image", x => x.ImageId);
+                    table.ForeignKey(
+                        name: "FK_Image_Album_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Album",
+                        principalColumn: "AlbumId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Image_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
@@ -133,6 +184,11 @@ namespace FriendBook.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Album_UserId",
+                table: "Album",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comment_PostId",
                 table: "Comment",
                 column: "PostId");
@@ -140,6 +196,16 @@ namespace FriendBook.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_UserId",
                 table: "Comment",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Image_AlbumId",
+                table: "Image",
+                column: "AlbumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Image_UserId",
+                table: "Image",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -169,6 +235,9 @@ namespace FriendBook.Migrations
                 name: "Comment");
 
             migrationBuilder.DropTable(
+                name: "Image");
+
+            migrationBuilder.DropTable(
                 name: "Relationship");
 
             migrationBuilder.DropTable(
@@ -176,6 +245,9 @@ namespace FriendBook.Migrations
 
             migrationBuilder.DropTable(
                 name: "Post");
+
+            migrationBuilder.DropTable(
+                name: "Album");
 
             migrationBuilder.DropTable(
                 name: "User");

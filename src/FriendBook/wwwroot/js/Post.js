@@ -71,5 +71,7 @@ $(".post").on("click", function (e) {
 })
 
 $(".clearStatus").on("click", function () {
-    $(".newStatus").val("");
+    $(".photoSelectedArea").html("")
+    $(".addPToStatus").val("")
+    $(".newStatus").val("")
 })
