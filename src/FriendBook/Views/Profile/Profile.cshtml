@@ -197,8 +197,12 @@
     <div class="row imagesDiv">
         <i class="fa fa-photo friendIcon"></i>
         <h3 class="friendHead">Albums</h3>
-        <i class="fa fa-plus-circle addAlbum"></i>   
-        
+
+        @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+        {
+            <i class="fa fa-plus-circle addAlbum"></i>   
+        }
+
         <div class="createNewAlbum hidden">
             <h3>Create New Album</h3>
 
@@ -253,6 +257,8 @@
             <div class="albumDetailDiv">
                 <h2 class="SelectedAlbumName"></h2>
                 
+            @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+            {
                 <div class="formArea">
                     <form asp-action="AddImageToAlbum" asp-controller="Album" class="AddImageToAlbum" enctype="multipart/form-data">
                         <label for="AddIToA">
@@ -263,6 +269,7 @@
                         <input type="submit" class="hidden submitAddImg"/>
                     </form>
                 </div>
+            }
 
                 <p class="selectedAlbumDescription"></p>
             </div>
