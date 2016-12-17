@@ -20,7 +20,9 @@ namespace FriendBook.ViewModels
         public ProfileBaseViewModel(FriendBookContext ctx, int UserProfileId) : base(ctx)
         {
             //WHEN A NEW INSTANCE OF PROFILEBASEVIEWMODEL IS CREATED, IT GETS THE CURRENT USER PROFILES ID AND SETS THE
-            //USER PROFILE EQUAL TO THAT USER, GETS THE STYLE OF THAT PARTICULAR USER 
+            //USER PROFILE EQUAL TO THAT USER, GETS THE STYLE OF THAT PARTICULAR USER, QUERIES THROUGH ALL RELATIONSHIPS
+            //TO FIND THE TYPE OF RELATIONSHIP SHARED BETWEEN THE CURRENT LOGGED IN USER, AND THE PROFILE BEING VIEWED
+            //
 
             User user = ctx.User.Where(u => u.UserId == UserProfileId).SingleOrDefault();
             UserProfile = user;

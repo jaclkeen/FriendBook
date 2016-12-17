@@ -31,9 +31,8 @@ else
     </form>
 }
 
-<h1 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h1>
-
-<div class="row profileNav">
+<h1 id="!" class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h1>
+<div class="row profileNav" id="nav">
     @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
     {
         <div class="navTab">
@@ -65,15 +64,19 @@ else
         </div>
     }
 
-    <div class="navTab showPosts">
-        <i class="fa fa-book profileNavIcon"></i>
-        <span class="profileNavItem">Posts</span>
-    </div>
+    <a href="/Profile/Index/@Model.UserProfile.UserId/#!">  
+        <div class="navTab showPosts">
+            <i class="fa fa-book profileNavIcon"></i>
+            <span class="profileNavItem">Posts</span>
+        </div>
+    </a>
 
-    <div class="navTab showAlbums">
-        <i class="fa fa-photo profileNavIcon"></i>
-        <span class="profileNavItem">Photos</span>
-    </div>
+    <a href="/Profile/Albums/@Model.UserProfile.UserId/#!">
+        <div class="navTab showAlbums">
+            <i class="fa fa-photo profileNavIcon"></i>
+            <span class="profileNavItem">Photos</span>
+        </div>
+    </a>
 
     <div class="navTab showFriends">
         <i class="fa fa-users profileNavIcon"></i>

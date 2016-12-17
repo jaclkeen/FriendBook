@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FriendBook.Models;
 using FriendBook.Data;
+using FriendBook.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace FriendBook.ViewModels
 {
-    public class UserProfileViewModel : ProfileBaseViewModel
+    public class ProfileAlbumViewModel : ProfileBaseViewModel
     {
-        public UserProfileViewModel(FriendBookContext ctx, int id) : base(ctx, id) { }
-        public UserProfileViewModel() { }
-        public List<User> Friends { get; set; }
-        public List<Post> Posts { get; set; }
+        public ProfileAlbumViewModel(FriendBookContext ctx, int UserProfileId) : base(ctx, UserProfileId) { }
+
         public List<Album> UserAlbums { get; set; }
         public Album NewAlbum { get; set; }
         public int AlbumId { get; set; }

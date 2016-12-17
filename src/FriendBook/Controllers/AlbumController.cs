@@ -47,7 +47,7 @@ namespace FriendBook.Controllers
             return FoundImages;
         }
 
-        public async Task<IActionResult> AddImageToAlbum(UserProfileViewModel model)
+        public async Task<IActionResult> AddImageToAlbum(ProfileIndexViewModel model)
         {
             IFormFile file = model.image;
             var uploads = Path.Combine(_environment.WebRootPath, "images");
@@ -80,7 +80,7 @@ namespace FriendBook.Controllers
                 context.Post.Add(NewImagePost);
 
                 await context.SaveChangesAsync();
-                return RedirectToAction("Profile", "Profile", new { id = u.UserId });
+                return RedirectToAction("Albums", "Profile", new { id = u.UserId });
             }
 
             return RedirectToAction("Index", "Home");

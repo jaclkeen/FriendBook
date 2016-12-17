@@ -1,9 +1,11 @@
-﻿<div class="colorContainer">
+﻿@model FriendBook.ViewModels.ProfileAlbumViewModel
+
+<div class="colorContainer">
     <div class="row profileHead">
         @{Html.RenderPartial("ProfileHeadPartial");}
     </div>
 
-    <div class="row imagesDiv">
+    <div class="row imagesDiv" id="images">
         <i class="fa fa-photo friendIcon"></i>
         <h3 class="friendHead">Albums</h3>
 
