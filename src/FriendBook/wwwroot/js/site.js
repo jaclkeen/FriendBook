@@ -31,26 +31,9 @@
         })
     }
 
-    //$('.friendDiv').hide();
-    //$(".imagesDiv").hide();
-
-    //$('.showPosts').on("click", function () {
-    //    $(".imagesDiv").hide();
-    //    $('.friendDiv').hide();
-    //    $('.posts').show();
-    //})
-
-    //$('.showFriends').on("click", function () {
-    //    $(".imagesDiv").hide();
-    //    $('.posts').hide();
-    //    $('.friendDiv').show();
-    //})
-
-    //$('.showAlbums').on("click", function () {
-    //    $(".imagesDiv").show();
-    //    $('.posts').hide();
-    //    $('.friendDiv').hide();
-    //})
+    $(".frButton").on("click", function () {
+        location.reload()
+    })
 
     $('.userSearch').on("input", function(){
         getUsers()

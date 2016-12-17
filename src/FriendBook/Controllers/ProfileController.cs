@@ -116,7 +116,7 @@ namespace FriendBook.Controllers
                 throw;
             }
 
-            return RedirectToAction("Profile", new { id });
+            return RedirectToAction("Index", "Profile", new { id });
         }
 
         public IActionResult Styling(int id)
