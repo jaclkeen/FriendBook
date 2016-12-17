@@ -29,12 +29,32 @@ namespace FriendBook.Controllers
         {
             int UserId = ActiveUser.Instance.User.UserId;
 
-            User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
-            Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
 
-            List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == id || r.SenderUserId == id).ToList();
             ProfileIndexViewModel model = new ProfileIndexViewModel(context, id);
+
+            posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
+            foreach (Post p in posts)
+            {
+                if (p.Comments != null)
+                {
+                    foreach (Comment c in p.Comments)
+                    {
+                        c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault();
+                    }
+                }
+            }
+
+            model.Posts = posts.OrderByDescending(p => p.TimePosted).ToList();
+
+            return View(model);
+        }
+
+        public IActionResult Friends([FromRoute] int id)
+        {
+            ProfileFriendsViewModel model = new ProfileFriendsViewModel(context, id);
+
+            List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == id || r.SenderUserId == id).ToList();
             model.Friends = new List<User> { };
 
             foreach (Relationship r in relationships)
@@ -52,22 +72,7 @@ namespace FriendBook.Controllers
                 }
             }
 
-            posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
-            foreach (Post p in posts)
-            {
-                if (p.Comments != null)
-                {
-                    foreach (Comment c in p.Comments)
-                    {
-                        c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault();
-                    }
-                }
-            }
-
             model.Friends.OrderBy(f => f.FirstName);
-            model.CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
-            model.CurrentUserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
-            model.Posts = posts;
 
             return View(model);
         }
@@ -177,7 +182,7 @@ namespace FriendBook.Controllers
                     CurrentDbUser.ProfileImg = $"/images/{file.FileName}";
                     context.SaveChanges();
                 }
-                    return RedirectToAction("Profile", "Profile", new { id = u.UserId });
+                    return RedirectToAction("Index", "Profile", new { id = u.UserId });
             }
 
             return RedirectToAction("Index", "Home");
@@ -197,7 +202,7 @@ namespace FriendBook.Controllers
                     CurrentDbUser.CoverImg = $"/images/{file.FileName}";
                     context.SaveChanges();
                 }
-                return RedirectToAction("Profile", "Profile", new { id = u.UserId });
+                return RedirectToAction("Index", "Profile", new { id = u.UserId });
             }
 
             return RedirectToAction("Index", "Home");

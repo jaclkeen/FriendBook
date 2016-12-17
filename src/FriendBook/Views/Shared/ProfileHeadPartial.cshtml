@@ -78,16 +78,20 @@ else
         </div>
     </a>
 
-    <div class="navTab showFriends">
-        <i class="fa fa-users profileNavIcon"></i>
-        <span class="profileNavItem">Friends</span>
-    </div>
+    <a href="/Profile/Friends/@Model.UserProfile.UserId/#!">
+        <div class="navTab showFriends">
+            <i class="fa fa-users profileNavIcon"></i>
+            <span class="profileNavItem">Friends</span>
+        </div>
+    </a>
 
     @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
     {
-        <div class="navTab">
-            <a asp-controller="Profile" asp-action="Styling" asp-route-id="@Model.CurrentUser.UserId"><i class="fa fa-hand-peace-o profileNavIcon"></i></a>
-            <a asp-controller="Profile" asp-action="Styling" asp-route-id="@Model.CurrentUser.UserId"><span class="updateStyling profileNavItem">Styling</span></a>
-        </div>
+        <a href="/Profile/Styling/@Model.UserProfile.UserId/#!">
+            <div class="navTab">
+                <i class="fa fa-hand-peace-o profileNavIcon"></i>
+                <span class="updateStyling profileNavItem">Styling</span>
+            </div>
+        </a>
     }
 </div>

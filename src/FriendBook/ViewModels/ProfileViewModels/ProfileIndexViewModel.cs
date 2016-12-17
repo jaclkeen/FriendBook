@@ -12,7 +12,6 @@ namespace FriendBook.ViewModels
     {
         public ProfileIndexViewModel(FriendBookContext ctx, int id) : base(ctx, id) { }
         public ProfileIndexViewModel() { }
-        public List<User> Friends { get; set; }
         public List<Post> Posts { get; set; }
         public int AlbumId { get; set; }
         public IFormFile image { get; set; }

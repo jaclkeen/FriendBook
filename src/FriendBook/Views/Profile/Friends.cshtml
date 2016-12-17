@@ -1,4 +1,6 @@
-﻿<div class="colorContainer">
+﻿@model FriendBook.ViewModels.ProfileFriendsViewModel
+
+<div class="colorContainer">
     <div class="row profileHead">
         @{Html.RenderPartial("ProfileHeadPartial");}
     </div>
@@ -15,7 +17,7 @@
                     </div>
 
                     <div class="friendName">
-                        <a asp-action="Profile" asp-route-id="@f.UserId" class="aFriendName"><h3>@Html.DisplayFor(modelItem => f.FirstName) @Html.DisplayFor(modelItem => f.LastName)</h3></a>
+                        <a asp-action="Index" asp-controller="Profile" asp-route-id="@f.UserId" class="aFriendName"><h3>@Html.DisplayFor(modelItem => f.FirstName) @Html.DisplayFor(modelItem => f.LastName)</h3></a>
                     </div>
 
                     <div class="friendFriends">
