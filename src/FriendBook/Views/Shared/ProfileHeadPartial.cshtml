@@ -42,12 +42,14 @@ else
     }
     @if (Model.AreFriends == "NoRelationship" || Model.AreFriends == "no")
     {
-        <a asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId">
-            <div class="navTab">
-                <i asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId" class="fa fa-user-plus profileNavIcon"></i>
-                <a class="addFriend profileNavItem" asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId"><span class="profileAddFriend">Add Friend!</span></a>
-            </div>
-        </a>
+        if (Model.UserProfile.UserId != Model.CurrentUser.UserId) {
+            <a asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId">
+                <div class="navTab">
+                    <i asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId" class="fa fa-user-plus profileNavIcon"></i>
+                    <span class="profileAddFriend profileNavItem">Add Friend!</span>
+                </div>
+            </a>
+        }
     }
     @if (Model.AreFriends == "Pending" && Model.UserProfile.UserId != Model.CurrentUser.UserId)
     {
