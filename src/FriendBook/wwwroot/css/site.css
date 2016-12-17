@@ -1,7 +1,40 @@
 ﻿.navbar{
-    /*position: absolute;*/
     position: fixed;
     z-index: -1;
+}
+
+.messagingContainer{
+    padding: 1%;
+    z-index: -1;
+    float: right;
+    position: fixed;
+    margin-top: 3%;
+    overflow-y: scroll;
+    margin-left: 64%;
+    width: 25%;
+    height: 535px;
+    background: white;
+}
+
+.MessageAreaName{
+    font-size: 1.2em;
+    margin-left: 3%;
+}
+
+.MessageAreaUser{
+    cursor: pointer;
+    margin-bottom: 2%;
+}
+
+.messageProfileImg{
+    background: white;
+    vertical-align: middle;
+    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
+    height: 90px;
+    min-height: 90px;
+    max-height: 90px;
 }
 
 .nav img{
