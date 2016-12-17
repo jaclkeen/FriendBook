@@ -1,0 +1,69 @@
+﻿@foreach (var s in Model.Posts)
+            {
+    <div class="post" id="@s.PostId">
+
+        <div class="postHeadDiv">
+            <div class="postProfileImg">
+                <img src="@s.User.ProfileImg" />
+            </div>
+
+            <div class="postUser">
+                <a asp-action="Profile" asp-controller="Profile" asp-route-id="@s.UserId"><span>@s.User.FirstName @s.User.LastName</span></a>
+            </div>
+
+            <div class="datePosted">
+                <span>@s.TimePosted</span>
+            </div>
+        </div>
+
+        @if (s.ImgUrl != null)
+        {
+            <div class="postImageDiv">
+                <img src="@s.ImgUrl" class="postImage" />
+            </div>
+        }
+
+        <div class="postTextDiv">
+            <span class="postText">@s.Text</span>
+        </div><hr />
+
+        @if (s.UserId == Model.CurrentUser.UserId)
+        {
+            <div class="deleteEditDiv">
+                <a class="deletePost" asp-action="DeletePost" asp-controller="Post" asp-route-id="@s.PostId"><span>Delete</span></a>
+                <a><span id="@s.PostId" class="EditPost">Edit</span></a>
+            </div>
+        }
+
+        <div class="LikeDislikeCommentDiv">
+            <a asp-action="AddProfileLike" asp-controller="Post" asp-route-id="@s.PostId" class="addSpaceRight like"><i class="fa fa-thumbs-up statusIcon"></i>(@s.Likes)</a>
+            <a asp-action="AddProfileDislike" asp-controller="Post" asp-route-id="@s.PostId" class="addSpaceRight dislike"><i class="fa fa-thumbs-down statusIcon"></i>(@s.Dislikes)</a>
+            <span class="comments addSpaceRight"><i class="fa fa-comments statusIcon CSI"></i>(@s.Comments.Count)</span>
+        </div><hr />
+
+        <div class="CommentArea hidden">
+            @if (s.Comments != null)
+            {
+                @foreach (var c in s.Comments)
+                {
+                    <div class="comment" id="@c.CommentId">
+                        <img src="@c.User.ProfileImg" />
+                        <a asp-action="Profile" asp-controller="Profile" asp-route-id="@c.UserId"><span>@c.User.FirstName @c.User.LastName</span></a>
+                        <p>@c.Text</p>
+                        @if (c.UserId == Model.CurrentUser.UserId)
+                        {
+                            <div class="EditOrDeleteComment">
+                                <a class="DeleteComment">Delete</a>
+                                <a class="EditComment">Edit</a>
+                            </div>
+                        }
+                    </div><hr />
+                }
+            }
+        </div>
+
+        <textarea class="AddNewComment" placeholder="Add Comment..."></textarea>
+        <input type="button" class="btn-success submitComment" value="Comment" />
+
+    </div>
+}

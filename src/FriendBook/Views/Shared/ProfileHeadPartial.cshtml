@@ -1,0 +1,90 @@
+﻿@if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+{
+    <form class="changeBannerImg" asp-controller="Profile" asp-action="UploadCoverImg" enctype="multipart/form-data">
+        <label for="profileBannerUpload" class="profileBannerUploadLabel">
+            <img class="profileBannerImg" src="@Model.UserProfile.CoverImg" />
+            <input type="file" name="file" id="profileBannerUpload" class="profileBannerUpload" />
+        </label>
+    </form>
+
+            <form class="changeProfileImg" asp-controller="Profile" asp-action="UploadImg" enctype="multipart/form-data">
+                <label for="profileImgUpload" class="profileImgUploadLabel">
+                    <img class="profileHeadImg" src="@Model.UserProfile.ProfileImg" />
+                    <input type="file" name="file" id="profileImgUpload" class="profileImgUpload" />
+                </label>
+            </form>
+}
+else
+{
+    <form class="changeBannerImg">
+        <label for="profileBannerUpload" class="profileBannerUploadLabel">
+            <img class="notYourProfileBannerImg" src="@Model.UserProfile.CoverImg" />
+            <input id="profileBannerUpload" class="profileBannerUpload" />
+        </label>
+    </form>
+
+            <form class="changeProfileImg">
+                <label for="profileImgUpload" class="profileImgUploadLabel">
+                    <img class="notYourProfileHeadImg" src="@Model.UserProfile.ProfileImg" />
+                    <input id="profileImgUpload" class="profileImgUpload" />
+                </label>
+            </form>
+}
+
+<h1 class="profileHeadName">@Model.UserProfile.FirstName @Model.UserProfile.LastName</h1>
+    </div>
+
+<div class="row profileNav">
+    @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+    {
+        <div class="navTab">
+            <i class="fa fa-user-circle profileNavIcon"></i>
+            <span class="pending profileNavItem">Me</span>
+        </div>
+    }
+    @if (Model.AreFriends == "NoRelationship" || Model.AreFriends == "no")
+    {
+        <a asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId">
+            <div class="navTab">
+                <i asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId" class="fa fa-user-plus profileNavIcon"></i>
+                <a class="addFriend profileNavItem" asp-action="AddFriend" asp-controller="Profile" asp-route-id="@Model.UserProfile.UserId"><span class="profileAddFriend">Add Friend!</span></a>
+            </div>
+        </a>
+    }
+    @if (Model.AreFriends == "Pending" && Model.UserProfile.UserId != Model.CurrentUser.UserId)
+    {
+        <div class="navTab">
+            <i class="fa fa-user-o profileNavIcon"></i>
+            <span class="pending profileNavItem">Pending</span>
+        </div>
+    }
+    @if (Model.AreFriends == "yes")
+    {
+        <div class="navTab">
+            <i class="fa fa-check-square profileNavIcon"></i>
+            <span class="friends profileNavItem">Friends</span>
+        </div>
+    }
+
+    <div class="navTab showPosts">
+        <i class="fa fa-book profileNavIcon"></i>
+        <span class="profileNavItem">Posts</span>
+    </div>
+
+    <div class="navTab showAlbums">
+        <i class="fa fa-photo profileNavIcon"></i>
+        <span class="profileNavItem">Photos</span>
+    </div>
+
+    <div class="navTab showFriends">
+        <i class="fa fa-users profileNavIcon"></i>
+        <span class="profileNavItem">Friends</span>
+    </div>
+
+    @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+    {
+        <div class="navTab">
+            <a asp-controller="Profile" asp-action="Styling" asp-route-id="@Model.CurrentUser.UserId"><i class="fa fa-hand-peace-o profileNavIcon"></i></a>
+            <a asp-controller="Profile" asp-action="Styling" asp-route-id="@Model.CurrentUser.UserId"><span class="updateStyling profileNavItem">Styling</span></a>
+        </div>
+    }
