@@ -36,35 +36,30 @@ namespace FriendBook.Controllers
             HomePageViewModel model = new HomePageViewModel(context);
             model.Posts = new List<Post> { };
 
-            //List<Post> UserPost = new List<Post>();
-            List<Post> UserPost = (from r in context.Relationship
-                                   join u in context.User on r.ReciverUserId equals u.UserId
-                                   join p in context.Post on u.UserId equals p.UserId
-                                   where r.Status == 1
-                                   select p).ToList();
+            List<Post> UserPost = new List<Post>();
 
-            //foreach (Relationship r in relationships)
-            //{
-            //    if(r.ReciverUserId == UserId && r.Status == 1)
-            //    {
-            //        UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).ToList();
-            //        if (UserPost != null)
-            //        {
-            //            UserPost.ForEach(up => up.User = context.User.Where(user => user.UserId == up.UserId).SingleOrDefault());
-            //            UserPost.ForEach(up => model.Posts.Add(up));
-            //        }
-            //    }
-            //    else if (r.SenderUserId == UserId && r.Status == 1)
-            //    {
-            //        UserPost = context.Post.Where(p => p.UserId == r.ReciverUserId).ToList();
+            foreach (Relationship r in relationships)
+            {
+                if (r.ReciverUserId == UserId && r.Status == 1)
+                {
+                    UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).ToList();
+                    if (UserPost != null)
+                    {
+                        UserPost.ForEach(up => up.User = context.User.Where(user => user.UserId == up.UserId).SingleOrDefault());
+                        UserPost.ForEach(up => model.Posts.Add(up));
+                    }
+                }
+                else if (r.SenderUserId == UserId && r.Status == 1)
+                {
+                    UserPost = context.Post.Where(p => p.UserId == r.ReciverUserId).ToList();
 
-            //        if (UserPost != null)
-            //        {
-            //            UserPost.ForEach(up => up.User = context.User.Where(user => user.UserId == up.UserId).SingleOrDefault());
-            //            UserPost.ForEach(up => model.Posts.Add(up));
-            //        }
-            //    }
-            //}
+                    if (UserPost != null)
+                    {
+                        UserPost.ForEach(up => up.User = context.User.Where(user => user.UserId == up.UserId).SingleOrDefault());
+                        UserPost.ForEach(up => model.Posts.Add(up));
+                    }
+                }
+            }
 
             List<Post> UserPosts = context.Post.Where(p => p.UserId == UserId).ToList();
             if (UserPosts != null) { UserPosts.ForEach(up => model.Posts.Add(up)); }
@@ -80,7 +75,7 @@ namespace FriendBook.Controllers
             }
 
             model.Posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
-            model.Posts.OrderBy(p => p.TimePosted);
+            model.Posts = model.Posts.OrderByDescending(p => p.TimePosted).ToList();
             model.UserStyle = styling;
             model.CurrentUserStyle = styling;
             model.CurrentUser = currentUser;
