@@ -149,12 +149,21 @@
             background-color: @Model.UserStyle.PostHeaderColor
         }
         .messagingContainer{
-            border-left: 2px solid @Model.UserStyle.DetailColor;
-            background-color: @Model.UserStyle.BackgroundColor;
+            border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background-color: @Model.CurrentUserStyle.BackgroundColor;
         }
         .MessageAreaUser{
-            background: @Model.UserStyle.PostHeaderColor;
-            border: 2px solid @Model.UserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.PostHeaderColor;
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+        }
+        .newMessage{
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+        }
+        .convoName, .minifyOrExpand{
+            background-color: @Model.CurrentUserStyle.BackgroundColor;
+        }
+        .conversation{
+            background-color: @Model.CurrentUserStyle.NavColor!important;
         }
     </style>
 </head>
