@@ -157,13 +157,19 @@
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .newMessage{
-            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-bottom: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-top: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-right: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .convoName, .minifyOrExpand{
             background-color: @Model.CurrentUserStyle.BackgroundColor;
         }
         .conversation{
             background-color: @Model.CurrentUserStyle.NavColor!important;
+        }
+        .submitNewMessage{
+            color: @Model.CurrentUserStyle.BackgroundColor;
+            background-color: black;
         }
     </style>
 </head>

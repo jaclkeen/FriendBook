@@ -13,26 +13,28 @@
 .conversation{
     height: 270px;
     width: 24%;
-    padding: 0 1% 1% 1%;
     position: relative;
     border: 2px solid black;
     background: white;
-    margin-right: 0%;
+    margin-right: .4%;
     display: inline-block;
 }
 
+.convoMessage{
+    padding: .5%;
+}
+
 .convoMessageContainer{
-    height: 140px;
-    max-height: 140px;
+    height: 155px;
+    max-height: 155px;
     overflow-y: overlay;
     clear: both;
-    padding-top: 5%;
+    padding-top: 1%;
 }
 
 .convoName{
-    margin-left: -5%;
     float: left;
-    width: 85%;
+    width: 75%;
     height: 40px;
     padding: 1%;
     border-bottom: 2px solid black;
@@ -53,7 +55,6 @@
 }
 
 .minifyOrExpand{
-    margin-right: -5%;
     float: right;
     height: 40px;
     border-bottom: 2px solid black;
@@ -87,17 +88,27 @@
     margin-bottom: 2%;
 }
 
+.submitNewMessage{
+    float: right;
+    margin-top: 1%;
+    width: 25%;
+    padding-left: 11%;
+    padding-top: 8%;
+    font-size: 2.5em;
+    height: 69px;
+    cursor: pointer;
+}
+
 .newMessage{
     position: absolute;
-    bottom: 10px;
-    width: 92%;
+    bottom: -1px;
+    width: 85%;
     height: 70px;
     min-height: 70px;
     max-height: 70px;
-    min-width: 92%;
-    max-width: 92%;
-    border-radius: 10px;
-    padding-left: 2%;
+    min-width: 85%;
+    max-width: 85%;
+    padding-left: 1%;
 }
 
 .convoName h5{

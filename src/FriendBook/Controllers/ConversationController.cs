@@ -28,14 +28,20 @@ namespace FriendBook.Controllers
 
             if (ConvoExists1 != null)
             {
+                ConvoExists1.ConversationStarter = ActiveUser.Instance.User;
+                ConvoExists1.ConversationReciever = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
+
                 return ConvoExists1;
             }
 
             if(ConvoExists2 != null)
             {
+                ConvoExists2.ConversationStarter = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
+                ConvoExists2.ConversationReciever = ActiveUser.Instance.User;
+
                 return ConvoExists2;
             }
-            
+
             Conversation c = new Conversation
             {
                 ConversationRoomName = CurrentUserId.ToString() + RecievingUserId.ToString(),
@@ -47,8 +53,15 @@ namespace FriendBook.Controllers
             context.SaveChanges();
 
             Conversation NewConvo = context.Conversation.Where(co => co.ConversationStarterId == CurrentUserId && co.ConversationRecieverId == RecievingUserId).SingleOrDefault();
+            NewConvo.ConversationStarter = ActiveUser.Instance.User;
+            NewConvo.ConversationReciever = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
 
             return NewConvo;
+        }
+
+        public List<Message> GetAllConversationMessages([FromBody] string ConversationName)
+        {
+            return context.Message.Where(m => m.ConversationRoomName == ConversationName).ToList();
         }
 
         public IActionResult PostToConversation([FromBody] NewMessageViewModel model)

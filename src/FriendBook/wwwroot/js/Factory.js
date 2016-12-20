@@ -1,4 +1,34 @@
-﻿function GetAParticularAlbumImages(id) {
+﻿function GetAllConversationMessages(ConversationName) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/GetAllConversationMessages",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(ConversationName)
+        }).done(function (messages) {
+            resolve(messages)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function CreateNewConversation(ClickedUserId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/CreateConversation",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(ClickedUserId)
+        }).done(function (convo) {
+            resolve(convo)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetAParticularAlbumImages(id) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: `/Album/GetAlbumImages/${id}`
