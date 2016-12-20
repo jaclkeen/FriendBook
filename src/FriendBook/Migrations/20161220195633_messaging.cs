@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FriendBook.Migrations
 {
-    public partial class AddingPhotoAlbums : Migration
+    public partial class messaging : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,6 +42,31 @@ namespace FriendBook.Migrations
                     table.ForeignKey(
                         name: "FK_Album_User_UserId",
                         column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Conversation",
+                columns: table => new
+                {
+                    ConversationRoomName = table.Column<string>(nullable: false),
+                    ConversationRecieverId = table.Column<int>(nullable: false),
+                    ConversationStarterId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Conversation", x => x.ConversationRoomName);
+                    table.ForeignKey(
+                        name: "FK_Conversation_User_ConversationRecieverId",
+                        column: x => x.ConversationRecieverId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Conversation_User_ConversationStarterId",
+                        column: x => x.ConversationStarterId,
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -156,6 +181,34 @@ namespace FriendBook.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Message",
+                columns: table => new
+                {
+                    MessageId = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    ConversationRoomName = table.Column<string>(nullable: false),
+                    MessageSentDate = table.Column<DateTime>(nullable: false),
+                    MessageText = table.Column<string>(nullable: false),
+                    SendingUserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.MessageId);
+                    table.ForeignKey(
+                        name: "FK_Message_Conversation_ConversationRoomName",
+                        column: x => x.ConversationRoomName,
+                        principalTable: "Conversation",
+                        principalColumn: "ConversationRoomName",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Message_User_SendingUserId",
+                        column: x => x.SendingUserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comment",
                 columns: table => new
                 {
@@ -199,6 +252,16 @@ namespace FriendBook.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Conversation_ConversationRecieverId",
+                table: "Conversation",
+                column: "ConversationRecieverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Conversation_ConversationStarterId",
+                table: "Conversation",
+                column: "ConversationStarterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Image_AlbumId",
                 table: "Image",
                 column: "AlbumId");
@@ -207,6 +270,16 @@ namespace FriendBook.Migrations
                 name: "IX_Image_UserId",
                 table: "Image",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message_ConversationRoomName",
+                table: "Message",
+                column: "ConversationRoomName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message_SendingUserId",
+                table: "Message",
+                column: "SendingUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Post_UserId",
@@ -238,6 +311,9 @@ namespace FriendBook.Migrations
                 name: "Image");
 
             migrationBuilder.DropTable(
+                name: "Message");
+
+            migrationBuilder.DropTable(
                 name: "Relationship");
 
             migrationBuilder.DropTable(
@@ -248,6 +324,9 @@ namespace FriendBook.Migrations
 
             migrationBuilder.DropTable(
                 name: "Album");
+
+            migrationBuilder.DropTable(
+                name: "Conversation");
 
             migrationBuilder.DropTable(
                 name: "User");

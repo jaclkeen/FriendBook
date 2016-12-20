@@ -35,7 +35,13 @@ namespace FriendBook
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             // Add framework services.
+            services.AddSignalR(options =>
+            {
+                options.Hubs.EnableDetailedErrors = true;
+            });
+
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
@@ -67,6 +73,8 @@ namespace FriendBook
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
+            app.UseWebSockets();
+            app.UseSignalR();
 
             DbInitializer.Initialize(app.ApplicationServices);
 
@@ -76,6 +84,7 @@ namespace FriendBook
                     name: "default",
                     template: "{controller=Login}/{action=Index}/{id?}");
             });
+
         }
     }
 }

@@ -16,3 +16,7 @@ $(".removeConversation").on("click", function () {
     let conversation = $(this).parent().parent().parent()
     conversation.remove();
 })
+
+$(".MessageAreaUser").on("click", function () {
+    console.log($(this).attr("id"))
+})
