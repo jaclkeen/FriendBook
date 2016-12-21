@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,6 +57,9 @@ namespace FriendBook.Controllers
             NewConvo.ConversationStarter = ActiveUser.Instance.User;
             NewConvo.ConversationReciever = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
 
+            Broadcaster broadcaster = new Broadcaster();
+            broadcaster.Subscribe(CurrentUserId.ToString() + RecievingUserId.ToString());
+
             return NewConvo;
         }
 
@@ -64,27 +68,25 @@ namespace FriendBook.Controllers
             return context.Message.Where(m => m.ConversationRoomName == ConversationName).ToList();
         }
 
-        public IActionResult PostToConversation([FromBody] NewMessageViewModel model)
+        [HttpPost]
+        public IActionResult PostToConversation([FromBody] Message message)
         {
-            string ChatroomName = model.ConversationRoomName;
-
-            Message message = new Message()
+            Message NewMessage = new Message()
             {
-                MessageText = model.message.MessageText,
+                MessageText = message.MessageText,
                 SendingUserId = ActiveUser.Instance.User.UserId,
-                SendingUser = ActiveUser.Instance.User,
                 MessageSentDate = DateTime.Now,
-                ConversationRoomName = ChatroomName,
-                Conversation = context.Conversation.Where(c => c.ConversationRoomName == ChatroomName).SingleOrDefault()
+                ConversationRoomName = message.ConversationRoomName,
+                Conversation = context.Conversation.Where(c => c.ConversationRoomName == message.ConversationRoomName).SingleOrDefault()
             };
 
             // Save the new message
-            context.Message.Add(message);
+            context.Add(NewMessage);
             context.SaveChanges();
 
             //MessageViewModel model = new MessageViewModel(newMessage);
 
-            this.Clients.Group(ChatroomName).AddChatMessage(model);
+            this.Clients.Group(message.ConversationRoomName).AddChatMessage(message.MessageText);
             return new NoContentResult();
         }
 

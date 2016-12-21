@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using FriendBook.Models;
 using FriendBook.ViewModels;
 using FriendBook.Data;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace FriendBook.Controllers
 {

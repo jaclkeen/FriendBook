@@ -25,15 +25,15 @@ function RemoveConversation() {
 
 function SubmitNewMessage() {
     $(".submitNewMessage").on("click", function () {
+        let conversationRoomName = $(this).parent().parent(".conversation").attr("id")
         let text = $(this).siblings(".newMessage").val()
         let NewMessage = {
-            messageText: text
+            MessageText: text,
+            ConversationRoomName: conversationRoomName,
         }
-        let ConversationArea = AddSingleMessageToConversation(NewMessage)
-        let ConversationMessageArea = $(this).parent().siblings(".convoMessageContainer")
 
-        console.log(ConversationMessageArea)
-        ConversationMessageArea.append(`<p>${ConversationArea}</p>`)
+        SaveNewMessage(NewMessage)
+        AddSingleMessageToConversation(NewMessage, this)
     })
 }
 
@@ -44,10 +44,9 @@ function MessagingEvents() {
     SubmitNewMessage()
 }
 
-function AddSingleMessageToConversation(message) {
-    let newMessage = message.messageText
-
-    return newMessage;
+function AddSingleMessageToConversation(message, context) {
+    let ConversationMessageArea = $(context).parent().siblings(".convoMessageContainer")
+    ConversationMessageArea.append(`<p>${message.MessageText}</p>`)
 }
 
 function AddMessagesToConversation(messages) {
@@ -62,10 +61,8 @@ function AddMessagesToConversation(messages) {
 
 function AddConversationToDom(conversation, message) {
     let messages = AddMessagesToConversation(message)
-    
-    console.log(message)
 
-    let convo = `<div class="conversation">
+    let convo = `<div class="conversation" id="${conversation.conversationRoomName}">
             <div class="convoHead">
                 <div class="convoName">
                     <h5>${conversation.conversationReciever.firstName} ${conversation.conversationReciever.lastName}</h5>

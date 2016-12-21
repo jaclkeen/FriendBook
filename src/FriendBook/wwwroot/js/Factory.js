@@ -1,4 +1,19 @@
-﻿function GetAllConversationMessages(ConversationName) {
+﻿function SaveNewMessage(message) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/PostToConversation",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(message)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetAllConversationMessages(ConversationName) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/Conversation/GetAllConversationMessages",
