@@ -84,8 +84,6 @@ namespace FriendBook.Controllers
 
             //MessageViewModel model = new MessageViewModel(newMessage);
 
-            // Call the client method 'addChatMessage' on all clients in the
-            // "MainChatroom" group.
             this.Clients.Group(ChatroomName).AddChatMessage(model);
             return new NoContentResult();
         }

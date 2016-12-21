@@ -1,33 +1,47 @@
-﻿function MessagingEvents() {
+﻿function HideConversation() {
     $(".hideConversation").on("click", function () {
         let conversation = $(this).parent().parent().parent()
         conversation.addClass("minifiedConversation")
         $(this).addClass("hidden")
         $(this).siblings(".showConversation").removeClass("hidden")
     })
+}
 
+function ShowConversation() {
     $(".showConversation").on("click", function () {
         let conversation = $(this).parent().parent().parent()
         conversation.removeClass("minifiedConversation")
         $(this).addClass("hidden")
         $(this).siblings(".hideConversation").removeClass("hidden")
     })
+}
 
+function RemoveConversation() {
     $(".removeConversation").on("click", function () {
         let conversation = $(this).parent().parent().parent()
         conversation.remove();
     })
+}
 
+function SubmitNewMessage() {
     $(".submitNewMessage").on("click", function () {
+        let text = $(this).siblings(".newMessage").val()
         let NewMessage = {
-            messageText: $(".newMessage").val()
+            messageText: text
         }
-
         let ConversationArea = AddSingleMessageToConversation(NewMessage)
-        let ConversationMessageArea = $(this).parent().siblings()[1]
+        let ConversationMessageArea = $(this).parent().siblings(".convoMessageContainer")
 
+        console.log(ConversationMessageArea)
         ConversationMessageArea.append(`<p>${ConversationArea}</p>`)
     })
+}
+
+function MessagingEvents() {
+    HideConversation()
+    ShowConversation()
+    RemoveConversation()
+    SubmitNewMessage()
 }
 
 function AddSingleMessageToConversation(message) {
