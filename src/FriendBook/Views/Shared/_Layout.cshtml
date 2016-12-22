@@ -29,7 +29,7 @@
             background-color: @Model.UserStyle.WallBackgroundColor;
             color: @Model.UserStyle.FontColor;
         }
-        .navGlyph:hover{
+        .navGlyph:hover, .messageNotifications:hover{
             color: @Model.UserStyle.WallBackgroundColor!important;
             cursor: pointer;
         }
@@ -37,7 +37,7 @@
             background-color: @Model.UserStyle.BackgroundColor;
             border: 2px solid @Model.UserStyle.DetailColor;
         }
-        .notificationArea{
+        .notificationArea, .messageNotificationArea{
             background-color: @Model.UserStyle.NavColor;            
         }
         .colorContainer{
@@ -215,6 +215,7 @@
             @if (Model.CurrentUser != null)
             {
                 Html.RenderPartial("FriendRequests");
+                Html.RenderPartial("MessageNotifications");
             }
 
             @RenderBody()
@@ -223,8 +224,6 @@
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/signalr/jquery.signalR.min.js"></script>
-        <script src="/signalr/hubs"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 
         <script src="~/js/Factory.js" asp-append-version="true"></script>
@@ -240,8 +239,6 @@
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
-        <script src="~/lib/signalr/jquery.signalR.min.js"></script>
-        <script src="/signalr/hubs"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">

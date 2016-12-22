@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FriendBook.Migrations
 {
-    public partial class messaging : Migration
+    public partial class UpdatedMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,6 +67,33 @@ namespace FriendBook.Migrations
                     table.ForeignKey(
                         name: "FK_Conversation_User_ConversationStarterId",
                         column: x => x.ConversationStarterId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MessageNotification",
+                columns: table => new
+                {
+                    MessageNotificationId = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    RecievingUserId = table.Column<int>(nullable: false),
+                    Seen = table.Column<bool>(nullable: false),
+                    SendingUserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageNotification", x => x.MessageNotificationId);
+                    table.ForeignKey(
+                        name: "FK_MessageNotification_User_RecievingUserId",
+                        column: x => x.RecievingUserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MessageNotification_User_SendingUserId",
+                        column: x => x.SendingUserId,
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -282,6 +309,16 @@ namespace FriendBook.Migrations
                 column: "SendingUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MessageNotification_RecievingUserId",
+                table: "MessageNotification",
+                column: "RecievingUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MessageNotification_SendingUserId",
+                table: "MessageNotification",
+                column: "SendingUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Post_UserId",
                 table: "Post",
                 column: "UserId");
@@ -312,6 +349,9 @@ namespace FriendBook.Migrations
 
             migrationBuilder.DropTable(
                 name: "Message");
+
+            migrationBuilder.DropTable(
+                name: "MessageNotification");
 
             migrationBuilder.DropTable(
                 name: "Relationship");

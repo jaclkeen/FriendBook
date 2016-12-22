@@ -43,8 +43,14 @@
         })
     })
 
+    $('.messageNotifications').on("click", function () {
+        $('.notificationArea').addClass("hidden")
+        $('.messageNotificationArea').toggleClass("hidden")
+    })
+
     $('.Notifications').on("click", function () {
         $('.notificationArea').toggleClass("hidden");
+        $('.messageNotificationArea').addClass("hidden")
     })
 
     $('.frButton').on("click", function () {

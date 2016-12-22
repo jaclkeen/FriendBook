@@ -19,7 +19,12 @@ function ShowConversation() {
 function RemoveConversation() {
     $(".removeConversation").on("click", function () {
         let conversation = $(this).parent().parent().parent()
-        conversation.remove();
+        let conversationId = conversation.attr("id")
+        //AJAX CALL TO END A CONVERSATION
+        EndAConversation(conversationId)
+        .then(function () {
+            conversation.remove();
+        })
     })
 }
 
@@ -88,14 +93,10 @@ function AddConversationToDom(conversation, message) {
     return convo;
 }
 
-$(".MessageAreaUser").on("click", function () {
-    let ClickedUserId = $(this).attr("id")
-
-    GetCurrentUser()
-    .then(function (user) {
-        let ChatRoomName = ClickedUserId.toString() + user.userId.toString()
-        ConnectToHub(ChatRoomName)
-    })
+function OpenConversation(ClickedUserId){
+    if($(this).hasClass("MnName")){
+        return false;
+    }
 
     CreateNewConversation(ClickedUserId)
     .then(function (conversation) {
@@ -106,19 +107,27 @@ $(".MessageAreaUser").on("click", function () {
             MessagingEvents()
         })
     })
+}
+
+$(document).on("ready", function(){
+    console.log('ready')
 })
 
-var hub = $.connection.broadcaster;
-$.connection.broadcaster.client.addChatMessage = AddSingleMessageToConversation
-$.connection.hub.logging = true;
+$(".MessageAreaUser, .NewM").on("click", function () {
+    let UserId = $(this).attr("id")
 
-function ConnectToHub(ChatRoomName) {
-    $.connection.hub.start().done(function (signalr) {
-        console.log('Connected!');
-        console.log('SignalR object: ', signalr);
+    OpenConversation(UserId)
+})
 
-        hub.server.subscribe(ChatRoomName);
-    }).fail(function (error) {
-        console.log('Failed to start connection! Error: ', error);
-    });
-}
+$(".NewM").on("click", function () {
+    if ($(this).hasClass("MnName")) {
+        return false;
+    }
+
+    $(this).remove()
+    UpdateMessageSeen($(this).attr("data"))
+    .then(function (UnseenMessageCount) {
+        console.log(UnseenMessageCount)
+        $(".MnCount").text(`(${UnseenMessageCount})`)
+    })
+})

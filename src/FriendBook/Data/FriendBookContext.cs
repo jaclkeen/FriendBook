@@ -17,6 +17,7 @@ namespace FriendBook.Data
         public DbSet<Album> Album { get; set; }
         public DbSet<Image> Image { get; set; }
         public DbSet<Conversation> Conversation { get; set; }
+        public DbSet<MessageNotification> MessageNotification { get; set; }
         public DbSet<Message> Message { get; set; }
     }
 }

@@ -1,26 +1,22 @@
 ﻿using System;
-using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FriendBook.Data;
 using FriendBook.Models;
-using Microsoft.AspNetCore.SignalR.Infrastructure;
-using FriendBook.Hubs;
-using FriendBook.ViewModels;
 
 namespace FriendBook.Controllers
 {
-    public class ConversationController : ApiHubController<Broadcaster>
+    public class ConversationController : Controller
     {
         private FriendBookContext context; 
 
-        public ConversationController(FriendBookContext ctx, IConnectionManager connectionManager) : base(connectionManager)
+        public ConversationController(FriendBookContext ctx)
         {
             context = ctx;
         }
-
+        
         public Conversation CreateConversation([FromBody] int RecievingUserId)
         {
             int CurrentUserId = ActiveUser.Instance.User.UserId;
@@ -31,6 +27,7 @@ namespace FriendBook.Controllers
             {
                 ConvoExists1.ConversationStarter = ActiveUser.Instance.User;
                 ConvoExists1.ConversationReciever = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
+                ConvoExists1.IsActive = true;
 
                 return ConvoExists1;
             }
@@ -39,6 +36,7 @@ namespace FriendBook.Controllers
             {
                 ConvoExists2.ConversationStarter = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
                 ConvoExists2.ConversationReciever = ActiveUser.Instance.User;
+                ConvoExists2.IsActive = true;
 
                 return ConvoExists2;
             }
@@ -47,7 +45,8 @@ namespace FriendBook.Controllers
             {
                 ConversationRoomName = CurrentUserId.ToString() + RecievingUserId.ToString(),
                 ConversationStarterId = CurrentUserId,
-                ConversationRecieverId = RecievingUserId
+                ConversationRecieverId = RecievingUserId,
+                IsActive = true
             };
 
             context.Conversation.Add(c);
@@ -56,9 +55,6 @@ namespace FriendBook.Controllers
             Conversation NewConvo = context.Conversation.Where(co => co.ConversationStarterId == CurrentUserId && co.ConversationRecieverId == RecievingUserId).SingleOrDefault();
             NewConvo.ConversationStarter = ActiveUser.Instance.User;
             NewConvo.ConversationReciever = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
-
-            Broadcaster broadcaster = new Broadcaster();
-            broadcaster.Subscribe(CurrentUserId.ToString() + RecievingUserId.ToString());
 
             return NewConvo;
         }
@@ -69,8 +65,27 @@ namespace FriendBook.Controllers
         }
 
         [HttpPost]
+        public int MessageSeen([FromBody] int id)
+        {
+            MessageNotification mn = context.MessageNotification.Where(m => m.MessageNotificationId == id).SingleOrDefault();
+            mn.Seen = true;
+
+            context.SaveChanges();
+
+            return context.MessageNotification.Where(MN => MN.RecievingUserId == ActiveUser.Instance.User.UserId && MN.Seen==false).ToList().Count();
+        }
+
+        [HttpPost]
         public IActionResult PostToConversation([FromBody] Message message)
         {
+            Conversation convo = context.Conversation.Where(c => c.ConversationRoomName == message.ConversationRoomName).SingleOrDefault();
+            User RecievingUser = context.User.Where(u => u.UserId == convo.ConversationStarterId).SingleOrDefault();
+
+            if(convo.ConversationStarterId == ActiveUser.Instance.User.UserId)
+            {
+                RecievingUser = context.User.Where(u => u.UserId == convo.ConversationRecieverId).SingleOrDefault();
+            }
+            
             Message NewMessage = new Message()
             {
                 MessageText = message.MessageText,
@@ -80,13 +95,17 @@ namespace FriendBook.Controllers
                 Conversation = context.Conversation.Where(c => c.ConversationRoomName == message.ConversationRoomName).SingleOrDefault()
             };
 
-            // Save the new message
+            MessageNotification mn = new MessageNotification()
+            {
+                SendingUserId = ActiveUser.Instance.User.UserId,
+                RecievingUserId = RecievingUser.UserId
+            };
+
+            context.Add(mn);
             context.Add(NewMessage);
+
             context.SaveChanges();
 
-            //MessageViewModel model = new MessageViewModel(newMessage);
-
-            this.Clients.Group(message.ConversationRoomName).AddChatMessage(message.MessageText);
             return new NoContentResult();
         }
 

@@ -19,6 +19,9 @@ namespace FriendBook.Models
         public int ConversationRecieverId { get; set; }
         public User ConversationReciever { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
+
         public List<Message> ConversationMessages { get; set; }
     }
 }

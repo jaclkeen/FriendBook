@@ -37,10 +37,6 @@ namespace FriendBook
         {
 
             // Add framework services.
-            services.AddSignalR(options =>
-            {
-                options.Hubs.EnableDetailedErrors = true;
-            });
 
             services.AddApplicationInsightsTelemetry(Configuration);
 
@@ -73,8 +69,6 @@ namespace FriendBook
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
-            app.UseWebSockets();
-            app.UseSignalR();
 
             DbInitializer.Initialize(app.ApplicationServices);
 

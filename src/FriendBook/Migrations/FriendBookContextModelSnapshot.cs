@@ -121,6 +121,26 @@ namespace FriendBook.Migrations
                     b.ToTable("Message");
                 });
 
+            modelBuilder.Entity("FriendBook.Models.MessageNotification", b =>
+                {
+                    b.Property<int>("MessageNotificationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("RecievingUserId");
+
+                    b.Property<bool>("Seen");
+
+                    b.Property<int>("SendingUserId");
+
+                    b.HasKey("MessageNotificationId");
+
+                    b.HasIndex("RecievingUserId");
+
+                    b.HasIndex("SendingUserId");
+
+                    b.ToTable("MessageNotification");
+                });
+
             modelBuilder.Entity("FriendBook.Models.Post", b =>
                 {
                     b.Property<int>("PostId")
@@ -279,6 +299,19 @@ namespace FriendBook.Migrations
                     b.HasOne("FriendBook.Models.Conversation", "Conversation")
                         .WithMany("ConversationMessages")
                         .HasForeignKey("ConversationRoomName")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.User", "SendingUser")
+                        .WithMany()
+                        .HasForeignKey("SendingUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FriendBook.Models.MessageNotification", b =>
+                {
+                    b.HasOne("FriendBook.Models.User", "RecievingUser")
+                        .WithMany()
+                        .HasForeignKey("RecievingUserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FriendBook.Models.User", "SendingUser")
