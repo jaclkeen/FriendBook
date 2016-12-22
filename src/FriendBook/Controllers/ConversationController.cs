@@ -25,19 +25,21 @@ namespace FriendBook.Controllers
 
             if (ConvoExists1 != null)
             {
+                ConvoExists1.IsActive = true;
+                context.SaveChanges();
+
                 ConvoExists1.ConversationStarter = ActiveUser.Instance.User;
                 ConvoExists1.ConversationReciever = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
-                ConvoExists1.IsActive = true;
-
                 return ConvoExists1;
             }
 
             if(ConvoExists2 != null)
             {
+                ConvoExists2.IsActive = true;
+                context.SaveChanges();
+
                 ConvoExists2.ConversationStarter = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
                 ConvoExists2.ConversationReciever = ActiveUser.Instance.User;
-                ConvoExists2.IsActive = true;
-
                 return ConvoExists2;
             }
 
@@ -109,5 +111,13 @@ namespace FriendBook.Controllers
             return new NoContentResult();
         }
 
+        [HttpPost]
+        public void EndConversation([FromBody] int id)
+        {
+            Conversation c = context.Conversation.Where(co => co.ConversationRoomName == id.ToString()).SingleOrDefault();
+            c.IsActive = false;
+
+            context.SaveChanges();
+        }
     }
 }

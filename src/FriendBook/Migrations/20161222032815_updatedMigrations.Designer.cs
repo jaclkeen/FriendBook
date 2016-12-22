@@ -8,8 +8,8 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161222000453_UpdatedMigrations")]
-    partial class UpdatedMigrations
+    [Migration("20161222032815_updatedMigrations")]
+    partial class updatedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,8 @@ namespace FriendBook.Migrations
                     b.Property<int>("ConversationRecieverId");
 
                     b.Property<int>("ConversationStarterId");
+
+                    b.Property<bool>("IsActive");
 
                     b.HasKey("ConversationRoomName");
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FriendBook.Migrations
 {
-    public partial class UpdatedMigrations : Migration
+    public partial class updatedMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,7 +53,8 @@ namespace FriendBook.Migrations
                 {
                     ConversationRoomName = table.Column<string>(nullable: false),
                     ConversationRecieverId = table.Column<int>(nullable: false),
-                    ConversationStarterId = table.Column<int>(nullable: false)
+                    ConversationStarterId = table.Column<int>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

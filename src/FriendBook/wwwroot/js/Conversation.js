@@ -20,7 +20,6 @@ function RemoveConversation() {
     $(".removeConversation").on("click", function () {
         let conversation = $(this).parent().parent().parent()
         let conversationId = conversation.attr("id")
-        //AJAX CALL TO END A CONVERSATION
         EndAConversation(conversationId)
         .then(function () {
             conversation.remove();
