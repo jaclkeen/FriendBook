@@ -20,10 +20,14 @@ function ShowConversation() {
 
 function RemoveConversation() {
     $(".removeConversation").on("click", function () {
+        let RemoveConversation = null
         let conversation = $(this).parent().parent().parent()
         let conversationId = conversation.attr("id")
         EndAConversation(conversationId)
         .then(function () {
+            RemoveConversation = ActiveConversations.indexOf(conversationId)
+            RemoveConversation != -1 ? ActiveConversations.splice(RemoveConversation) : false;
+            console.log(ActiveConversations.length)
             conversation.remove();
         })
     })
@@ -103,15 +107,21 @@ function OpenConversation(ClickedUserId){
     CreateNewConversation(ClickedUserId)
     .then(function (conversation) {
         if (conversation.isActive == false) {
-            SetConversationAsActive(conversation.conversationRoomName)
-            .then(function () {
-                GetAllConversationMessages(conversation.conversationRoomName)
-                .then(function (messages) {
-                    let output = AddConversationToDom(conversation, messages)
-                    $(".conversationWrapper").append(output);
-                    MessagingEvents()
+            if (ActiveConversations.length < 4) {
+                ActiveConversations.indexOf(conversation.conversationRoomName) === -1 ? ActiveConversations.push(conversation.conversationRoomName) : false;
+                SetConversationAsActive(conversation.conversationRoomName)
+                .then(function () {
+                    GetAllConversationMessages(conversation.conversationRoomName)
+                    .then(function (messages) {
+                        let output = AddConversationToDom(conversation, messages)
+                        $(".conversationWrapper").append(output);
+                        MessagingEvents()
+                    })
                 })
-            })
+            }
+            else {
+                //MATERILIAZE.TOAST ONLY 4 ACTIVE CONVOS AT TIME
+            }
         }
         else {
             let conversations = $(".conversation").toArray();
@@ -133,15 +143,15 @@ function ActiveConvo() {
     UserActiveConversations()
     .then(function (conversations) {
         conversations.forEach(function (convo) {
-            ActiveConversations.length < 5 ? ActiveConversations.push(convo) : false
-            GetAllConversationMessages(convo.conversationRoomName)
-            .then(function (messages) {
-                ActiveConversations.forEach(function (AConvo) {
-                    let output = AddConversationToDom(AConvo, messages)
+            if (ActiveConversations.length < 4) {
+                ActiveConversations.push(convo.conversationRoomName)
+                GetAllConversationMessages(convo.conversationRoomName)
+                .then(function (messages) {
+                    let output = AddConversationToDom(convo, messages)
                     $(".conversationWrapper").append(output);
                     MessagingEvents()
                 })
-            })
+            }
         })
     })
 }
