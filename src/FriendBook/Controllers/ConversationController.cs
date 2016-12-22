@@ -25,9 +25,6 @@ namespace FriendBook.Controllers
 
             if (ConvoExists1 != null)
             {
-                ConvoExists1.IsActive = true;
-                context.SaveChanges();
-
                 ConvoExists1.ConversationStarter = ActiveUser.Instance.User;
                 ConvoExists1.ConversationReciever = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
                 return ConvoExists1;
@@ -35,9 +32,6 @@ namespace FriendBook.Controllers
 
             if(ConvoExists2 != null)
             {
-                ConvoExists2.IsActive = true;
-                context.SaveChanges();
-
                 ConvoExists2.ConversationStarter = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
                 ConvoExists2.ConversationReciever = ActiveUser.Instance.User;
                 return ConvoExists2;
@@ -48,7 +42,7 @@ namespace FriendBook.Controllers
                 ConversationRoomName = CurrentUserId.ToString() + RecievingUserId.ToString(),
                 ConversationStarterId = CurrentUserId,
                 ConversationRecieverId = RecievingUserId,
-                IsActive = true
+                IsActive = false
             };
 
             context.Conversation.Add(c);
@@ -61,9 +55,29 @@ namespace FriendBook.Controllers
             return NewConvo;
         }
 
+        public List<Conversation> ActiveConversations()
+        {
+            int UId = ActiveUser.Instance.User.UserId;
+            List<Conversation> conversations = context.Conversation.Where(c => c.ConversationRecieverId == UId || c.ConversationStarterId == UId).ToList();
+            conversations.ForEach(co => co.ConversationReciever = context.User.Where(u => u.UserId == co.ConversationRecieverId).SingleOrDefault());
+            conversations.ForEach(co => co.ConversationStarter = context.User.Where(u => u.UserId == co.ConversationStarterId).SingleOrDefault());
+
+            return conversations.Where(convo => convo.IsActive == true).ToList();
+        }
+
         public List<Message> GetAllConversationMessages([FromBody] string ConversationName)
         {
-            return context.Message.Where(m => m.ConversationRoomName == ConversationName).ToList();
+            List<Message> messages = context.Message.Where(m => m.ConversationRoomName == ConversationName).ToList();
+
+            return messages;
+        }
+
+        [HttpPost]
+        public void ActivateConversation([FromBody] int RoomName)
+        {
+            Conversation convo = context.Conversation.Where(c => c.ConversationRoomName == RoomName.ToString()).SingleOrDefault();
+            convo.IsActive = true;
+            context.SaveChanges();
         }
 
         [HttpPost]

@@ -1,4 +1,6 @@
-﻿function HideConversation() {
+﻿let ActiveConversations = []
+
+function HideConversation() {
     $(".hideConversation").on("click", function () {
         let conversation = $(this).parent().parent().parent()
         conversation.addClass("minifiedConversation")
@@ -63,18 +65,19 @@ function AddMessagesToConversation(messages) {
     return ConversationMessage
 }
 
-function AddConversationToDom(conversation, message) {
+function AddConversationToDom(conversation, message, AConvo) {
+
     let messages = AddMessagesToConversation(message)
 
-    let convo = `<div class="conversation" id="${conversation.conversationRoomName}">
+    let convo = `<div class="conversation minifiedConversation" id="${conversation.conversationRoomName}">
             <div class="convoHead">
                 <div class="convoName">
                     <h5>${conversation.conversationReciever.firstName} ${conversation.conversationReciever.lastName}</h5>
                 </div>
 
                 <div class="minifyOrExpand">
-                    <i class="fa fa-minus hideConversation" aria-hidden="true"></i>
-                    <i class="fa fa-plus hidden showConversation" aria-hidden="true"></i>
+                    <i class ="fa fa-minus hidden hideConversation" aria-hidden="true"></i>
+                    <i class="fa fa-plus showConversation" aria-hidden="true"></i>
                     <i class="fa fa-times removeConversation" aria-hidden="true"></i>
                 </div>
             </div>
@@ -99,18 +102,51 @@ function OpenConversation(ClickedUserId){
 
     CreateNewConversation(ClickedUserId)
     .then(function (conversation) {
-        GetAllConversationMessages(conversation.conversationRoomName)
-        .then(function (messages) {
-            let output = AddConversationToDom(conversation, messages)
-            $(".conversationWrapper").append(output);
-            MessagingEvents()
+        if (conversation.isActive == false) {
+            SetConversationAsActive(conversation.conversationRoomName)
+            .then(function () {
+                GetAllConversationMessages(conversation.conversationRoomName)
+                .then(function (messages) {
+                    let output = AddConversationToDom(conversation, messages)
+                    $(".conversationWrapper").append(output);
+                    MessagingEvents()
+                })
+            })
+        }
+        else {
+            let conversations = $(".conversation").toArray();
+
+            conversations.forEach(function (convo) {
+                convo = $(convo)
+                if (convo.attr("id") === conversation.conversationRoomName) {
+                    let ShowHideDiv = convo.children(".convoHead").children(".minifyOrExpand")
+                    ShowHideDiv.children(".showConversation").addClass("hidden")
+                    ShowHideDiv.children(".hideConversation").removeClass("hidden")
+                    convo.removeClass("minifiedConversation")
+                }
+            })
+        }
+    })
+}
+
+function ActiveConvo() {
+    UserActiveConversations()
+    .then(function (conversations) {
+        conversations.forEach(function (convo) {
+            ActiveConversations.length < 5 ? ActiveConversations.push(convo) : false
+            GetAllConversationMessages(convo.conversationRoomName)
+            .then(function (messages) {
+                ActiveConversations.forEach(function (AConvo) {
+                    let output = AddConversationToDom(AConvo, messages)
+                    $(".conversationWrapper").append(output);
+                    MessagingEvents()
+                })
+            })
         })
     })
 }
 
-$(document).on("ready", function(){
-    console.log('ready')
-})
+ActiveConvo()
 
 $(".MessageAreaUser, .NewM").on("click", function () {
     let UserId = $(this).attr("id")

@@ -1,4 +1,31 @@
-﻿function EndAConversation(conversationId) {
+﻿function SetConversationAsActive(RoomName) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/ActivateConversation",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(RoomName)
+        }).done(function (nothing) {
+            resolve(nothing)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function UserActiveConversations() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/ActiveConversations"
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function EndAConversation(conversationId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "Conversation/EndConversation",
