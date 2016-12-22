@@ -6,6 +6,7 @@
 .conversationWrapper{
     position: fixed;
     width: 77%;
+    height: 0;
     bottom: 0;
     left: 1.3%;
 }
@@ -44,6 +45,7 @@
 }
 
 .conversation{
+    bottom: 270px;
     height: 270px;
     width: 24%;
     position: relative;
@@ -95,7 +97,7 @@
 }
 
 .minifiedConversation{
-    bottom: -228px;
+    bottom: 42px;
 }
 
 .messagingContainer{
