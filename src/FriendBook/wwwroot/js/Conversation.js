@@ -27,23 +27,8 @@ function RemoveConversation() {
         .then(function () {
             RemoveConversation = ActiveConversations.indexOf(conversationId)
             RemoveConversation != -1 ? ActiveConversations.splice(RemoveConversation) : false;
-            console.log(ActiveConversations.length)
             conversation.remove();
         })
-    })
-}
-
-function SubmitNewMessage() {
-    $(".submitNewMessage").on("click", function () {
-        let conversationRoomName = $(this).parent().parent(".conversation").attr("id")
-        let text = $(this).siblings(".newMessage").val()
-        let NewMessage = {
-            MessageText: text,
-            ConversationRoomName: conversationRoomName,
-        }
-
-        SaveNewMessage(NewMessage)
-        AddSingleMessageToConversation(NewMessage, this)
     })
 }
 
@@ -51,12 +36,6 @@ function MessagingEvents() {
     HideConversation()
     ShowConversation()
     RemoveConversation()
-    SubmitNewMessage()
-}
-
-function AddSingleMessageToConversation(message, context) {
-    let ConversationMessageArea = $(context).parent().siblings(".convoMessageContainer")
-    ConversationMessageArea.append(`<p>${message.MessageText}</p>`)
 }
 
 function AddMessagesToConversation(messages) {
@@ -156,7 +135,57 @@ function ActiveConvo() {
     })
 }
 
-ActiveConvo()
+function UpdateConversationMessages() {
+    let Conversations = $(".conversation").toArray();
+
+    ActiveConversations.forEach(function (convo) {
+        Conversations.forEach(function (c) {
+            let co = $(c)
+            if (co.attr("id") === convo) {
+                let y = co.children(".convoMessageContainer")
+                GetAllConversationMessages(convo)
+                .then(function (messages) {
+                    y.html("")
+                    messages.forEach(function (m) {
+                        y.append(`<p class="convoMessage">${m.messageText}</p>`)
+                    })
+                })
+            }
+        })
+    })
+}
+
+function UpdateUnseenMessages() {
+    GetUserMessageNotifications()
+    .then(function (notifications) {
+        notifications.forEach(function (n) {
+            let noti =
+            `<div class='NewM' id='${n.SendingUser.UserId}' data='${n.MessageNotificationId}'>
+            <img src='${n.SendingUser.ProfileImg}' class='MnImg'/>
+            <a asp-action="Index" asp-controller="Profile" asp-route-id="@mn.SendingUser.UserId" class="MnName MnText">@mn.SendingUser.FirstName @mn.SendingUser.LastName</a>
+            <span class="MnText">sent you a new message!</span>
+            </div>`
+        })
+    })
+}
+
+$("body").on("click", function (e) {
+    let context = $(e.target)
+    if (context.hasClass("submitNewMessage")) {
+        let conversationRoomName = $(context).parent().parent(".conversation").attr("id")
+        let ConversationMessageArea = $(context).parent().siblings(".convoMessageContainer")
+        let text = $(context).siblings(".newMessage").val()
+        let NewMessage = {
+            MessageText: text,
+            ConversationRoomName: conversationRoomName,
+        }
+
+        console.log(conversationRoomName, ConversationMessageArea, text, NewMessage)
+
+        SaveNewMessage(NewMessage)
+        ConversationMessageArea.append(`<p>${NewMessage.MessageText}</p>`)
+    }
+})
 
 $(".MessageAreaUser, .NewM").on("click", function () {
     let UserId = $(this).attr("id")
@@ -176,3 +205,7 @@ $(".NewM").on("click", function () {
         $(".MnCount").text(`(${UnseenMessageCount})`)
     })
 })
+
+ActiveConvo()
+setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)
+setInterval(UpdateUnseenMessages, 5000)

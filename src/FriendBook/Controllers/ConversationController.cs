@@ -72,6 +72,15 @@ namespace FriendBook.Controllers
             return messages;
         }
 
+        [HttpGet]
+        public List<MessageNotification> MessageNotifications()
+        {
+            List<MessageNotification> MN = context.MessageNotification.Where(mn => mn.RecievingUserId == ActiveUser.Instance.User.UserId && mn.Seen == false).ToList();
+            MN.ForEach(m => m.RecievingUser = context.User.Where(u => u.UserId == m.RecievingUserId).SingleOrDefault());
+
+            return MN;
+        }
+
         [HttpPost]
         public void ActivateConversation([FromBody] int RoomName)
         {

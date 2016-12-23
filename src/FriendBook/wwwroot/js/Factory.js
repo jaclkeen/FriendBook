@@ -1,4 +1,16 @@
-﻿function SetConversationAsActive(RoomName) {
+﻿function GetUserMessageNotifications() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/MessageNotifications"
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function SetConversationAsActive(RoomName) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/Conversation/ActivateConversation",
