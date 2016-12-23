@@ -25,6 +25,21 @@ function SetConversationAsActive(RoomName) {
     })
 }
 
+function EndAConversation(conversationId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/EndConversation",
+            method: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify(conversationId)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
 function UserActiveConversations() {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -37,25 +52,10 @@ function UserActiveConversations() {
     })
 }
 
-function EndAConversation(conversationId) {
-    return new Promise(function (resolve, reject) {
-        $.ajax({
-            url: "Conversation/EndConversation",
-            method: 'POST',
-            contentType: "application/json",
-            data: JSON.stringify(conversationId)
-        }).done(function (success) {
-            resolve(success)
-        }).error(function (err) {
-            reject(err)
-        })
-    })
-}
-
 function UpdateMessageSeen(id) {
     return new Promise(function (resolve, reject) {
         $.ajax({
-            url: "Conversation/MessageSeen",
+            url: "/Conversation/MessageSeen",
             method: 'POST',
             contentType: "application/json",
             data: JSON.stringify(id)

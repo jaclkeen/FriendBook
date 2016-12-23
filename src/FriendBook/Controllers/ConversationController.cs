@@ -73,6 +73,15 @@ namespace FriendBook.Controllers
             return messages;
         }
 
+        [HttpPost]
+        public void EndConversation([FromBody] int id)
+        {
+            Conversation c = context.Conversation.Where(co => co.ConversationRoomName == id.ToString()).SingleOrDefault();
+            c.IsActive = false;
+
+            context.SaveChanges();
+        }
+
         [HttpGet]
         public List<MessageNotification> MessageNotifications()
         {
@@ -133,15 +142,6 @@ namespace FriendBook.Controllers
             context.SaveChanges();
 
             return new NoContentResult();
-        }
-
-        [HttpPost]
-        public void EndConversation([FromBody] int id)
-        {
-            Conversation c = context.Conversation.Where(co => co.ConversationRoomName == id.ToString()).SingleOrDefault();
-            c.IsActive = false;
-
-            context.SaveChanges();
         }
     }
 }

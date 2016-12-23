@@ -75,6 +75,18 @@
     border-bottom: 2px solid black;
 }
 
+.hideConversation:hover{
+    color: yellow;
+}
+
+.showConversation:hover{
+    color: lightgreen;
+}
+
+.removeConversation:hover{
+    color: red;
+}
+
 .hideConversation, .showConversation{
     margin-left: 10%;
     font-size: 1.5em;
