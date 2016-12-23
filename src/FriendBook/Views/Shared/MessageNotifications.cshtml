@@ -1,0 +1,15 @@
+﻿<div class="messageNotificationArea hidden">
+    @if(Model.MessageNotifications.Count == 0)
+    {
+        <h4 style="text-align:center">No new messages!</h4>
+    }
+
+    @foreach (var mn in Model.MessageNotifications)
+    {
+       <div class="NewM" id="@mn.SendingUser.UserId" data="@mn.MessageNotificationId">
+           <img src="@mn.SendingUser.ProfileImg" class="MnImg"/>
+           <a asp-action="Index" asp-controller="Profile" asp-route-id="@mn.SendingUser.UserId" class="MnName MnText">@mn.SendingUser.FirstName @mn.SendingUser.LastName</a>
+           <span class="MnText">sent you a new message!</span>
+       </div>
+    }
+</div>

@@ -5,8 +5,8 @@
 <li class="page-scroll navThing">
     <a asp-action="Index" asp-controller="Home" class="HomeLink glyphicon glyphicon-home navGlyph"></a>
 </li>
-<li class="page-scroll navThing">  
-    <i class="fa fa-globe icon navGlyph"></i>
+<li class="page-scroll navThing messageNotifications">  
+    <i class="fa fa-envelope-square icon navGlyph"></i><span class="MnCount">(@Model.MessageNotifications.Count)</span>
 </li>
 <li class="page-scroll navThing">
     <a class="Notifications glyphicon glyphicon-user navGlyph">(@Model.FriendRequests.Count)</a>

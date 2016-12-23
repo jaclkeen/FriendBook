@@ -51,7 +51,7 @@ namespace FriendBook.Controllers
             post.Likes++;
 
             context.SaveChanges();
-            return RedirectToAction("Profile", "Profile", new { id = userId });
+            return RedirectToAction("Index", "Profile", new { id = userId });
         }
 
         public IActionResult AddProfileDislike([FromRoute] int id)
@@ -61,7 +61,7 @@ namespace FriendBook.Controllers
             post.Dislikes++;
 
             context.SaveChanges();
-            return RedirectToAction("Profile", "Profile", new { id = userId });
+            return RedirectToAction("Index", "Profile", new { id = userId });
         }
 
         [HttpPost]

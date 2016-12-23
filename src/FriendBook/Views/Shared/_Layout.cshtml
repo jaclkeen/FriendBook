@@ -29,7 +29,7 @@
             background-color: @Model.UserStyle.WallBackgroundColor;
             color: @Model.UserStyle.FontColor;
         }
-        .navGlyph:hover{
+        .navGlyph:hover, .messageNotifications:hover{
             color: @Model.UserStyle.WallBackgroundColor!important;
             cursor: pointer;
         }
@@ -37,7 +37,7 @@
             background-color: @Model.UserStyle.BackgroundColor;
             border: 2px solid @Model.UserStyle.DetailColor;
         }
-        .notificationArea{
+        .notificationArea, .messageNotificationArea{
             background-color: @Model.UserStyle.NavColor;            
         }
         .colorContainer{
@@ -149,12 +149,30 @@
             background-color: @Model.UserStyle.PostHeaderColor
         }
         .messagingContainer{
-            border-left: 2px solid @Model.UserStyle.DetailColor;
-            background-color: @Model.UserStyle.BackgroundColor;
+            border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background-color: @Model.CurrentUserStyle.BackgroundColor;
         }
         .MessageAreaUser{
-            background: @Model.UserStyle.PostHeaderColor;
-            border: 2px solid @Model.UserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.PostHeaderColor;
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+        }
+        .newMessage{
+            border-bottom: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-top: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-right: 2px solid @Model.CurrentUserStyle.DetailColor;
+        }
+        .convoName, .minifyOrExpand{
+            background-color: @Model.CurrentUserStyle.BackgroundColor;
+        }
+        .conversation{
+            background-color: @Model.CurrentUserStyle.NavColor!important;
+        }
+        .submitNewMessage{
+            color: @Model.CurrentUserStyle.BackgroundColor;
+            background-color: black;
+        }
+        .MessageAreaUser:hover{
+            box-shadow: 2px 2px 2px @Model.CurrentUserStyle.DetailColor;
         }
     </style>
 </head>
@@ -200,7 +218,11 @@
             @if (Model.CurrentUser != null)
             {
                 Html.RenderPartial("FriendRequests");
-                @*@{Html.RenderPartial("FriendRequests");}*@
+                Html.RenderPartial("MessageNotifications");
+
+                <div class="row conversationWrapper">
+
+                </div>
             }
 
             @RenderBody()
@@ -216,6 +238,7 @@
         <script src="~/js/Comment.js" asp-append-version="true"></script>
         <script src="~/js/Post.js" asp-append-version="true"></script>
         <script src="~/js/Album.js" asp-append-version="true"></script>
+        <script src="~/js/Conversation.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
@@ -232,6 +255,7 @@
         <script src="~/js/Comment.js" asp-append-version="true"></script>
         <script src="~/js/Post.js" asp-append-version="true"></script>
         <script src="~/js/Album.js" asp-append-version="true"></script>
+        <script src="~/js/Conversation.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 

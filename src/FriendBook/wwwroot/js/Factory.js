@@ -1,4 +1,118 @@
-﻿function GetAParticularAlbumImages(id) {
+﻿function GetUserMessageNotifications() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/MessageNotifications"
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function SetConversationAsActive(RoomName) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/ActivateConversation",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(RoomName)
+        }).done(function (nothing) {
+            resolve(nothing)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function EndAConversation(conversationId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/EndConversation",
+            method: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify(conversationId)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function UserActiveConversations() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/ActiveConversations"
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function UpdateMessageSeen(id) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/MessageSeen",
+            method: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify(id)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function SaveNewMessage(message) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/PostToConversation",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(message)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetAllConversationMessages(ConversationName) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/GetAllConversationMessages",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(ConversationName)
+        }).done(function (messages) {
+            resolve(messages)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function CreateNewConversation(ClickedUserId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/CreateConversation",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(ClickedUserId)
+        }).done(function (convo) {
+            resolve(convo)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetAParticularAlbumImages(id) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: `/Album/GetAlbumImages/${id}`

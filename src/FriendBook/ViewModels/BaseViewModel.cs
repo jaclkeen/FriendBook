@@ -17,6 +17,8 @@ namespace FriendBook.ViewModels
 
         public Style CurrentUserStyle { get; set; }
 
+        public List<MessageNotification> MessageNotifications { get; set; }
+
         private ActiveUser singleton = ActiveUser.Instance;
 
         public User ChosenUser
@@ -71,6 +73,13 @@ namespace FriendBook.ViewModels
                     CurrentUserFriends.Add(context.User.Where(u => u.UserId == r.ReciverUserId).SingleOrDefault());
                 }
             }
+
+            //GET ALL MESSAGE NOTIFICATIONS FOR CURRENT USER
+            List<MessageNotification> MN = context.MessageNotification.Where(mn => mn.RecievingUserId == UserId && mn.Seen == false).ToList();
+            MN.ForEach(n => n.RecievingUser = context.User.Where(u => u.UserId == n.RecievingUserId).SingleOrDefault());
+            MessageNotifications = MN;
+
+            //GET LIST OF ALL FRIENDS OF A CURRENT USER
             UserFriends = CurrentUserFriends.OrderBy(f => f.FirstName + f.LastName).ToList();
         }
     }

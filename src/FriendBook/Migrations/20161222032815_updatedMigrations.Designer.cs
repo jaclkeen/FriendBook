@@ -8,13 +8,13 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161211152255_AddingPhotoAlbums")]
-    partial class AddingPhotoAlbums
+    [Migration("20161222032815_updatedMigrations")]
+    partial class updatedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
+                .HasAnnotation("ProductVersion", "1.0.1");
 
             modelBuilder.Entity("FriendBook.Models.Album", b =>
                 {
@@ -58,6 +58,25 @@ namespace FriendBook.Migrations
                     b.ToTable("Comment");
                 });
 
+            modelBuilder.Entity("FriendBook.Models.Conversation", b =>
+                {
+                    b.Property<string>("ConversationRoomName");
+
+                    b.Property<int>("ConversationRecieverId");
+
+                    b.Property<int>("ConversationStarterId");
+
+                    b.Property<bool>("IsActive");
+
+                    b.HasKey("ConversationRoomName");
+
+                    b.HasIndex("ConversationRecieverId");
+
+                    b.HasIndex("ConversationStarterId");
+
+                    b.ToTable("Conversation");
+                });
+
             modelBuilder.Entity("FriendBook.Models.Image", b =>
                 {
                     b.Property<int>("ImageId")
@@ -79,6 +98,50 @@ namespace FriendBook.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Image");
+                });
+
+            modelBuilder.Entity("FriendBook.Models.Message", b =>
+                {
+                    b.Property<int>("MessageId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConversationRoomName")
+                        .IsRequired();
+
+                    b.Property<DateTime>("MessageSentDate");
+
+                    b.Property<string>("MessageText")
+                        .IsRequired();
+
+                    b.Property<int>("SendingUserId");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ConversationRoomName");
+
+                    b.HasIndex("SendingUserId");
+
+                    b.ToTable("Message");
+                });
+
+            modelBuilder.Entity("FriendBook.Models.MessageNotification", b =>
+                {
+                    b.Property<int>("MessageNotificationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("RecievingUserId");
+
+                    b.Property<bool>("Seen");
+
+                    b.Property<int>("SendingUserId");
+
+                    b.HasKey("MessageNotificationId");
+
+                    b.HasIndex("RecievingUserId");
+
+                    b.HasIndex("SendingUserId");
+
+                    b.ToTable("MessageNotification");
                 });
 
             modelBuilder.Entity("FriendBook.Models.Post", b =>
@@ -208,6 +271,19 @@ namespace FriendBook.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("FriendBook.Models.Conversation", b =>
+                {
+                    b.HasOne("FriendBook.Models.User", "ConversationReciever")
+                        .WithMany()
+                        .HasForeignKey("ConversationRecieverId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.User", "ConversationStarter")
+                        .WithMany()
+                        .HasForeignKey("ConversationStarterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("FriendBook.Models.Image", b =>
                 {
                     b.HasOne("FriendBook.Models.Album", "album")
@@ -218,6 +294,32 @@ namespace FriendBook.Migrations
                     b.HasOne("FriendBook.Models.User", "ImageUser")
                         .WithMany("UserImages")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FriendBook.Models.Message", b =>
+                {
+                    b.HasOne("FriendBook.Models.Conversation", "Conversation")
+                        .WithMany("ConversationMessages")
+                        .HasForeignKey("ConversationRoomName")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.User", "SendingUser")
+                        .WithMany()
+                        .HasForeignKey("SendingUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FriendBook.Models.MessageNotification", b =>
+                {
+                    b.HasOne("FriendBook.Models.User", "RecievingUser")
+                        .WithMany()
+                        .HasForeignKey("RecievingUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.User", "SendingUser")
+                        .WithMany()
+                        .HasForeignKey("SendingUserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

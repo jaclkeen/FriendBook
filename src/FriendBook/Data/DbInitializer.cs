@@ -25,13 +25,6 @@ namespace FriendBook.Data
                 {
                     new User
                     {
-                        FirstName = "Jacob",
-                        LastName = "Keen",
-                        Email = "jaclkeen@gmail.com",
-                        Password = "jkeen33",
-                    },
-                    new User
-                    {
                         FirstName = "Mason",
                         LastName = "Keen",
                         Email = "mason@mason.com",
