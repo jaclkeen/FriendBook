@@ -58,7 +58,7 @@ else
             <span class="pending profileNavItem">Pending</span>
         </div>
     }
-    @if (Model.AreFriends == "yes")
+    @if (Model.AreFriends == "yes" && Model.UserProfile.UserId != Model.CurrentUser.UserId)
     {
         <div class="navTab">
             <i class="fa fa-check-square profileNavIcon"></i>
