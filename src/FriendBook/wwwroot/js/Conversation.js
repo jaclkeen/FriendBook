@@ -1,49 +1,17 @@
 ﻿let ActiveConversations = []
 
-function HideConversation() {
-    $(".hideConversation").on("click", function () {
-        let conversation = $(this).parent().parent().parent()
-        conversation.addClass("minifiedConversation")
-        $(this).addClass("hidden")
-        $(this).siblings(".showConversation").removeClass("hidden")
-    })
-}
-
-function ShowConversation() {
-    $(".showConversation").on("click", function () {
-        let conversation = $(this).parent().parent().parent()
-        conversation.removeClass("minifiedConversation")
-        $(this).addClass("hidden")
-        $(this).siblings(".hideConversation").removeClass("hidden")
-    })
-}
-
-function RemoveConversation() {
-    $(".removeConversation").on("click", function () {
-        let RemoveConversation = null
-        let conversation = $(this).parent().parent().parent()
-        let conversationId = conversation.attr("id")
-        EndAConversation(conversationId)
-        .then(function () {
-            RemoveConversation = ActiveConversations.indexOf(conversationId)
-            RemoveConversation != -1 ? ActiveConversations.splice(RemoveConversation) : false;
-            conversation.remove();
-        })
-    })
-}
-
-function MessagingEvents() {
-    HideConversation()
-    ShowConversation()
-    RemoveConversation()
-}
-
 function AddMessagesToConversation(messages) {
     let ConversationMessage = ""
 
-    messages.forEach(function (message) {
-        ConversationMessage += `<p class="convoMessage">${message.messageText}</p>`
-    })
+    if (messages.length > 0) {
+        messages.forEach(function (message) {
+            ConversationMessage +=
+                `<div class="message"">
+                <img class ="messageSenderImage" src="${message.sendingUser.profileImg}">
+                <p class ="convoMessage">${message.messageText}</p>
+            </div>`
+        })
+    }
 
     return ConversationMessage
 }
@@ -86,6 +54,7 @@ function OpenConversation(ClickedUserId){
     CreateNewConversation(ClickedUserId)
     .then(function (conversation) {
         if (conversation.isActive == false) {
+            console.log(ActiveConversations.length)
             if (ActiveConversations.length < 4) {
                 ActiveConversations.indexOf(conversation.conversationRoomName) === -1 ? ActiveConversations.push(conversation.conversationRoomName) : false;
                 SetConversationAsActive(conversation.conversationRoomName)
@@ -94,7 +63,6 @@ function OpenConversation(ClickedUserId){
                     .then(function (messages) {
                         let output = AddConversationToDom(conversation, messages)
                         $(".conversationWrapper").append(output);
-                        MessagingEvents()
                     })
                 })
             }
@@ -128,7 +96,6 @@ function ActiveConvo() {
                 .then(function (messages) {
                     let output = AddConversationToDom(convo, messages)
                     $(".conversationWrapper").append(output);
-                    MessagingEvents()
                 })
             }
         })
@@ -137,7 +104,6 @@ function ActiveConvo() {
 
 function UpdateConversationMessages() {
     let Conversations = $(".conversation").toArray();
-
     ActiveConversations.forEach(function (convo) {
         Conversations.forEach(function (c) {
             let co = $(c)
@@ -146,9 +112,8 @@ function UpdateConversationMessages() {
                 GetAllConversationMessages(convo)
                 .then(function (messages) {
                     y.html("")
-                    messages.forEach(function (m) {
-                        y.append(`<p class="convoMessage">${m.messageText}</p>`)
-                    })
+                    let DomMessage = AddMessagesToConversation(messages)
+                    y.append(DomMessage)
                 })
             }
         })
@@ -158,16 +123,56 @@ function UpdateConversationMessages() {
 function UpdateUnseenMessages() {
     GetUserMessageNotifications()
     .then(function (notifications) {
+        $(".messageNotificationArea").html("")
         notifications.forEach(function (n) {
             let noti =
-            `<div class='NewM' id='${n.SendingUser.UserId}' data='${n.MessageNotificationId}'>
-            <img src='${n.SendingUser.ProfileImg}' class='MnImg'/>
-            <a asp-action="Index" asp-controller="Profile" asp-route-id="@mn.SendingUser.UserId" class="MnName MnText">@mn.SendingUser.FirstName @mn.SendingUser.LastName</a>
-            <span class="MnText">sent you a new message!</span>
+            `<div class='NewM' id='${n.sendingUser.userId}' data='${n.MessageNotificationId}'>
+                <img src=${n.sendingUser.profileImg} class='MnImg'/>
+                <a asp-action="Index" asp-controller="Profile" asp-route-id="${n.sendingUser.userId}" class="MnName MnText">${n.sendingUser.firstName} ${n.sendingUser.lastName}</a>
+                <span class="MnText">sent you a new message!</span>
             </div>`
+
+            $(".MnCount").html(`(${notifications.length})`)
+            $(".messageNotificationArea").append(noti)
         })
     })
 }
+
+$("body").on("click", function (e) {
+    let context = $(e.target)
+    if (context.hasClass("hideConversation")) {
+        let conversation = $(context).parent().parent().parent()
+        conversation.addClass("minifiedConversation")
+        $(context).addClass("hidden")
+        $(context).siblings(".showConversation").removeClass("hidden")
+    }
+})
+
+$("body").on("click", function (e) {
+    let context = $(e.target)
+    if (context.hasClass("showConversation")) {
+        let conversation = $(context).parent().parent().parent()
+        conversation.removeClass("minifiedConversation")
+        $(context).addClass("hidden")
+        $(context).siblings(".hideConversation").removeClass("hidden")
+    }
+})
+
+$("body").on("click", function (e) {
+    let context = $(e.target)
+    if (context.hasClass("removeConversation")) {
+        let RemoveConversation = null
+        let conversation = $(context).parent().parent().parent()
+        let conversationId = conversation.attr("id")
+        EndAConversation(conversationId)
+        .then(function () {
+            console.log(ActiveConversations.length)
+            RemoveConversation = ActiveConversations.indexOf(conversationId)
+            RemoveConversation != -1 ? ActiveConversations.splice(RemoveConversation, 1) : false;
+            conversation.remove();
+        })
+    }
+})
 
 $("body").on("click", function (e) {
     let context = $(e.target)
@@ -180,9 +185,8 @@ $("body").on("click", function (e) {
             ConversationRoomName: conversationRoomName,
         }
 
-        console.log(conversationRoomName, ConversationMessageArea, text, NewMessage)
-
         SaveNewMessage(NewMessage)
+        //let DomMessage = AddMessagesToConversation(m)
         ConversationMessageArea.append(`<p>${NewMessage.MessageText}</p>`)
     }
 })

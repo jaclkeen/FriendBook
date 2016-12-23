@@ -158,6 +158,30 @@
     margin-top: 0!important;
 }
 
+.message{
+    margin-bottom: 2%;
+    margin-top: 2%;
+    width: 98%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+}
+
+.messageSenderImage{
+    width: 15%;
+    display: inline-block;
+}
+
+.convoMessage{
+    border: 2px solid black;
+    width: 80%;
+    max-width: 75%;
+    padding: 1%;
+    background: white;
+    vertical-align: middle;
+    display: inline-block;
+    border-radius: 10px;
+}
+
 .messageProfileImg{
     background: white;
     vertical-align: middle;
