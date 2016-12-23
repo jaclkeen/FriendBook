@@ -1,4 +1,10 @@
 ﻿let ActiveConversations = []
+let user;
+
+GetCurrentUser()
+.then(function (u) {
+    user = u
+})
 
 function AddMessagesToConversation(messages) {
     let ConversationMessage = ""
@@ -7,9 +13,9 @@ function AddMessagesToConversation(messages) {
         messages.forEach(function (message) {
             ConversationMessage +=
                 `<div class="message"">
-                <img class ="messageSenderImage" src="${message.sendingUser.profileImg}">
-                <p class ="convoMessage">${message.messageText}</p>
-            </div>`
+                    <img class ="messageSenderImage" src="${message.sendingUser.profileImg}">
+                    <p class ="convoMessage">${message.messageText}</p>
+                </div>`
         })
     }
 
@@ -17,13 +23,22 @@ function AddMessagesToConversation(messages) {
 }
 
 function AddConversationToDom(conversation, message, AConvo) {
-
+    let conversationName = ""
     let messages = AddMessagesToConversation(message)
+    let i = 0
+    let messageTitle = ""
+    
+    if (conversation.conversationReciever.firstName + conversation.conversationReciever.lastName === user.firstName + user.lastName) {
+        conversationName = conversation.conversationStarter.firstName + " " + conversation.conversationStarter.lastName
+    }
+    else {
+        conversationName = conversation.conversationReciever.firstName + " " + conversation.conversationReciever.lastName
+    }
 
     let convo = `<div class="conversation minifiedConversation" id="${conversation.conversationRoomName}">
             <div class="convoHead">
-                <div class="convoName">
-                    <h5>${conversation.conversationReciever.firstName} ${conversation.conversationReciever.lastName}</h5>
+                <div class ="convoName">
+                    <h5>${conversationName}</h5>
                 </div>
 
                 <div class="minifyOrExpand">
@@ -195,30 +210,21 @@ $("body").on("click", function (e) {
                     <p class ="convoMessage">${NewMessage.MessageText}</p>
                 </div>`
 
-            SaveNewMessage(NewMessage)
-            ConversationMessageArea.append(`${ConversationMessage}`)
+            if (NewMessage.MessageText != "") {
+                SaveNewMessage(NewMessage)
+                ConversationMessageArea.append(`${ConversationMessage}`)
+                $(context).siblings(".newMessage").val("")
+                //MATERIALIZE.TOAST MESSAGE ADDED
+            }
         })
     }
 })
 
-$(".MessageAreaUser, .NewM").on("click", function () {
+$(".MessageAreaUser").on("click", function () {
     let UserId = $(this).attr("id")
 
     OpenConversation(UserId)
 })
-
-//$(".NewM").on("click", function () {
-//    if ($(this).hasClass("MnName")) {
-//        return false;
-//    }
-
-//    $(this).remove()
-//    UpdateMessageSeen($(this).attr("data"))
-//    .then(function (UnseenMessageCount) {
-//        console.log(UnseenMessageCount)
-//        $(".MnCount").text(`(${UnseenMessageCount})`)
-//    })
-//})
 
 $("body").on("click", function (e) {
     let context = $(e.target)
@@ -228,15 +234,29 @@ $("body").on("click", function (e) {
     }
 
     else if ($(context).hasClass("NewM")) {
+        let UserId = $(context).attr("id")
         $(context).remove()
         UpdateMessageSeen($(context).attr("data"))
         .then(function (UnseenMessageCount) {
-            console.log(UnseenMessageCount)
             $(".MnCount").text(`(${UnseenMessageCount})`)
+            OpenConversation(UserId)
+        })
+    }
+
+    else if($(context).hasClass("MnText")){
+        let newContext = $(context).parent();
+        let UserId = $(newContext).attr("id")
+        $(newContext).remove()
+        UpdateMessageSeen($(newContext).attr("data"))
+        .then(function (UnseenMessageCount) {
+            $(".MnCount").text(`(${UnseenMessageCount})`)
+            OpenConversation(UserId)
         })
     }
 })
 
 ActiveConvo()
-setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)
-setInterval(UpdateUnseenMessages, 5000)
+if (user != null) {
+    setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)
+    setInterval(UpdateUnseenMessages, 5000)
+}

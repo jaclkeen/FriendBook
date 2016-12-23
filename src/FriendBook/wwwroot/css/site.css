@@ -12,7 +12,12 @@
 }
 
 .MnImg{
+    min-height: 53px;
+    max-height: 53px;
+    height: 53px;
     width: 30%;
+    min-width: 30%;
+    max-width: 30%;
     padding-right: 3%;
     float: left;
 }
@@ -442,9 +447,9 @@ hr{
 }
 
 .NoFR{
-    font-size: 1.3em;
+    font-size: 1.2em;
     text-align: center;
-    padding: 8%;
+    padding: 4%;
 }
 
 .receivedFR{

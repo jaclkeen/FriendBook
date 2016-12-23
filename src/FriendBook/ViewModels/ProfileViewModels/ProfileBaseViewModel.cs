@@ -56,10 +56,6 @@ namespace FriendBook.ViewModels
                             this.AreFriends = "blocked";
                         }
                     }
-                    //else
-                    //{
-                    //    this.AreFriends = "NoRelationship";
-                    //}
                 }
             }
 
