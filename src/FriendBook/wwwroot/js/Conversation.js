@@ -82,7 +82,7 @@ function OpenConversation(ClickedUserId){
                 })
             }
             else {
-                //MATERILIAZE.TOAST ONLY 4 ACTIVE CONVOS AT TIME
+                ToastNotification("Only 4 active conversations allowed at a time.. Close one to start another!")
             }
         }
         else {
@@ -214,7 +214,7 @@ $("body").on("click", function (e) {
                 SaveNewMessage(NewMessage)
                 ConversationMessageArea.append(`${ConversationMessage}`)
                 $(context).siblings(".newMessage").val("")
-                //MATERIALIZE.TOAST MESSAGE ADDED
+                ToastNotification("Message sent!")
             }
         })
     }
@@ -230,7 +230,7 @@ $("body").on("click", function (e) {
     let context = $(e.target)
 
     if ($(context).hasClass("MnName")) {
-        return false;
+        //return false;
     }
 
     else if ($(context).hasClass("NewM")) {

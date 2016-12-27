@@ -31,10 +31,6 @@
         })
     }
 
-    $(".frButton").on("click", function () {
-        location.reload()
-    })
-
     $('.userSearch').on("input", function(){
         getUsers()
         .then(function(users){
@@ -64,15 +60,13 @@
         if ($(this).hasClass("declineFR")) {
             DeclineFR(frId)
             .then(function (data) {
-                frHtml = `<p class="successFR">You declined ${frHtml[76]} ${frHtml[77]}'s friend request!</p>`
-                //Materialize.Toast(frHtml);
+                location.reload();
             })
         }
         else {
             AcceptFR(frId)
-            .then(function (data) {
-                frHtml = `<p class="successFR">You and ${frHtml[76]} ${frHtml[77]} are now friends!</p>`
-                //Materialize.Toast(frHtml);
+            .then(function(){
+                location.reload();
             })
         }
     })

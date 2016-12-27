@@ -1,4 +1,11 @@
-﻿function AddDislike(PostId) {
+﻿function ToastNotification(message) {
+    $(".toast").removeClass("hidden")
+    $(".toast").html(message)
+    $(".toast").fadeIn(2000)
+    $(".toast").fadeOut(5000)
+}
+
+function AddDislike(PostId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/Post/AddDislike",

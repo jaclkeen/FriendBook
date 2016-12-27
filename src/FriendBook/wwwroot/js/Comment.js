@@ -15,6 +15,7 @@
                 GetAllCommentsFromSpecificPost(CurrentPostId.attr("id"))
                 .then(function (comments) {
                     CommentCountHTML.html(`<span class="comments addSpaceRight"><i class="fa fa-comments statusIcon CSI"></i>(${comments.length})</span>`)
+                    ToastNotification("Comment deleted!")
                 })
             })
         }

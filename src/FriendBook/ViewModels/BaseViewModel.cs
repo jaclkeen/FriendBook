@@ -17,7 +17,17 @@ namespace FriendBook.ViewModels
 
         public Style CurrentUserStyle { get; set; }
 
+        public struct MN
+        {
+            public MessageNotification UniqueMN { get; set; }
+            public int UniqueMessageNotificationCount { get; set; }
+        }
+
         public List<MessageNotification> MessageNotifications { get; set; }
+
+        //public List<MessageNotification> MessageNotifications { get; set; }
+
+        //public int UniqueMessageNotificationCount { get; set; }
 
         private ActiveUser singleton = ActiveUser.Instance;
 
@@ -75,8 +85,10 @@ namespace FriendBook.ViewModels
             }
 
             //GET ALL MESSAGE NOTIFICATIONS FOR CURRENT USER
+
             List<MessageNotification> MN = context.MessageNotification.Where(mn => mn.RecievingUserId == UserId && mn.Seen == false).ToList();
             MN.ForEach(n => n.RecievingUser = context.User.Where(u => u.UserId == n.RecievingUserId).SingleOrDefault());
+
             MessageNotifications = MN;
 
             //GET LIST OF ALL FRIENDS OF A CURRENT USER

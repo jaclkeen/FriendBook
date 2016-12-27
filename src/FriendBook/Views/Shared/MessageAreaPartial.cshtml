@@ -1,4 +1,7 @@
 ﻿<div class="messagingContainer">
+    <h3 class="messageFriendCount">Friends (@Model.UserFriends.Count)</h3>
+    <input type="text" class="messageFriendSearch" placeholder="Filter..."/>
+
     @foreach (var user in Model.UserFriends)
     {
         <div class="MessageAreaUser" id="@user.UserId">
