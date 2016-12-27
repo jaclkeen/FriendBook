@@ -155,6 +155,43 @@ function UpdateUnseenMessages() {
     })
 }
 
+function AddUserFriendsToDom(friends) {
+    $(".UserFriendsList").html("")
+
+    if (friends.length > 1) {
+        friends.forEach(function (friend) {
+            $(".UserFriendsList").append(`<div class="MessageAreaUser" id="${friend.userId}">
+                <img src= ${friend.profileImg} class="messageProfileImg" />
+                <span class="MessageAreaName">${friend.firstName} ${friend.lastName}</span>
+            </div>`)
+        })
+    }
+    else {
+        $(".UserFriendsList").append(`<div class="MessageAreaUser" id="${friends[0].userId}">
+                <img src= "${friends[0].profileImg}" class="messageProfileImg" />
+                <span class="MessageAreaName">${friends[0].firstName} ${friends[0].lastName}</span>
+            </div>`)
+    }
+}
+
+$(".messageFriendSearch").on("input", function () {
+    let search = $(this).val().toLowerCase()
+    let FoundFriends = []
+    GetCurrentUserFriends()
+    .then(function (friends) {
+        friends.forEach(function (friend) {
+            let FullName = friend.firstName + friend.lastName
+            search === FullName.toLowerCase() ? FoundFriends.push(friend) : false
+            search === friend.firstName.toLowerCase() ? FoundFriends.push(friend) : false
+            search === friend.lastName.toLowerCase() ? FoundFriends.push(friend) : false
+            search === "" ? AddUserFriendsToDom(friends) : false
+
+        })
+
+        FoundFriends.length > 0 ? AddUserFriendsToDom(FoundFriends) : false
+    })
+})
+
 $("body").on("click", function (e) {
     let context = $(e.target)
     if (context.hasClass("hideConversation")) {
@@ -220,18 +257,29 @@ $("body").on("click", function (e) {
     }
 })
 
-$(".MessageAreaUser").on("click", function () {
+$(".sendMessageToUser").on("click", function () {
     let UserId = $(this).attr("id")
-
     OpenConversation(UserId)
 })
 
 $("body").on("click", function (e) {
     let context = $(e.target)
-
-    if ($(context).hasClass("MnName")) {
-        //return false;
+    if (context.hasClass("MessageAreaUser")) {
+        let UserId = $(context).attr("id")
+        OpenConversation(UserId)
     }
+
+    else if (context.hasClass("MessageAreaName") || context.hasClass("messageProfileImg")) {
+        let UserId = $(context).parent().attr("id")
+        OpenConversation(UserId)
+    }
+
+})
+
+$("body").on("click", function (e) {
+    let context = $(e.target)
+
+    if ($(context).hasClass("MnName")) {}
 
     else if ($(context).hasClass("NewM")) {
         let UserId = $(context).attr("id")

@@ -61,6 +61,7 @@
     height: 212px;
     max-height: 212px;
     overflow-y: overlay;
+    overflow-x: hidden;
     clear: both;
     padding-top: 1%;
 }

@@ -5,6 +5,18 @@
     $(".toast").fadeOut(5000)
 }
 
+function GetCurrentUserFriends() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Home/UserFriends"
+        }).done(function (friends) {
+            resolve(friends)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
 function AddDislike(PostId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
