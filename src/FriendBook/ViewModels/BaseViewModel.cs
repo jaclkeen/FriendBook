@@ -17,17 +17,7 @@ namespace FriendBook.ViewModels
 
         public Style CurrentUserStyle { get; set; }
 
-        public struct MN
-        {
-            public MessageNotification UniqueMN { get; set; }
-            public int UniqueMessageNotificationCount { get; set; }
-        }
-
         public List<MessageNotification> MessageNotifications { get; set; }
-
-        //public List<MessageNotification> MessageNotifications { get; set; }
-
-        //public int UniqueMessageNotificationCount { get; set; }
 
         private ActiveUser singleton = ActiveUser.Instance;
 
