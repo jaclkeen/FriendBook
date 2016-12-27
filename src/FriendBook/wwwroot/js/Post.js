@@ -31,6 +31,22 @@ $(".post").on("click", function (e) {
     let CurrentPost = $(e.currentTarget);
     let CurrentPostId = CurrentPost.attr("id")
 
+    if (e.target.classList.contains("like")) {
+        let context = $(e.target)
+        AddLike(CurrentPostId)
+        .then(function (LikeCount) {
+            context.closest(".likeCount").html(`<i class="fa fa-thumbs-up statusIcon like"></i>(${LikeCount})`)
+        })
+    }
+
+    if (e.target.classList.contains("dislike")) {
+        let context = $(e.target)
+        AddDislike(CurrentPostId)
+        .then(function (DislikeCount) {
+            context.closest(".dislikeCount").html(`<i class="fa fa-thumbs-down statusIcon dislike"></i>(${DislikeCount})`)
+        })
+    }
+
     if (e.target.classList.contains("EditPost")) {
         AppendPostEdit(e);
     }

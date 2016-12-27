@@ -18,24 +18,6 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
-        public IActionResult AddLike([FromRoute] int id)
-        {
-            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
-            post.Likes++;
-
-            context.SaveChanges();
-            return RedirectToAction("Index", "Home");
-        }
-
-        public IActionResult AddDislike([FromRoute] int id)
-        {
-            Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
-            post.Dislikes++;
-
-            context.SaveChanges();
-            return RedirectToAction("Index", "Home");
-        }
-
         public IActionResult DeletePost([FromRoute] int id)
         {
             Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
@@ -44,24 +26,26 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult AddProfileLike([FromRoute] int id)
+        [HttpPost]
+        public int AddLike([FromBody] int id)
         {
             Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
-            int userId = post.UserId;
             post.Likes++;
 
             context.SaveChanges();
-            return RedirectToAction("Index", "Profile", new { id = userId });
+
+            return post.Likes;
         }
 
-        public IActionResult AddProfileDislike([FromRoute] int id)
+        [HttpPost]
+        public int AddDislike([FromBody] int id)
         {
             Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
-            int userId = post.UserId;
             post.Dislikes++;
 
             context.SaveChanges();
-            return RedirectToAction("Index", "Profile", new { id = userId });
+
+            return post.Dislikes;
         }
 
         [HttpPost]

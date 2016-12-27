@@ -11,6 +11,10 @@
     left: 1.3%;
 }
 
+.like, .dislike{
+    cursor: pointer;
+}
+
 .MnImg{
     min-height: 53px;
     max-height: 53px;

@@ -36,8 +36,8 @@
         }
 
         <div class="LikeDislikeCommentDiv">
-            <a asp-action="AddProfileLike" asp-controller="Post" asp-route-id="@s.PostId" class="addSpaceRight like"><i class="fa fa-thumbs-up statusIcon"></i>(@s.Likes)</a>
-            <a asp-action="AddProfileDislike" asp-controller="Post" asp-route-id="@s.PostId" class="addSpaceRight dislike"><i class="fa fa-thumbs-down statusIcon"></i>(@s.Dislikes)</a>
+            <a class="addSpaceRight like likeCount"><i class="fa fa-thumbs-up statusIcon like"></i>(@s.Likes)</a>
+            <a class="addSpaceRight dislike dislikeCount"><i class="fa fa-thumbs-down statusIcon dislike"></i>(@s.Dislikes)</a>
             <span class="comments addSpaceRight"><i class="fa fa-comments statusIcon CSI"></i>(@s.Comments.Count)</span>
         </div><hr />
 

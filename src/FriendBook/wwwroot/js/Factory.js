@@ -1,4 +1,34 @@
-﻿function GetUserMessageNotifications() {
+﻿function AddDislike(PostId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Post/AddDislike",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(PostId)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function AddLike(PostId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Post/AddLike",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(PostId)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetUserMessageNotifications() {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/Conversation/MessageNotifications"
