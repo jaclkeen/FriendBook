@@ -75,8 +75,10 @@ namespace FriendBook.ViewModels
             }
 
             //GET ALL MESSAGE NOTIFICATIONS FOR CURRENT USER
+
             List<MessageNotification> MN = context.MessageNotification.Where(mn => mn.RecievingUserId == UserId && mn.Seen == false).ToList();
             MN.ForEach(n => n.RecievingUser = context.User.Where(u => u.UserId == n.RecievingUserId).SingleOrDefault());
+
             MessageNotifications = MN;
 
             //GET LIST OF ALL FRIENDS OF A CURRENT USER

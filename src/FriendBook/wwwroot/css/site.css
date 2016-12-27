@@ -11,8 +11,17 @@
     left: 1.3%;
 }
 
+.like, .dislike{
+    cursor: pointer;
+}
+
 .MnImg{
+    min-height: 53px;
+    max-height: 53px;
+    height: 53px;
     width: 30%;
+    min-width: 30%;
+    max-width: 30%;
     padding-right: 3%;
     float: left;
 }
@@ -44,25 +53,15 @@
     border-bottom: 2px solid black;
 }
 
-.conversation{
-    bottom: 270px;
-    height: 270px;
-    width: 24%;
-    position: relative;
-    border: 2px solid black;
-    background: white;
-    margin-right: .4%;
-    display: inline-block;
-}
-
 .convoMessage{
     padding: .5%;
 }
 
 .convoMessageContainer{
-    height: 155px;
-    max-height: 155px;
+    height: 212px;
+    max-height: 212px;
     overflow-y: overlay;
+    overflow-x: hidden;
     clear: both;
     padding-top: 1%;
 }
@@ -108,6 +107,17 @@
     width: 25%
 }
 
+.conversation{
+    bottom: 325px;
+    height: 325px;
+    width: 24%;
+    position: relative;
+    border: 2px solid black;
+    background: white;
+    margin-right: .4%;
+    display: inline-block;
+}
+
 .minifiedConversation{
     bottom: 42px;
 }
@@ -119,10 +129,19 @@
     position: fixed;
     margin-top: 3%;
     overflow-y: overlay;
+    overflow-x: hidden;
     margin-left: 64%;
     width: 25%;
     height: 535px;
     background: white;
+}
+
+.messageFriendSearch{
+    margin-bottom: 2%!important;
+    padding: 2%;
+    width: 96%;
+    border: 2px solid black;
+    margin: auto;
 }
 
 .MessageAreaName{
@@ -131,13 +150,13 @@
 }
 
 .MessageAreaUser{
+    margin-right: 4%;
     cursor: pointer;
     margin-bottom: 2%;
 }
 
 .submitNewMessage{
     float: right;
-    margin-top: 1%;
     width: 25%;
     padding-left: 11%;
     padding-top: 8%;
@@ -226,11 +245,19 @@
     border-left: 2px solid black;
     border-right: 2px solid black;
     border-bottom: 2px solid black;
+    max-height: 347px;
+    overflow-x: overlay;
+}
+
+.messageFriendCount{
+    margin-top: 0;
 }
 
 .notificationProfileImg{
+    background: white;
     width: 35%;
     min-height: 65px;
+    max-height: 65px;
     float: left;
     margin-right: 3%;
 }
@@ -280,6 +307,19 @@
     background: #c9302c;
     border-radius: 20px;
     margin-right: 5%;
+}
+
+.toast{
+    text-align: center;
+    width: 14%;
+    max-width: 14%;
+    min-width: 14%;
+    font-weight: bolder;
+    position: fixed;
+    margin-top: 5%;
+    margin-left: 49%;
+    padding: .5%;
+    border-radius: 10px;
 }
 
 .deletePost:hover{
@@ -442,9 +482,9 @@ hr{
 }
 
 .NoFR{
-    font-size: 1.3em;
+    font-size: 1.2em;
     text-align: center;
-    padding: 8%;
+    padding: 4%;
 }
 
 .receivedFR{
@@ -943,10 +983,6 @@ a{
     font-size: 2em;
     margin-left: 2%;
 }
-
-/*.selectedAlbumDescription{
-
-}*/
 
 .albumDetailDiv{
     width: 96%;

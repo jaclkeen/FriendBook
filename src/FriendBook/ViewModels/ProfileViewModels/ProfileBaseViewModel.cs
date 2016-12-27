@@ -33,40 +33,31 @@ namespace FriendBook.ViewModels
             UserStyle = style;
 
             List<Relationship> relationships = ctx.Relationship.Where(r => r.ReciverUserId == UserProfileId || r.SenderUserId == UserProfileId).ToList();
+            this.AreFriends = "NoRelationship";
 
-            if (relationships.Count > 0)
-            {
-                foreach (Relationship r in relationships)
+            foreach (Relationship r in relationships)
                 {
                     if (r.SenderUserId == LoggedInUser.UserId || r.ReciverUserId == LoggedInUser.UserId)
                     {
                         if (r.Status == 0)
                         {
-                            AreFriends = "Pending";
-                            break;
+                            this.AreFriends = "Pending";
                         }
                         else if (r.Status == 1)
                         {
-                            AreFriends = "yes";
-                            break;
+                            this.AreFriends = "yes";
                         }
                         else if (r.Status == 2)
                         {
-                            AreFriends = "no";
-                            break;
+                            this.AreFriends = "no";
                         }
-                        else
+                        else if(r.Status == 3)
                         {
-                            AreFriends = "blocked";
+                            this.AreFriends = "blocked";
                         }
                     }
                 }
-
-                if (AreFriends == null)
-                {
-                    AreFriends = "NoRelationship";
-                }
             }
-        }
+
     }
 }

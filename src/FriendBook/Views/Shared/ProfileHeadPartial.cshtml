@@ -58,7 +58,7 @@ else
             <span class="pending profileNavItem">Pending</span>
         </div>
     }
-    @if (Model.AreFriends == "yes")
+    @if (Model.AreFriends == "yes" && Model.UserProfile.UserId != Model.CurrentUser.UserId)
     {
         <div class="navTab">
             <i class="fa fa-check-square profileNavIcon"></i>
@@ -95,5 +95,12 @@ else
                 <span class="updateStyling profileNavItem">Styling</span>
             </div>
         </a>
+    }
+    else
+    {
+        <div class="navTab sendMessageToUser" id="@Model.UserProfile.UserId">
+            <i class="fa fa-commenting-o profileNavIcon"></i>
+            <span class="updateStyling profileNavItem">Message</span>
+        </div>
     }
 </div>

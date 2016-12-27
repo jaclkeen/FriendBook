@@ -1,9 +1,14 @@
 ﻿<div class="messagingContainer">
-    @foreach (var user in Model.UserFriends)
-    {
-        <div class="MessageAreaUser" id="@user.UserId">
-            <img src="@user.ProfileImg" class="messageProfileImg" />
-            <span class="MessageAreaName">@user.FirstName @user.LastName</span>
-        </div>
-    }
+    <h3 class="messageFriendCount">Friends (@Model.UserFriends.Count)</h3>
+    <input type="text" class="messageFriendSearch" placeholder="Filter..."/>
+
+    <div class="UserFriendsList">
+        @foreach (var user in Model.UserFriends)
+        {
+            <div class="MessageAreaUser" id="@user.UserId">
+                <img src="@user.ProfileImg" class="messageProfileImg" />
+                <span class="MessageAreaName">@user.FirstName @user.LastName</span>
+            </div>
+        }
+    </div>
 </div>

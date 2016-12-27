@@ -31,6 +31,24 @@ $(".post").on("click", function (e) {
     let CurrentPost = $(e.currentTarget);
     let CurrentPostId = CurrentPost.attr("id")
 
+    if (e.target.classList.contains("like")) {
+        let context = $(e.target)
+        AddLike(CurrentPostId)
+        .then(function (LikeCount) {
+            context.closest(".likeCount").html(`<i class="fa fa-thumbs-up statusIcon like"></i>(${LikeCount})`)
+            ToastNotification("Post liked!")
+        })
+    }
+
+    if (e.target.classList.contains("dislike")) {
+        let context = $(e.target)
+        AddDislike(CurrentPostId)
+        .then(function (DislikeCount) {
+            context.closest(".dislikeCount").html(`<i class="fa fa-thumbs-down statusIcon dislike"></i>(${DislikeCount})`)
+            ToastNotification("Post disliked!")
+        })
+    }
+
     if (e.target.classList.contains("EditPost")) {
         AppendPostEdit(e);
     }
@@ -62,6 +80,7 @@ $(".post").on("click", function (e) {
                         CurrentPost.children(".CommentArea").append(NewCommentDiv)
                         CommentEventsForDeleteAndEdit()
                         ClickedCommentButtonTextArea.val("")
+                        ToastNotification("Comment posted!")
                     })
                     $(CommentTag).html(`<span class="comments addSpaceRight"><i class="fa fa-comments statusIcon CSI"></i>(${CommentCount})</span>`)
                 })

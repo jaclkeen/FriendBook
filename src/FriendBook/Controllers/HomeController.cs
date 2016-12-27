@@ -120,6 +120,32 @@ namespace FriendBook.Controllers
         }
 
         [HttpGet]
+        public List<User> UserFriends()
+        {
+            int CurrentUserId = ActiveUser.Instance.User.UserId;
+            List<User> CurrentUserFriends = new List<User> { };
+            List<Relationship> UserRelationships = 
+                (from r in context.Relationship
+                where r.ReciverUserId == CurrentUserId && r.Status == 1 || r.SenderUserId == CurrentUserId && r.Status == 1
+                select r).ToList();
+
+            foreach(Relationship r in UserRelationships)
+            {
+                if(r.SenderUserId == CurrentUserId)
+                {
+                    CurrentUserFriends.Add(context.User.Where(u => u.UserId == r.ReciverUserId).SingleOrDefault());
+                }
+
+                else
+                {
+                    CurrentUserFriends.Add(context.User.Where(u => u.UserId == r.SenderUserId).SingleOrDefault());
+                }
+            }
+
+            return CurrentUserFriends;
+        }
+
+        [HttpGet]
         public User GetCurrentUser()
         {
             int UserId = ActiveUser.Instance.User.UserId;

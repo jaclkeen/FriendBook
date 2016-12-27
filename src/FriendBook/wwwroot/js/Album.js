@@ -17,7 +17,6 @@ $(".createAlbum").on("click", function () {
 
     CreateAlbum(album)
     .then(function (success) {
-        
     })
 })
 

@@ -1,4 +1,53 @@
-﻿function GetUserMessageNotifications() {
+﻿function ToastNotification(message) {
+    $(".toast").removeClass("hidden")
+    $(".toast").html(message)
+    $(".toast").fadeIn(2000)
+    $(".toast").fadeOut(5000)
+}
+
+function GetCurrentUserFriends() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Home/UserFriends"
+        }).done(function (friends) {
+            resolve(friends)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function AddDislike(PostId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Post/AddDislike",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(PostId)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function AddLike(PostId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Post/AddLike",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(PostId)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetUserMessageNotifications() {
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/Conversation/MessageNotifications"
