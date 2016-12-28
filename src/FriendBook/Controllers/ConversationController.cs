@@ -10,7 +10,7 @@ namespace FriendBook.Controllers
 {
     public class ConversationController : Controller
     {
-        private FriendBookContext context; 
+        private FriendBookContext context;
 
         public ConversationController(FriendBookContext ctx)
         {
@@ -35,6 +35,7 @@ namespace FriendBook.Controllers
             {
                 ConvoExists1.ConversationStarter = ActiveUser.Instance.User;
                 ConvoExists1.ConversationReciever = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
+
                 return ConvoExists1;
             }
 
@@ -42,6 +43,7 @@ namespace FriendBook.Controllers
             {
                 ConvoExists2.ConversationStarter = context.User.Where(u => u.UserId == RecievingUserId).SingleOrDefault();
                 ConvoExists2.ConversationReciever = ActiveUser.Instance.User;
+
                 return ConvoExists2;
             }
 
@@ -50,7 +52,8 @@ namespace FriendBook.Controllers
                 ConversationRoomName = CurrentUserId.ToString() + RecievingUserId.ToString(),
                 ConversationStarterId = CurrentUserId,
                 ConversationRecieverId = RecievingUserId,
-                IsActive = false
+                ConversationStarterIsActive = false,
+                ConversationRecieverIsActive = false
             };
 
             context.Conversation.Add(c);
@@ -73,11 +76,26 @@ namespace FriendBook.Controllers
         public List<Conversation> ActiveConversations()
         {
             int UId = ActiveUser.Instance.User.UserId;
-            List<Conversation> conversations = context.Conversation.Where(c => c.ConversationRecieverId == UId || c.ConversationStarterId == UId).ToList();
-            conversations.ForEach(co => co.ConversationReciever = context.User.Where(u => u.UserId == co.ConversationRecieverId).SingleOrDefault());
-            conversations.ForEach(co => co.ConversationStarter = context.User.Where(u => u.UserId == co.ConversationStarterId).SingleOrDefault());
+            List<Conversation> ActiveUserConversations = new List<Conversation> { };
+            List<Conversation> UserConversations = context.Conversation.Where(c => c.ConversationRecieverId == UId || c.ConversationStarterId == UId).ToList();
 
-            return conversations.Where(convo => convo.IsActive == true).ToList();
+            foreach(Conversation c in UserConversations)
+            {
+                if(c.ConversationRecieverId == UId && c.ConversationRecieverIsActive == true)
+                {
+                    c.ConversationStarter = context.User.Where(u => u.UserId == c.ConversationStarterId).SingleOrDefault();
+                    c.ConversationReciever = ActiveUser.Instance.User;
+                    ActiveUserConversations.Add(c);
+                }
+                else if (c.ConversationStarterId == UId && c.ConversationStarterIsActive == true)
+                {
+                    c.ConversationStarter = ActiveUser.Instance.User;
+                    c.ConversationReciever = context.User.Where(u => u.UserId == c.ConversationRecieverId).SingleOrDefault();
+                    ActiveUserConversations.Add(c);
+                }
+            }
+
+            return ActiveUserConversations;
         }
 
         /**
@@ -106,13 +124,44 @@ namespace FriendBook.Controllers
         public void EndConversation([FromBody] int id)
         {
             Conversation c = context.Conversation.Where(co => co.ConversationRoomName == id.ToString()).SingleOrDefault();
-            c.IsActive = false;
+
+            if (c.ConversationStarterId == ActiveUser.Instance.User.UserId)
+            {
+                c.ConversationStarterIsActive = false;
+            }
+            else
+            {
+                c.ConversationRecieverIsActive = false;
+            }
 
             context.SaveChanges();
         }
 
         /**
-        * Purpose: To retrieve all message notifications where the recievingUser is the current user
+        * Purpose: Activates an existing conversation
+        * Arguments:
+        *      int RoomName - the Conversation roomName that is being activated
+        * Return:
+        *      None
+        */
+        [HttpPost]
+        public void ActivateConversation([FromBody] int RoomName)
+        {
+            Conversation convo = context.Conversation.Where(c => c.ConversationRoomName == RoomName.ToString()).SingleOrDefault();
+
+            if (convo.ConversationStarterId == ActiveUser.Instance.User.UserId)
+            {
+                convo.ConversationStarterIsActive = true;
+            }
+            else
+            {
+                convo.ConversationRecieverIsActive = true;
+            }
+
+            context.SaveChanges();
+        }
+
+        /** Purpose: To retrieve all message notifications where the recievingUser is the current user
         * Arguments:
         *      None
         * Return:
@@ -127,20 +176,6 @@ namespace FriendBook.Controllers
             return MN;
         }
 
-        /**
-        * Purpose: Activates an existing conversation
-        * Arguments:
-        *      int RoomName - the Conversation roomName that is being activated
-        * Return:
-        *      None
-        */
-        [HttpPost]
-        public void ActivateConversation([FromBody] int RoomName)
-        {
-            Conversation convo = context.Conversation.Where(c => c.ConversationRoomName == RoomName.ToString()).SingleOrDefault();
-            convo.IsActive = true;
-            context.SaveChanges();
-        }
 
         /**
         * Purpose: Method that sets a particular MessageNotification's seen property to true
