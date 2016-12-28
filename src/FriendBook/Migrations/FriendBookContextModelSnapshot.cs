@@ -63,9 +63,11 @@ namespace FriendBook.Migrations
 
                     b.Property<int>("ConversationRecieverId");
 
+                    b.Property<bool>("ConversationRecieverIsActive");
+
                     b.Property<int>("ConversationStarterId");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("ConversationStarterIsActive");
 
                     b.HasKey("ConversationRoomName");
 

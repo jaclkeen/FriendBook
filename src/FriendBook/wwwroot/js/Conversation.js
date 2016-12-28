@@ -31,7 +31,7 @@ function AddConversationToDom(conversation, message, AConvo) {
     let i = 0
     let messageTitle = ""
     
-    if (conversation.conversationReciever.firstName + conversation.conversationReciever.lastName === user.firstName + user.lastName) {
+    if (conversation.conversationReciever.userId === user.userId) {
         conversationName = conversation.conversationStarter.firstName + " " + conversation.conversationStarter.lastName
     }
     else {
@@ -67,17 +67,20 @@ function AddConversationToDom(conversation, message, AConvo) {
 //Purpose: To create a function that creates a new conversation, ensures there are less than 4 conversations open,
 //          ensures the conversation being opened isn't already open, and appends the conversation along with its
 //          messages to the DOM
-function OpenConversation(ClickedUserId){
-    if($(this).hasClass("MnName")){
-        return false;
-    }
+function OpenConversation(ClickedUserId) {
+    let CurrentUserIsRecieverUser = false
+    let CurrentUserIsStartingUser = false
 
     CreateNewConversation(ClickedUserId)
     .then(function (conversation) {
-        if (conversation.isActive == false) {
-            console.log(ActiveConversations.length)
+
+        conversation.conversationStarterId === user.userId ? CurrentUserIsStartingUser = true
+                : CurrentUserIsRecieverUser = true
+
+        //IF THE CONVERSATION IS NOT ACTIVE, IF THERE ARE NOT CURRENTLY 4 ACTIVE CONVERSATIONS, AND
+        if (CurrentUserIsRecieverUser && conversation.conversationRecieverIsActive == false || CurrentUserIsStartingUser && conversation.conversationStarterIsActive == false) {
             if (ActiveConversations.length < 4) {
-                ActiveConversations.indexOf(conversation.conversationRoomName) === -1 ? ActiveConversations.push(conversation.conversationRoomName) : false;
+                ActiveConversations.push(conversation.conversationRoomName)
                 SetConversationAsActive(conversation.conversationRoomName)
                 .then(function () {
                     GetAllConversationMessages(conversation.conversationRoomName)
