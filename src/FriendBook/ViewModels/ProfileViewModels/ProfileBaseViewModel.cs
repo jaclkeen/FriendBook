@@ -17,6 +17,16 @@ namespace FriendBook.ViewModels
 
         public string AreFriends { get; set; }
 
+        /**
+        * Purpose:  Provide a BaseViewModel for all Profile type views to prevent copying code, by setting properties
+        *           common to all profile based views on creation of each profile based view model. Each of these profile
+        *           based view models inherit from the ProfileBaseViewModel.
+        * Arguments:
+        *      FriendBookContext ctx - Gives access and connection to the database
+        *      int UserProfileId - the UserId of the current profile that is being visited.
+        * Return:
+        *      None
+        */
         public ProfileBaseViewModel(FriendBookContext ctx, int UserProfileId) : base(ctx)
         {
             //WHEN A NEW INSTANCE OF PROFILEBASEVIEWMODEL IS CREATED, IT GETS THE CURRENT USER PROFILES ID AND SETS THE
@@ -29,9 +39,11 @@ namespace FriendBook.ViewModels
             User user = ctx.User.Where(u => u.UserId == UserProfileId).SingleOrDefault();
             UserProfile = user;
 
+            //SETS THE CURRENT USER'S STYLE OF THE PROFILE BEING VISITED
             Style style = ctx.Style.Where(s => s.UserId == UserProfileId).SingleOrDefault();
             UserStyle = style;
 
+            //DETERMINES THE RELATIONSHIP BETWEEN THE CURRENT USER AND THE USER'S PROFILE THAT IS BEING VISITED
             List<Relationship> relationships = ctx.Relationship.Where(r => r.ReciverUserId == UserProfileId || r.SenderUserId == UserProfileId).ToList();
             this.AreFriends = "NoRelationship";
 

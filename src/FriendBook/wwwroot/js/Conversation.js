@@ -1,11 +1,13 @@
 ﻿let ActiveConversations = []
 let user;
 
+//Purpose: To set the current user
 GetCurrentUser()
 .then(function (u) {
     user = u
 })
 
+//Purpose: To create a DOM element for all messages to a particular conversation
 function AddMessagesToConversation(messages) {
     let ConversationMessage = ""
 
@@ -22,6 +24,7 @@ function AddMessagesToConversation(messages) {
     return ConversationMessage
 }
 
+//Purpose: To create a DOM element for a new conversation
 function AddConversationToDom(conversation, message, AConvo) {
     let conversationName = ""
     let messages = AddMessagesToConversation(message)
@@ -61,6 +64,9 @@ function AddConversationToDom(conversation, message, AConvo) {
     return convo;
 }
 
+//Purpose: To create a function that creates a new conversation, ensures there are less than 4 conversations open,
+//          ensures the conversation being opened isn't already open, and appends the conversation along with its
+//          messages to the DOM
 function OpenConversation(ClickedUserId){
     if($(this).hasClass("MnName")){
         return false;
@@ -101,6 +107,8 @@ function OpenConversation(ClickedUserId){
     })
 }
 
+//Purpose: On page load, get all active conversation and append them with their messages to the DOM. This is used to 
+//          carry conversations over from page to page.
 function ActiveConvo() {
     UserActiveConversations()
     .then(function (conversations) {
@@ -117,6 +125,7 @@ function ActiveConvo() {
     })
 }
 
+//Purpose: searches through all conversations in the conversation array and looks for messages for that conversation
 function UpdateConversationMessages() {
     let Conversations = $(".conversation").toArray();
 
@@ -136,6 +145,7 @@ function UpdateConversationMessages() {
     })
 }
 
+//Purpose: To load all message notifications where the current user is the recieving user and append them to the dom
 function UpdateUnseenMessages() {
     GetUserMessageNotifications()
     .then(function (notifications) {
@@ -155,6 +165,7 @@ function UpdateUnseenMessages() {
     })
 }
 
+//Purpose: Creates a DOM element and appends for each friend that is passed into the function in the friend search message area
 function AddUserFriendsToDom(friends) {
     $(".UserFriendsList").html("")
 
@@ -174,6 +185,9 @@ function AddUserFriendsToDom(friends) {
     }
 }
 
+//Purpose: Event listener for the friend search area that gets the current user's friend and determines if any of 
+//          those friends fullname, firstname, or lastname matches the input of the search input. If it does, it calls
+//          the AddUserFriendsToDom function the user(s) to the dom.
 $(".messageFriendSearch").on("input", function () {
     let search = $(this).val().toLowerCase()
     let FoundFriends = []
@@ -192,6 +206,8 @@ $(".messageFriendSearch").on("input", function () {
     })
 })
 
+//Purpose: To create an event listener that hides a particular conversations (slides down the page) when the - button 
+//          is clicked
 $("body").on("click", function (e) {
     let context = $(e.target)
     if (context.hasClass("hideConversation")) {
@@ -202,6 +218,8 @@ $("body").on("click", function (e) {
     }
 })
 
+//Purpose: To create an event listener that shows a particular conversation (slides up the page) when the + button
+//          is clicked
 $("body").on("click", function (e) {
     let context = $(e.target)
     if (context.hasClass("showConversation")) {
@@ -212,6 +230,7 @@ $("body").on("click", function (e) {
     }
 })
 
+//Purpose: To create an event listener that removes and ends a particular conversation when the x button is clicked
 $("body").on("click", function (e) {
     let context = $(e.target)
     if (context.hasClass("removeConversation")) {
@@ -228,6 +247,8 @@ $("body").on("click", function (e) {
     }
 })
 
+//Purpose: To create an event listener that submits and posts a new message to a conversation when the submit button
+//          is pressed in a conversation
 $("body").on("click", function (e) {
     let context = $(e.target)
     if (context.hasClass("submitNewMessage")) {
@@ -253,15 +274,20 @@ $("body").on("click", function (e) {
                 $(context).siblings(".newMessage").val("")
                 ToastNotification("Message sent!")
             }
+            else {
+                ToastNotification("You cannot send an empty message!")
+            }
         })
     }
 })
 
+//Purpose: To create an event listener that opens a conversation when a user is clicked on in a user's profile page
 $(".sendMessageToUser").on("click", function () {
     let UserId = $(this).attr("id")
     OpenConversation(UserId)
 })
 
+//Purpose: To create an event listener that opens a conversation when a user is clicked on in the userFriends message area
 $("body").on("click", function (e) {
     let context = $(e.target)
     if (context.hasClass("MessageAreaUser")) {
@@ -276,6 +302,7 @@ $("body").on("click", function (e) {
 
 })
 
+//Purpose: Removes a message notification, updates the notification count, and posts that notification as seen
 $("body").on("click", function (e) {
     let context = $(e.target)
 
@@ -303,7 +330,10 @@ $("body").on("click", function (e) {
     }
 })
 
+//Purpose: To call ActiveConvo each time the page loads in order to always show the current user's active conversations
 ActiveConvo()
+
+//Purpose: If there is a user logged in, search for new messages, and message notifications every 5 seconds
 if (user != null) {
     setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)
     setInterval(UpdateUnseenMessages, 5000)

@@ -16,7 +16,15 @@ namespace FriendBook.Controllers
         {
             context = ctx;
         }
-        
+
+        /**
+        * Purpose: Method that is called in JavaScript to create a new Conversation between 2 users or return an
+        *           already existing one if it already exists.
+        * Arguments:
+        *      int RecievingUserId - The Recieving user of the conversation being created
+        * Return:
+        *      NewConvo - returns the conversation created or the one found
+        */
         public Conversation CreateConversation([FromBody] int RecievingUserId)
         {
             int CurrentUserId = ActiveUser.Instance.User.UserId;
@@ -55,6 +63,13 @@ namespace FriendBook.Controllers
             return NewConvo;
         }
 
+        /**
+        * Purpose: Method that is called in JavaScript to find all ActiveConversations of the currentUser
+        * Arguments:
+        *      None
+        * Return:
+        *     all active current user conversations
+        */
         public List<Conversation> ActiveConversations()
         {
             int UId = ActiveUser.Instance.User.UserId;
@@ -65,6 +80,13 @@ namespace FriendBook.Controllers
             return conversations.Where(convo => convo.IsActive == true).ToList();
         }
 
+        /**
+        * Purpose: To retrieve all messages within a conversation
+        * Arguments:
+        *      string conversationName - The conversation id in which messages are needed
+        * Return:
+        *      messages - a list of all messages within the conversationName passed into the method
+        */
         public List<Message> GetAllConversationMessages([FromBody] string ConversationName)
         {
             List<Message> messages = context.Message.Where(m => m.ConversationRoomName == ConversationName).ToList();
@@ -73,6 +95,13 @@ namespace FriendBook.Controllers
             return messages;
         }
 
+        /**
+        * Purpose: Method that Ends a particular conversation
+        * Arguments:
+        *      int id - the conversationId of the one being ended
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void EndConversation([FromBody] int id)
         {
@@ -82,6 +111,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: To retrieve all message notifications where the recievingUser is the current user
+        * Arguments:
+        *      None
+        * Return:
+        *      MN - all messageNotifications where the recievingUser is the current user
+        */
         [HttpGet]
         public List<MessageNotification> MessageNotifications()
         {
@@ -91,6 +127,13 @@ namespace FriendBook.Controllers
             return MN;
         }
 
+        /**
+        * Purpose: Activates an existing conversation
+        * Arguments:
+        *      int RoomName - the Conversation roomName that is being activated
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void ActivateConversation([FromBody] int RoomName)
         {
@@ -99,6 +142,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: Method that sets a particular MessageNotification's seen property to true
+        * Arguments:
+        *      int id - The id of a particular message notification
+        * Return:
+        *      returns the count of messageNotifcations where the recieving user is the current user and seen is false
+        */
         [HttpPost]
         public int MessageSeen([FromBody] int id)
         {
@@ -110,6 +160,13 @@ namespace FriendBook.Controllers
             return context.MessageNotification.Where(MN => MN.RecievingUserId == ActiveUser.Instance.User.UserId && MN.Seen==false).ToList().Count();
         }
 
+        /**
+        * Purpose: Method that posts a new message into a particular conversation and created a new message notification
+        * Arguments:
+        *       Message message - contains all the neccesary properties to create a new message
+        * Return:
+        *      Nothing - NoContentResult()
+        */
         [HttpPost]
         public IActionResult PostToConversation([FromBody] Message message)
         {

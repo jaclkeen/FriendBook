@@ -19,6 +19,13 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
+        /**
+        * Purpose: Method that contains the view for the Login page and sets the UserStyle for the page since the user is not logged in.
+        * Arguments:
+        *      None
+        * Return:
+        *      returns the view for the login page
+        */
         public IActionResult Index()
         {
             LoginViewModel model = new LoginViewModel();
@@ -43,6 +50,13 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        /**
+        * Purpose: Method that is used to set the activeUser equal to the user that was logged in
+        * Arguments:
+        *      int id - the id of the user being logged in
+        * Return:
+        *      Redirects the user to the /Home (Index) view
+        */
         public IActionResult LoginUser([FromRoute]int id)
         {
             User user = context.User.Where(u => u.UserId == id).SingleOrDefault();
@@ -51,6 +65,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /**
+        * Purpose: Method that is used to logout the current user
+        * Arguments:
+        *      None
+        * Return:
+        *      Redirects the user back to the login page
+        */
         public IActionResult LogoutUser()
         {
             ActiveUser.Instance.User = null;
@@ -58,6 +79,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        /**
+        * Purpose: Method that is called to Register a new user
+        * Arguments:
+        *      User user - contains all the neccessary properties to create a new user
+        * Return:
+        *      The createdUser's UserId to instantly login
+        */
         [HttpPost]
         public int RegisterNewUser([FromBody]User user)
         {

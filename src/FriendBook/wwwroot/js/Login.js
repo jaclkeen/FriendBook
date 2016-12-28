@@ -1,21 +1,7 @@
-﻿
-function CreateNewUser(NewUser) {
-    return new Promise(function (resolve, reject) {
-        $.ajax({
-            url: "Login/RegisterNewUser",
-            method: "POST",
-            contentType: 'application/json',
-            data: JSON.stringify(NewUser)
-        }).done(function (newUser) {
-            resolve(newUser)
-        }).error(function (err) {
-            reject(err)
-        })
-    })
-}
-
+﻿//Purpose: To hide the register page
 $(".Register").hide();
 
+//Purpose: To show the login page and hide the register page on 'login' click
 $(".showLogin").on("click", function () {
     $(this).addClass("active")
     $(".showRegister").removeClass("active")
@@ -23,6 +9,7 @@ $(".showLogin").on("click", function () {
     $(".Register").hide();
 })
 
+//Purpose: To show the register page and hide the login page on 'register' click
 $(".showRegister").on("click", function () {
     $(this).addClass("active")
     $(".showLogin").removeClass("active")
@@ -30,6 +17,8 @@ $(".showRegister").on("click", function () {
     $(".Login").hide();
 })
 
+//Purpose: To provide form validation for a user trying to login and to log that user in if his/her credentials 
+//          match that of an existing user
 $(".submitLogin").on("click", function () {
     let email = $(".email").val();
     let pass = $(".password").val();
@@ -73,6 +62,8 @@ $(".submitLogin").on("click", function () {
     }
 })
 
+//Purpose: To provide for validation for the user trying to register and call the post method in the factory to register
+//         a new user
 $(".submitRegister").on("click", function () {
     let FirstName = $(".registerFN").val(),
         LastName = $(".registerLN").val(),

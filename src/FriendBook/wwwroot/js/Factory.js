@@ -1,10 +1,12 @@
-﻿function ToastNotification(message) {
+﻿//Purpose: To show a toast notification based on the message passed in
+function ToastNotification(message) {
     $(".toast").removeClass("hidden")
     $(".toast").html(message)
     $(".toast").fadeIn(2000)
     $(".toast").fadeOut(5000)
 }
 
+//Purpose: To get all of the currentUser's friends
 function GetCurrentUserFriends() {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -17,6 +19,7 @@ function GetCurrentUserFriends() {
     })
 }
 
+//Purpose: To add a dislike to a particular post
 function AddDislike(PostId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -32,6 +35,7 @@ function AddDislike(PostId) {
     })
 }
 
+//Purpose: To add a like to a particular post
 function AddLike(PostId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -47,6 +51,7 @@ function AddLike(PostId) {
     })
 }
 
+//Purpose: To get all message notifications where the recieving user is the current user
 function GetUserMessageNotifications() {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -59,6 +64,7 @@ function GetUserMessageNotifications() {
     })
 }
 
+//Purpose: To set a current user's conversation as active
 function SetConversationAsActive(RoomName) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -74,6 +80,7 @@ function SetConversationAsActive(RoomName) {
     })
 }
 
+//Purpose: To set a current user's converstion as inactive
 function EndAConversation(conversationId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -89,6 +96,7 @@ function EndAConversation(conversationId) {
     })
 }
 
+//Purpose: To return all of the current user's active conversations
 function UserActiveConversations() {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -101,6 +109,7 @@ function UserActiveConversations() {
     })
 }
 
+//Purpose: To update that a message notification has been seen
 function UpdateMessageSeen(id) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -116,6 +125,7 @@ function UpdateMessageSeen(id) {
     })
 }
 
+//Purpose: To save a new message to a particular conversation
 function SaveNewMessage(message) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -131,6 +141,7 @@ function SaveNewMessage(message) {
     })
 }
 
+//Purpose: To get all message that are in a particular conversation
 function GetAllConversationMessages(ConversationName) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -146,6 +157,7 @@ function GetAllConversationMessages(ConversationName) {
     })
 }
 
+//Purpose: To create a new conversation or return an already created existing one
 function CreateNewConversation(ClickedUserId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -161,6 +173,7 @@ function CreateNewConversation(ClickedUserId) {
     })
 }
 
+//Purpose: To get all images of a particular album
 function GetAParticularAlbumImages(id) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -173,6 +186,7 @@ function GetAParticularAlbumImages(id) {
     })
 }
 
+//Purpose: To get a particular album
 function GetAParticularAlbum(id) {
     return new Promise(function(resolve, reject){
         $.ajax({
@@ -185,6 +199,7 @@ function GetAParticularAlbum(id) {
     })
 }
 
+//Purpose: to create a new album
 function CreateAlbum(Album) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -201,6 +216,7 @@ function CreateAlbum(Album) {
     })
 }
 
+//Purpose: To delete a comment from a particular post
 function DeleteComment(CommentId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -214,6 +230,7 @@ function DeleteComment(CommentId) {
     })
 }
 
+//Purpose: To get all comments from a specific post
 function GetAllCommentsFromSpecificPost(PostId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -226,6 +243,7 @@ function GetAllCommentsFromSpecificPost(PostId) {
     })
 }
 
+//Purpose: To get the current user
 function GetCurrentUser() {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -238,6 +256,7 @@ function GetCurrentUser() {
     })
 }
 
+//Purpose: To create a new comment onto a particular post
 function CreateNewComment(pId, CommentText) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -253,6 +272,7 @@ function CreateNewComment(pId, CommentText) {
     })
 }
 
+//Purpose: To edit the text of a specific comment
 function EditSpecificComment(cId, CommentText) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -268,6 +288,7 @@ function EditSpecificComment(cId, CommentText) {
     })
 }
 
+//Purpose: To edit the text of a specific post
 function EditSpecificPost(pID, PostText) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -284,6 +305,7 @@ function EditSpecificPost(pID, PostText) {
     })
 }
 
+//Purpose: To accept a friend request
 function AcceptFR(RelationshipId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -299,6 +321,7 @@ function AcceptFR(RelationshipId) {
     })
 }
 
+//Purpose: To decline a friend request
 function DeclineFR(RelationshipId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -314,6 +337,7 @@ function DeclineFR(RelationshipId) {
     })
 }
 
+//Purpose: To get all users
 function getUsers() {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -324,6 +348,22 @@ function getUsers() {
             resolve(users)
         }).error(function (e) {
             reject(e)
+        })
+    })
+}
+
+//Purpose: To create a new user on register
+function CreateNewUser(NewUser) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "Login/RegisterNewUser",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(NewUser)
+        }).done(function (newUser) {
+            resolve(newUser)
+        }).error(function (err) {
+            reject(err)
         })
     })
 }

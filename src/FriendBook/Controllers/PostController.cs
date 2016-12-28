@@ -18,6 +18,13 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
+        /**
+        * Purpose: Method that is used to delete a specific post
+        * Arguments:
+        *      int id - the id of the particular post being deleted
+        * Return:
+        *      redirects to the /Home (Index) view
+        */
         public IActionResult DeletePost([FromRoute] int id)
         {
             Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
@@ -26,6 +33,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /**
+        * Purpose: Method that is used to add a like to a specific Post
+        * Arguments:
+        *      int id - the PostId that is being liked
+        * Return:
+        *      the count of likes from the particular post being liked
+        */
         [HttpPost]
         public int AddLike([FromBody] int id)
         {
@@ -37,6 +51,13 @@ namespace FriendBook.Controllers
             return post.Likes;
         }
 
+        /**
+        * Purpose: Method that is used to add a dislike to a specific Post
+        * Arguments:
+        *      int id - the PostId that is being disliked
+        * Return:
+        *      the count of likes from the particular post being disliked
+        */
         [HttpPost]
         public int AddDislike([FromBody] int id)
         {
@@ -48,6 +69,13 @@ namespace FriendBook.Controllers
             return post.Dislikes;
         }
 
+        /**
+        * Purpose: Method that is used to add a comment to a specific Post
+        * Arguments:
+        *      Comment comment - contains all the neccessary properties to create a new comment
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void CreateNewCommentOnPost([FromBody] Comment comment)
         {
@@ -69,6 +97,13 @@ namespace FriendBook.Controllers
             }
         }
 
+        /**
+        * Purpose: Changes(Edits) the text of a specific post
+        * Arguments:
+        *      Post EditedPost - contains the text property needed to update an editedPost
+        * Return:
+        *      the count of likes from the particular post being liked
+        */
         [HttpPost]
         public void EditSpecificPost([FromBody] Post EditedPost)
         {
@@ -79,6 +114,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: Method that is used to get all comments from a particular post
+        * Arguments:
+        *      int id - the PostId needed to get all comments from that post
+        * Return:
+        *      the comments of a particular post
+        */
         [HttpGet]
         public List<Comment> GetAllCommentsFromSpecificPost([FromRoute] int id)
         {
@@ -88,6 +130,13 @@ namespace FriendBook.Controllers
             return comments;
         }
 
+        /**
+        * Purpose: Method used to deleted a comment
+        * Arguments:
+        *      int id - the comment Id that is being deleted
+        * Return:
+        *      None
+        */
         [HttpDelete]
         public void DeleteComment([FromRoute] int id)
         {
@@ -96,6 +145,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: Edit the text of a particular comment
+        * Arguments:
+        *       Comment comment - the comment that is being edited
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void EditSpecificCommentOnPost([FromBody] Comment comment)
         {
