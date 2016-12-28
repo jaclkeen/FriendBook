@@ -1,4 +1,5 @@
-﻿function AppendPostEdit(e) {
+﻿//Purpose: To append the edited post text to the dom and add event listeners to either cancel or confirm the edit
+function AppendPostEdit(e) {
     let post = $(e.currentTarget),
             editBtn = $(e.target),
             postId = editBtn.attr("id"),
@@ -27,6 +28,7 @@
     })
 }
 
+//Purpose: To provide event listeners to all posts such as like, dislike, edit, and submit comment events.
 $(".post").on("click", function (e) {
     let CurrentPost = $(e.currentTarget);
     let CurrentPostId = CurrentPost.attr("id")
@@ -89,6 +91,7 @@ $(".post").on("click", function (e) {
     }
 })
 
+//Purpose: To clear all values from the new status form on the clear button click
 $(".clearStatus").on("click", function () {
     $(".photoSelectedArea").html("")
     $(".addPToStatus").val("")

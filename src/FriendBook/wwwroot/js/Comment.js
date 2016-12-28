@@ -1,4 +1,5 @@
-﻿function CommentEventsForDeleteAndEdit(Post) {
+﻿//Purpose: To add event listeners such as delete and edit onto each comment that is created
+function CommentEventsForDeleteAndEdit(Post) {
     $(".comment").on("click", function (e) {
         let CurrentComment = $(e.currentTarget),
             CurrentPostId = CurrentComment.parent().parent(".post"),
