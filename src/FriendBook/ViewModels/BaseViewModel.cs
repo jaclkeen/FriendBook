@@ -39,6 +39,15 @@ namespace FriendBook.ViewModels
 
         public BaseViewModel() {}
 
+        /**
+        * Purpose:  Provide a BaseViewModel for all views to prevent copying code, by setting properties
+        *           common to all views on creation of each new view model. All view models inherit from
+        *           the BaseViewModel.
+        * Arguments:
+        *      FriendBookContext ctx - Gives access and connection to the database
+        * Return:
+        *      None
+        */
         public BaseViewModel(FriendBookContext context) {
 
             int UserId = ActiveUser.Instance.User.UserId;

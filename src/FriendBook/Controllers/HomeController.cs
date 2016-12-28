@@ -15,6 +15,9 @@ namespace FriendBook.Controllers
     public class HomeController : Controller
     {
         private FriendBookContext context;
+
+        //Purpose: To initialize an IHostingEnvironment variable to gain access to the "images" folder when saving
+                    //a new image.
         private IHostingEnvironment _environment;
 
         public HomeController(FriendBookContext ctx, IHostingEnvironment environment)
@@ -23,6 +26,14 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
+
+        /**
+         * Purpose: Creates an Index view page for the Home controller and sets properties of the HomePageViewModel
+         * Arguments:
+         *      None
+         * Return:
+         *      returns the view for the /Home
+         */
         public IActionResult Index()
         {
             int UserId = ActiveUser.Instance.User.UserId;
@@ -83,6 +94,14 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+         /**
+         * Purpose: Used to Post a new status with or without an image
+         * Arguments:
+         *      HomePageViewModel model - Used to pass in all neccessary properties of a post
+         * Return:
+         *      redirects to the /Home view
+         */
+
         public async Task<IActionResult> NewStatus(HomePageViewModel model)
         {
             var uploads = Path.Combine(_environment.WebRootPath, "images");
@@ -119,6 +138,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index");
         }
 
+         /**
+         * Purpose: HttpGet Method to be called in JavaScript to get a particular user's friends.
+         * Arguments:
+         *      None
+         * Return:
+         *      returns a list of the current user's friends
+         */
         [HttpGet]
         public List<User> UserFriends()
         {
@@ -145,6 +171,13 @@ namespace FriendBook.Controllers
             return CurrentUserFriends;
         }
 
+        /**
+        * Purpose: HttpGet Method to be called in JavaScript to get the current user.
+        * Arguments:
+        *      None
+        * Return:
+        *      returns the current user
+        */
         [HttpGet]
         public User GetCurrentUser()
         {
@@ -154,6 +187,14 @@ namespace FriendBook.Controllers
             return CurrentUser;
         }
 
+
+        /**
+        * Purpose: HttpGet Method to be called in JavaScript to get all users for search feature
+        * Arguments:
+        *      None
+        * Return:
+        *      returns a list of all users
+        */
         [HttpGet]
         public List<User> GetUsers()
         {
@@ -161,6 +202,13 @@ namespace FriendBook.Controllers
             return users;
         }
 
+        /**
+        * Purpose: HttpPost method that is called in JavaScript to accept a friend request (change R status to 1)
+        * Arguments:
+        *      RelationshipId
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void AcceptFR([FromBody] int id)
         {
@@ -169,6 +217,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: HttpPost method that is called in JavaScript to decline a friend request (change R status to 2)
+        * Arguments:
+        *      RelationshipId
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void DeclineFR([FromBody] int id)
         {

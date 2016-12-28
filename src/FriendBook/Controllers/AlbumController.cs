@@ -15,6 +15,9 @@ namespace FriendBook.Controllers
     public class AlbumController : Controller
     {
         private FriendBookContext context;
+
+        //Purpose: To initialize an IHostingEnvironment variable to gain access to the "images" folder when saving
+        //a new image.
         private IHostingEnvironment _environment;
 
         public AlbumController(FriendBookContext ctx, IHostingEnvironment environment)
@@ -23,6 +26,13 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
+        /**
+        * Purpose: HttpPost method that is called in JavaScript to create a new photo album
+        * Arguments:
+        *      Album album - contains all neccesary Album properties to create a new album
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void CreateNewAlbum([FromBody] Album album)
         {
@@ -33,6 +43,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: HttpGet method that is called in JavaScript to return a specific album
+        * Arguments:
+        *      int id - The particualar albumId that is being returned
+        * Return:
+        *      SelectedAlbum - The album found from the id being passed into the method
+        */
         [HttpGet]
         public Album GetSpecificAlbum([FromRoute] int id)
         {
@@ -40,6 +57,13 @@ namespace FriendBook.Controllers
             return SelectedAlbum;
         }
 
+        /**
+        * Purpose: HttpGet method that is called in JavaScript to return all images within a particular album
+        * Arguments:
+        *      int id - The particular album that contains its images
+        * Return:
+        *      FoundImages - A list of images that have the particular albumId
+        */
         [HttpGet]
         public List<Image> GetAlbumImages([FromRoute] int id)
         {
@@ -47,6 +71,13 @@ namespace FriendBook.Controllers
             return FoundImages;
         }
 
+        /**
+        * Purpose: To upload a new image into an album
+        * Arguments:
+        *      ProfileIndexViewModel model - Contains the albumId selected and all properties neccasary to create a new image
+        * Return:
+        *      Redirects to the list of albums view.
+        */
         public async Task<IActionResult> AddImageToAlbum(ProfileIndexViewModel model)
         {
             IFormFile file = model.image;

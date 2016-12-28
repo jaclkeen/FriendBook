@@ -17,6 +17,9 @@ namespace FriendBook.Controllers
     public class ProfileController : Controller
     {
         private FriendBookContext context;
+
+        //Purpose: To initialize an IHostingEnvironment variable to gain access to the "images" folder when saving
+        //a new image.
         private IHostingEnvironment _environment;
 
         public ProfileController(FriendBookContext ctx, IHostingEnvironment environment)
@@ -25,6 +28,13 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
+        /**
+        * Purpose: Method that is used to return the /Profile view and sets properties of the ProfileIndexViewModel
+        * Arguments:
+        *      int id - the userId of the profile being visited
+        * Return:
+        *      the view for the profile index view
+        */
         public IActionResult Index([FromRoute] int id)
         {
             int UserId = ActiveUser.Instance.User.UserId;
@@ -50,6 +60,14 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        /**
+        * Purpose: Method that is used to return the /Profile/Friends that shows all of a users friends 
+        *           view and sets properties of the ProfileFriendsViewModel
+        * Arguments:
+        *      int id - the userId of the profile being visited
+        * Return:
+        *      the view for the Profile/Friends view
+        */
         public IActionResult Friends([FromRoute] int id)
         {
             ProfileFriendsViewModel model = new ProfileFriendsViewModel(context, id);
@@ -77,6 +95,14 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        /**
+        * Purpose: Method that is used to return the /Profile/Albums that shows all of a users albums 
+        *           view and sets properties of the ProfileAlbumViewModel
+        * Arguments:
+        *      int id - the userId of the profile being visited
+        * Return:
+        *      the view for the Profile/Albums view
+        */
         public IActionResult Albums([FromRoute] int id)
         {
             ProfileAlbumViewModel model = new ProfileAlbumViewModel(context, id);
@@ -90,6 +116,13 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        /**
+        * Purpose: Method that is called to create a new relationship between two users
+        * Arguments:
+        *      int id - the userId of the profile being visited
+        * Return:
+        *      Redirects to the current userProfile page being visited
+        */
         public IActionResult AddFriend([FromRoute] int id)
         {
             int UserId = ActiveUser.Instance.User.UserId;
@@ -119,6 +152,14 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Profile", new { id });
         }
 
+        /**
+        * Purpose: Method that is used to return the /Profile/Styling that shows the form to update the 
+        *           currentUser's style view and sets properties of the ProfileStylingViewModel
+        * Arguments:
+        *      int id - the userId of the profile being visited
+        * Return:
+        *      the view for the profile index view
+        */
         public IActionResult Styling(int id)
         {
             User CurrentUser = ActiveUser.Instance.User;
@@ -129,6 +170,14 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        /**
+        * Purpose: Method that is used to update the current users styling from the properties in the Styling form
+        * Arguments:
+        *      int id - The currentUser's userId
+        *      Style UserStyle - the new style that was created by the current user
+        * Return:
+        *      the view for the profile index view
+        */
         public IActionResult UpdateUserStyling([FromRoute] int id, Style UserStyle)
         {
             Style style = context.Style.Where(s => s.UserId == id).SingleOrDefault();
@@ -147,6 +196,14 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Profile", new { id });
         }
 
+        /**
+        * Purpose: Method that is used to change the currentUser's profile Image. Also creates a new "Uploads" album
+        *           if one doesn't already exists and adds the newly uploaded image to that album
+        * Arguments:
+        *      IFormFile file - the image being uploaded
+        * Return:
+        *      If successful, redirects to the currentUser's /Profile (Index) view
+        */
         public async Task<IActionResult> UploadImg(IFormFile file)
         {
             var uploads = Path.Combine(_environment.WebRootPath, "images");
@@ -188,6 +245,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /**
+        * Purpose: Method that is used to change the currentUser's cover image.
+        * Arguments:
+        *      IFormFile file - the image being uploaded
+        * Return:
+        *      If successful, redirects to the currentUser's /Profile (Index) view
+        */
         public async Task<IActionResult> UploadCoverImg(IFormFile file)
         {
             var uploads = Path.Combine(_environment.WebRootPath, "images");
