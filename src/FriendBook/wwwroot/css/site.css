@@ -198,6 +198,8 @@
 }
 
 .messageSenderImage{
+    min-height: 35px;
+    background: white;
     width: 15%;
     display: inline-block;
 }
@@ -276,6 +278,7 @@
 }
 
 .nav span img{
+    background: white;
     min-height: 55px;
     margin-top: .5%;
     margin-bottom: .5%;
@@ -352,11 +355,28 @@ hr{
     border: 2px solid green;
 }
 
-.submitStatus, .clearStatus{
+.submitStatus, .tagFriends{
     padding-left: 5%;
     padding-right: 5%;
     border-radius: 30px;
     margin-right: 2%;
+}
+
+.clearStatus{
+    padding-left: 5%;
+    padding-right: 5%;
+    border-radius: 30px;
+    margin-left: 30%;
+}
+
+.tagFriendsDiv{
+    margin-top: 2%;
+    margin-left: 0%;
+}
+
+.tagFriendsDiv input {
+    padding: .5%;
+    width: 97%;
 }
 
 .postUser{
@@ -379,6 +399,7 @@ hr{
 }
 
 .postProfileImg img{
+    background: white;
     width: 100%;
     min-height: 75px;
     max-height: 75px;
@@ -869,6 +890,7 @@ a{
 }
 
 .postImage{
+    background: white;
     max-width: 54%;
     min-width: 54%;
     width: 54%;
@@ -929,6 +951,7 @@ a{
 }
 
 .albumImg{
+    background: white;
     min-height: 240px;
     max-height: 240px; 
     min-width: 100%;
@@ -995,6 +1018,7 @@ a{
 }
 
 .AlbumImage{
+    background: white;
     height: 300px;
     width: 100%
 }
@@ -1006,4 +1030,49 @@ a{
 
 .AddImageToAlbum, .formArea{
     display: inline-block;
+}
+
+.friendBeingTaggedProfileImg{
+    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
+    min-height: 55px;
+    max-height: 55px;
+    display: inline-block;
+    background: white;
+}
+
+.friendBeingTaggedName{
+    display: inline-block;
+    font-size: 1.2em;
+}
+
+.friendBeingTagged{
+    cursor: pointer;
+    width: 40%;
+}
+
+.TaggedFriend{
+    border-radius: 30px;
+    margin-bottom: .5%;
+    padding: 1%;
+    display: inline-block;
+}
+
+.TaggedFriend p{
+    margin-bottom: 0;
+    display: inline-block;
+}
+
+.RemoveTag{
+    cursor: pointer;
+    display: inline-block;
+}
+
+.RemoveTag:hover {
+    color: red;
+}
+
+.ActualTaggedFriends{
+    width: 97%;
 }

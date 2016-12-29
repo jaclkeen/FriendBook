@@ -24,6 +24,7 @@ function AppendPostEdit(e) {
         .then(function (post) {
             let p = `<span class="postText">${updatedPostText}</span>`
             postTextDiv.html(p)
+            ToastNotification("Post successfully updated!")
         })
     })
 }
@@ -96,4 +97,83 @@ $(".clearStatus").on("click", function () {
     $(".photoSelectedArea").html("")
     $(".addPToStatus").val("")
     $(".newStatus").val("")
+})
+
+//TAGGING FRIENDS STARTS HERE, POSSIBLY CREATE NEW FILE?
+function AppendTaggingSearch(friend) {
+    $(".tagFriendSearchDiv").append(`
+        <div class="friendBeingTagged" id="${friend.userId}">
+            <img src="${friend.profileImg}" class ="friendBeingTaggedProfileImg"/>
+            <p class ="friendBeingTaggedName">${friend.firstName} ${friend.lastName}</p>
+        </div>
+    `)
+}
+
+function AppendTag(FriendUserId, FriendName) {
+    $(".ActualTaggedFriends").append(`
+        <div class ="TaggedFriend" id="${FriendUserId}">
+            <p class="TaggedFriendName">${FriendName}</p>
+            <i class ="fa fa-times RemoveTag" aria-hidden="true"></i>
+        </div>
+    `)
+}
+
+$("body").on("click", function (e) {
+    let context = $(e.target)
+
+    if (context.hasClass("RemoveTag")) {
+        let name = context.siblings(".TaggedFriendName").text()
+        context.parent().remove()
+        ToastNotification(`You removed ${name}'s tag from this post!`)
+    }
+})
+
+$("body").on("click", function (e) {
+    let context = $(e.target),
+        TaggedFriendName = null,
+        TaggedUserId = null
+
+    if (context.hasClass("friendBeingTagged")) {
+        $(".tagFriendsInput").val("")
+        context.remove()
+        TaggedUserId = context.attr("id")
+        TaggedFriendName = context.children(".friendBeingTaggedName").text()
+    }
+    else if (context.hasClass("friendBeingTaggedName")) {
+        context.parent().remove()
+        $(".tagFriendsInput").val("")
+        TaggedUserId = context.parent().attr("id")
+        TaggedFriendName = context.text()
+    }
+    else if (context.hasClass("friendBeingTaggedProfileImg")) {
+        context.parent.remove()
+        $(".tagFriendsInput").val("")
+        TaggedUserId = context.parent().attr("id")
+        TaggedFriendName = context.siblings(".friendBeingTaggedName").text()
+    }
+
+    TaggedFriendName !== null && TaggedUserId !== null ? ToastNotification(`You tagged ${TaggedFriendName}, in this post!`) : false
+    TaggedFriendName !== null && TaggedUserId !== null ? AppendTag(TaggedUserId, TaggedFriendName) : false
+})
+
+$(".tagFriends").on("click", function () {
+    $(".tagFriendsDiv").toggleClass("hidden")
+})
+
+$(".tagFriendsDiv").on("input", function () {
+    let StatusValue = $(".tagFriendsInput").val().toLowerCase()
+
+    GetCurrentUserFriends()
+    .then(function (friends) {
+        $(".tagFriendSearchDiv").html("")
+        friends.forEach(function (friend) {
+            let FullName = friend.firstName.toLowerCase() + " " + friend.lastName.toLowerCase()
+            let FirstName = friend.firstName.toLowerCase()
+            let LastName = friend.lastName.toLowerCase()
+
+            if (FullName === StatusValue || StatusValue === FirstName || StatusValue === LastName) {
+                AppendTaggingSearch(friend)
+            }
+        })
+    })
 })

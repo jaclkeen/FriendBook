@@ -19,6 +19,16 @@
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
     <style>
+        .TaggedFriend{
+            background-color: @Model.UserStyle.PostBackgroundColor;
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .friendBeingTagged{
+            background-color: @Model.UserStyle.PostBackgroundColor;
+            border-left: 2px solid @Model.UserStyle.DetailColor;
+            border-right: 2px solid @Model.UserStyle.DetailColor;
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
+        }
         .toast{
             background-color: @Model.UserStyle.BackgroundColor;
             border: 2px solid @Model.UserStyle.DetailColor;
@@ -26,7 +36,7 @@
         .navbar-brand{
             color: black!important;
         }
-        .submitStatus, .clearStatus{
+        .submitStatus, .clearStatus, .tagFriends, .tagFriendsDiv input {
             border: 2px solid @Model.UserStyle.DetailColor;
         }
         body{
@@ -36,6 +46,9 @@
         .navGlyph:hover, .messageNotifications:hover{
             color: @Model.UserStyle.WallBackgroundColor!important;
             cursor: pointer;
+        }
+        .postImage, .postProfileImg img{
+            border: 2px solid @Model.UserStyle.DetailColor;
         }
         .postUser a{
             background-color: @Model.UserStyle.BackgroundColor;
@@ -120,7 +133,10 @@
             background-color: @Model.UserStyle.NavColor;
         }
         .addPhotoToStatusDiv{
-            background-color: @Model.UserStyle.NavColor;       
+            background-color: @Model.UserStyle.NavColor;  
+            border-top: 2px solid @Model.UserStyle.DetailColor;
+            border-left: 2px solid @Model.UserStyle.DetailColor;
+            border-right: 2px solid @Model.UserStyle.DetailColor;     
         }
         .postHeadDiv{
             background-color: @Model.UserStyle.PostHeaderColor;
@@ -177,6 +193,9 @@
         }
         .MessageAreaUser:hover{
             box-shadow: 2px 2px 2px @Model.CurrentUserStyle.DetailColor;
+        }
+        .brandImg, .brandName{
+            color: @Model.CurrentUserStyle.DetailColor;
         }
     </style>
 </head>
