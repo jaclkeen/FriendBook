@@ -104,6 +104,8 @@ namespace FriendBook.Controllers
 
         public async Task<IActionResult> NewStatus(HomePageViewModel model)
         {
+            string[] TaggedUsers = model.TaggedUsers.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+
             var uploads = Path.Combine(_environment.WebRootPath, "images");
             User u = ActiveUser.Instance.User;
 

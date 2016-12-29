@@ -17,5 +17,6 @@ namespace FriendBook.ViewModels
         public Post Post { get; set; }
         public Style UserStyle { get; set; }
         public IFormFile PostImgUpload { get; set; }
+        public string TaggedUsers { get; set; }
     }
 }

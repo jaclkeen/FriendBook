@@ -119,37 +119,55 @@ function AppendTag(FriendUserId, FriendName) {
 }
 
 $("body").on("click", function (e) {
-    let context = $(e.target)
+    let context = $(e.target),
+        TaggedUsersInputValue = $(".TaggedUsersInput").val()
+
+    if (TaggedUsersInputValue !== "") {
+        TaggedUsersInputValue = TaggedUsersInputValue.split(" ")
+    }
 
     if (context.hasClass("RemoveTag")) {
-        let name = context.siblings(".TaggedFriendName").text()
+        let name = context.siblings(".TaggedFriendName").text(),
+            UserId = context.parent().attr("id"),
+            IndexOfUserId = TaggedUsersInputValue.indexOf(UserId)
+
+        TaggedUsersInputValue.splice(IndexOfUserId, 1)
+
+        $(".TaggedUsersInput").val(TaggedUsersInputValue.join(" "))
         context.parent().remove()
         ToastNotification(`You removed ${name}'s tag from this post!`)
     }
 })
 
+//TaggedUsersInput is used to append each chosen tagged user as EX: "1 " that is appended to the form and then
+//      used by the viewmodel in the c# method. So each time another user is tagged, that userId is appended
+//      onto that input field in the form.
 $("body").on("click", function (e) {
     let context = $(e.target),
         TaggedFriendName = null,
         TaggedUserId = null
+        TaggedUsersInput = $(".TaggedUsersInput").val()
 
     if (context.hasClass("friendBeingTagged")) {
         $(".tagFriendsInput").val("")
         context.remove()
         TaggedUserId = context.attr("id")
         TaggedFriendName = context.children(".friendBeingTaggedName").text()
+        $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
     }
     else if (context.hasClass("friendBeingTaggedName")) {
         context.parent().remove()
         $(".tagFriendsInput").val("")
         TaggedUserId = context.parent().attr("id")
         TaggedFriendName = context.text()
+        $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
     }
     else if (context.hasClass("friendBeingTaggedProfileImg")) {
         context.parent.remove()
         $(".tagFriendsInput").val("")
         TaggedUserId = context.parent().attr("id")
         TaggedFriendName = context.siblings(".friendBeingTaggedName").text()
+        $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
     }
 
     TaggedFriendName !== null && TaggedUserId !== null ? ToastNotification(`You tagged ${TaggedFriendName}, in this post!`) : false
@@ -177,3 +195,4 @@ $(".tagFriendsDiv").on("input", function () {
         })
     })
 })
+

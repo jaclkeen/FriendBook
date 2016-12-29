@@ -14,12 +14,14 @@
                     <div class="photoSelectedArea"></div>
                 </label>
                 <input type="file" asp-for="@Model.PostImgUpload" name="PostImgUpload" id="addPToStatus" class="addPToStatus"/>
+                <input asp-for="@Model.TaggedUsers" type="text" class="TaggedUsersInput"/>
 
                 <textarea asp-for="@Model.Post.Text" class="newStatus" placeholder="What's on your mind?"></textarea>
                 <input type="submit" class="submitStatus btn-success" value="Submit" />
                 <input type="button" class="tagFriends btn-warning" value="Tag Friends" />
                 <input type="button" class="clearStatus btn-danger" value="Clear" />
             </form>
+
         </div>
     </div>
 
