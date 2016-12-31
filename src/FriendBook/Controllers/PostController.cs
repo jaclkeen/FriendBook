@@ -43,9 +43,22 @@ namespace FriendBook.Controllers
         [HttpPost]
         public int AddLike([FromBody] int id)
         {
+            User CurrentUser = ActiveUser.Instance.User;
             Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
             post.Likes++;
 
+            Notification NewNotification = new Notification
+            {
+                NotificationText = $"{CurrentUser.FirstName} {CurrentUser.LastName}, liked your status!",
+                NotificatonDate = DateTime.Now,
+                RecievingUserId = post.UserId,
+                SenderUserId = CurrentUser.UserId,
+                PostId = post.PostId,
+                Seen = false,
+                NotificationType = "LikeDislikeOrComment"
+            };
+
+            context.Notification.Add(NewNotification);
             context.SaveChanges();
 
             return post.Likes;
@@ -61,8 +74,22 @@ namespace FriendBook.Controllers
         [HttpPost]
         public int AddDislike([FromBody] int id)
         {
+            User CurrentUser = ActiveUser.Instance.User;
             Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
             post.Dislikes++;
+
+            Notification NewNotification = new Notification
+            {
+                NotificationText = $"{CurrentUser.FirstName} {CurrentUser.LastName}, disliked your status!",
+                NotificatonDate = DateTime.Now,
+                RecievingUserId = post.UserId,
+                SenderUserId = CurrentUser.UserId,
+                PostId = post.PostId,
+                Seen = false,
+                NotificationType = "LikeDislikeOrComment"
+            };
+
+            context.Notification.Add(NewNotification);
 
             context.SaveChanges();
 
@@ -79,12 +106,25 @@ namespace FriendBook.Controllers
         [HttpPost]
         public void CreateNewCommentOnPost([FromBody] Comment comment)
         {
-            int UserId = ActiveUser.Instance.User.UserId;
+            User user = ActiveUser.Instance.User;
 
-            comment.UserId = UserId;
-            comment.User = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
+            comment.UserId = user.UserId;
+            comment.User = context.User.Where(u => u.UserId == user.UserId).SingleOrDefault();
             comment.TimePosted = DateTime.Now;
+            comment.Post = context.Post.Where(p => p.PostId == comment.PostId).SingleOrDefault();
 
+            Notification NewNotification = new Notification
+            {
+                NotificationText = $"{user.FirstName} {user.LastName}, commented on your post!",
+                NotificatonDate = DateTime.Now,
+                RecievingUserId = comment.Post.UserId,
+                SenderUserId = user.UserId,
+                PostId = comment.PostId,
+                Seen = false,
+                NotificationType = "LikeDislikeOrComment"
+            };
+
+            context.Notification.Add(NewNotification);
             context.Comment.Add(comment);
 
             try

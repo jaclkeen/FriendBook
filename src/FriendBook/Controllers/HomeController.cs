@@ -149,6 +149,18 @@ namespace FriendBook.Controllers
                         TaggerId = u.UserId
                     };
 
+                    Notification NewNotification = new Notification
+                    {
+                        NotificationText = $"{u.FirstName} {u.LastName} tagged you in a post!",
+                        NotificatonDate = DateTime.Now,
+                        RecievingUserId = Convert.ToInt16(id),
+                        SenderUserId = u.UserId,
+                        PostId = model.Post.PostId,
+                        Seen = false,
+                        NotificationType = "Tag"
+                    };
+
+                    context.Notification.Add(NewNotification);
                     context.Tag.Add(NewTag);
                 }
 
@@ -158,13 +170,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index");
         }
 
-         /**
-         * Purpose: HttpGet Method to be called in JavaScript to get a particular user's friends.
-         * Arguments:
-         *      None
-         * Return:
-         *      returns a list of the current user's friends
-         */
+        /**
+        * Purpose: HttpGet Method to be called in JavaScript to get a particular user's friends.
+        * Arguments:
+        *      None
+        * Return:
+        *      returns a list of the current user's friends
+        */
         [HttpGet]
         public List<User> UserFriends()
         {
@@ -234,6 +246,20 @@ namespace FriendBook.Controllers
         {
             Relationship relationship = context.Relationship.Where(r => r.RelationshipId == id).SingleOrDefault();
             relationship.Status = 1;
+            relationship.ReceivingUser = context.User.Where(u => relationship.ReciverUserId == u.UserId).SingleOrDefault();
+            relationship.SenderUser = context.User.Where(u => relationship.SenderUserId == u.UserId).SingleOrDefault();
+
+            Notification NewNotification = new Notification
+            {
+                NotificationText = $"{relationship.ReceivingUser.FirstName} {relationship.ReceivingUser.LastName}, accepted your friend request!",
+                NotificatonDate = DateTime.Now,
+                RecievingUserId = relationship.SenderUserId,
+                SenderUserId = relationship.ReciverUserId,
+                Seen = false,
+                NotificationType = "FR"
+            };
+
+            context.Notification.Add(NewNotification);
             context.SaveChanges();
         }
 

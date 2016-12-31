@@ -8,8 +8,8 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161231010825_updatedMigrations")]
-    partial class updatedMigrations
+    [Migration("20161231200046_UpdatedMigrations")]
+    partial class UpdatedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,6 +144,38 @@ namespace FriendBook.Migrations
                     b.HasIndex("SendingUserId");
 
                     b.ToTable("MessageNotification");
+                });
+
+            modelBuilder.Entity("FriendBook.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("NotificationText")
+                        .IsRequired();
+
+                    b.Property<string>("NotificationType")
+                        .IsRequired();
+
+                    b.Property<DateTime>("NotificatonDate");
+
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("RecievingUserId");
+
+                    b.Property<bool>("Seen");
+
+                    b.Property<int>("SenderUserId");
+
+                    b.Property<int?>("SendingUserUserId");
+
+                    b.HasKey("NotificationId");
+
+                    b.HasIndex("RecievingUserId");
+
+                    b.HasIndex("SendingUserUserId");
+
+                    b.ToTable("Notification");
                 });
 
             modelBuilder.Entity("FriendBook.Models.Post", b =>
@@ -345,6 +377,18 @@ namespace FriendBook.Migrations
                         .WithMany()
                         .HasForeignKey("SendingUserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FriendBook.Models.Notification", b =>
+                {
+                    b.HasOne("FriendBook.Models.User", "RecievingUser")
+                        .WithMany()
+                        .HasForeignKey("RecievingUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.User", "SendingUser")
+                        .WithMany()
+                        .HasForeignKey("SendingUserUserId");
                 });
 
             modelBuilder.Entity("FriendBook.Models.Post", b =>

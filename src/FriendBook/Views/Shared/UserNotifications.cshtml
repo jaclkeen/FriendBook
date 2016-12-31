@@ -1,0 +1,29 @@
+﻿<div class="UserNotificationDiv hidden">
+    @if (Model.UserNotifications.Count == 0)
+    {
+        <div class="NoNewNotifications" id="0" data="0">
+            <p class="NoNewNotificationsText">No new notifications!</p>
+        </div>
+    }
+    @foreach(var un in Model.UserNotifications)
+    {
+        @if (un.NotificationType == "Tag" || un.NotificationType == "FR")
+        {
+            <div class="NewUserNotification" id="@un.PostId" data="@un.SendingUser.UserId">
+                <a href="/Profile/Index/@un.SendingUser.UserId/#'@un.PostId'">
+                    <img src="@un.SendingUser.ProfileImg" class="UserNotificationsImage" />
+                    <p class="UserNotificationsText">@un.NotificationText</p>
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="NewUserNotification" id="@un.PostId" data="@un.RecievingUser.UserId">
+                <a href="/Profile/Index/@un.RecievingUser.UserId/#'@un.PostId'">
+                    <img src="@un.SendingUser.ProfileImg" class="UserNotificationsImage" />
+                    <p class="UserNotificationsText">@un.NotificationText</p>
+                </a>
+            </div>
+        }
+    }
+</div>

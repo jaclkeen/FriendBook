@@ -2,15 +2,23 @@
     <a class ="navNamePic navGlyph" asp-action="Index" asp-controller="Profile" asp-route-id="@Model.CurrentUser.UserId">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</a>
     <span><img src="@Model.CurrentUser.ProfileImg" class="profileImg"></span>
 </li>
+
 <li class="page-scroll navThing">
     <a asp-action="Index" asp-controller="Home" class="HomeLink glyphicon glyphicon-home navGlyph"></a>
 </li>
+
 <li class="page-scroll navThing messageNotifications">  
-    <i class="fa fa-envelope-square icon navGlyph"></i><span class="MnCount">(@Model.MessageNotifications.Count)</span>
+    <a class="glyphicon glyphicon-inbox navGlyph">(@Model.MessageNotifications.Count)</a>
 </li>
+
 <li class="page-scroll navThing">
     <a class="Notifications glyphicon glyphicon-user navGlyph">(@Model.FriendRequests.Count)</a>
 </li>
+
+<li class="page-scroll navThing ShowUserNotifications">
+    <a class="UserNotifications glyphicon glyphicon-globe navGlyph">(@Model.UserNotifications.Count)</a>
+</li>
+
 <li class="page-scroll navThing">
     <a class="Logout navGlyph logout" asp-action="LogoutUser" asp-controller="Login">Logout</a>
 </li>

@@ -1,4 +1,13 @@
-﻿.navbar{
+﻿.NewUserNotification a:hover{
+    text-decoration: none!important;
+}
+
+.comment{
+    padding: 1%;
+    margin-bottom: 1%;
+}
+
+.navbar{
     position: fixed;
     z-index: -1;
 }
@@ -31,26 +40,49 @@
 }
 
 .messageNotifications{
+    font-size: 1.7em;
     cursor: pointer;
 }
 
-.messageNotifications i{
-    margin-top: 31%;
+.messageNotifications a {
+    margin-top: 5px!important;
+} 
+
+.UserNotificationDiv{
+    position: fixed;
+    margin-top: 3%;
+    margin-left: 56%;
+    float: right;
+    width: 16%;
+    cursor: pointer;
 }
 
-.messageNotifications span{
-    font-size: 1.5em;
+.NoNewNotificationsText{
+    text-align: center;
+    font-size: 1.3em;
+    padding-top: 4%;
+}
+
+.UserNotificationsImage{
+    display: inline-block;
+    width: 25%;
+    margin-bottom: 3%;
+    margin-top: 3%;
+}
+
+.UserNotificationsText{
+    vertical-align: bottom;
+    display: inline-block;
+    width: 70%;
+    margin-top: 2%;
 }
 
 .messageNotificationArea{
     position: fixed;
     margin-top: 3%;
-    margin-left: 40%;
+    margin-left: 34%;
     float: right;
-    width: 16%;
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
+    width: 23%;
 }
 
 .convoMessage{
@@ -241,7 +273,7 @@
 .notificationArea{
     position: fixed;
     margin-top: 3%;
-    margin-left: 57%;
+    margin-left: 49%;
     float: right;
     width: 16%;
     border-left: 2px solid black;
@@ -450,10 +482,10 @@ hr{
 }
 
 .navThing{
-    margin-left: 3%;
+    margin-left: 2%;
 }
 
-.Notifications, .HomeLink{
+.Notifications, .HomeLink, .UserNotifications{
     font-size: 1.7em;
 }
 
@@ -733,7 +765,7 @@ a{
 }
 
 .logout{
-    margin-left: 290%;
+    margin-left: 130%;
 }
 
 .brandImg{

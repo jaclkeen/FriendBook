@@ -19,6 +19,8 @@ namespace FriendBook.ViewModels
 
         public List<MessageNotification> MessageNotifications { get; set; }
 
+        public List<Notification> UserNotifications { get; set; }
+
         private ActiveUser singleton = ActiveUser.Instance;
 
         public User ChosenUser
@@ -84,7 +86,6 @@ namespace FriendBook.ViewModels
             }
 
             //GET ALL MESSAGE NOTIFICATIONS FOR CURRENT USER
-
             List<MessageNotification> MN = context.MessageNotification.Where(mn => mn.RecievingUserId == UserId && mn.Seen == false).ToList();
             MN.ForEach(n => n.RecievingUser = context.User.Where(u => u.UserId == n.RecievingUserId).SingleOrDefault());
 
@@ -92,6 +93,13 @@ namespace FriendBook.ViewModels
 
             //GET LIST OF ALL FRIENDS OF A CURRENT USER
             UserFriends = CurrentUserFriends.OrderBy(f => f.FirstName + f.LastName).ToList();
+
+            //GETS LIST OF ALL THE CURRENT USER'S NOTIFICATIONS
+            List<Notification> UN = context.Notification.Where(n => n.RecievingUserId == UserId).ToList();
+            UN.ForEach(un => un.SendingUser = context.User.Where(u => u.UserId == un.SenderUserId).SingleOrDefault());
+            UN.ForEach(un => un.RecievingUser = context.User.Where(u => u.UserId == un.RecievingUserId).SingleOrDefault());
+
+            UserNotifications = UN.OrderBy(un => un.NotificatonDate).ToList();
         }
     }
 }

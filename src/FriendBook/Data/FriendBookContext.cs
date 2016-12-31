@@ -20,5 +20,6 @@ namespace FriendBook.Data
         public DbSet<MessageNotification> MessageNotification { get; set; }
         public DbSet<Message> Message { get; set; }
         public DbSet<Tag> Tag { get; set; }
+        public DbSet<Notification> Notification { get; set; }
     }
 }
