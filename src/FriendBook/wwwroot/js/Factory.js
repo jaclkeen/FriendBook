@@ -6,6 +6,22 @@ function ToastNotification(message) {
     $(".toast").fadeOut(5000)
 }
 
+//Purpose: To post the tagged users onto the method of the post being submitted
+function PostTaggedFriends(TaggedUserIds) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Home/NewStatus",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(TaggedUserIds)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
 //Purpose: To get all of the currentUser's friends
 function GetCurrentUserFriends() {
     return new Promise(function (resolve, reject) {

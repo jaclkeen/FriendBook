@@ -225,6 +225,28 @@ namespace FriendBook.Migrations
                     b.ToTable("Style");
                 });
 
+            modelBuilder.Entity("FriendBook.Models.Tag", b =>
+                {
+                    b.Property<int>("TagId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PersonBeingTaggedId");
+
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("TaggerId");
+
+                    b.HasKey("TagId");
+
+                    b.HasIndex("PersonBeingTaggedId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("TaggerId");
+
+                    b.ToTable("Tag");
+                });
+
             modelBuilder.Entity("FriendBook.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -349,6 +371,24 @@ namespace FriendBook.Migrations
                     b.HasOne("FriendBook.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FriendBook.Models.Tag", b =>
+                {
+                    b.HasOne("FriendBook.Models.User", "PersonBeingTagged")
+                        .WithMany()
+                        .HasForeignKey("PersonBeingTaggedId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.Post", "Post")
+                        .WithMany("TaggedUsers")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.User", "Tagger")
+                        .WithMany()
+                        .HasForeignKey("TaggerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

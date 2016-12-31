@@ -24,6 +24,7 @@ function AppendPostEdit(e) {
         .then(function (post) {
             let p = `<span class="postText">${updatedPostText}</span>`
             postTextDiv.html(p)
+            ToastNotification("Post successfully updated!")
         })
     })
 }

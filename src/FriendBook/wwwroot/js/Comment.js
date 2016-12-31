@@ -40,6 +40,7 @@ function CommentEventsForDeleteAndEdit(Post) {
                 .then(function (success) {
                     let newComment = `<p>${UpdatedCommentText}</p>`
                     $(CommentTextDiv).html(newComment)
+                    ToastNotification("Comment successfully updated!")
                 })
             })
         }

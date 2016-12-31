@@ -77,7 +77,8 @@ function OpenConversation(ClickedUserId) {
         conversation.conversationStarterId === user.userId ? CurrentUserIsStartingUser = true
                 : CurrentUserIsRecieverUser = true
 
-        //IF THE CONVERSATION IS NOT ACTIVE, IF THERE ARE NOT CURRENTLY 4 ACTIVE CONVERSATIONS, AND
+        //IF THE CONVERSATION IS NOT ACTIVE, IF THERE ARE NOT CURRENTLY 4 ACTIVE CONVERSATIONS SET CONVERSATION AS ACTIVE
+        //AND APPEND THAT CONVERSATION TO THE DOM
         if (CurrentUserIsRecieverUser && conversation.conversationRecieverIsActive == false || CurrentUserIsStartingUser && conversation.conversationStarterIsActive == false) {
             if (ActiveConversations.length < 4) {
                 ActiveConversations.push(conversation.conversationRoomName)

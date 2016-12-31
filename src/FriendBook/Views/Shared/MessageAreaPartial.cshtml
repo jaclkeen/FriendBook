@@ -1,6 +1,8 @@
 ﻿<div class="messagingContainer">
-    <h3 class="messageFriendCount">Friends (@Model.UserFriends.Count)</h3>
-    <input type="text" class="messageFriendSearch" placeholder="Filter..."/>
+    <div class="messageContainerHead">
+        <h3 class="messageFriendCount">Friends (@Model.UserFriends.Count)</h3>
+        <input type="text" class="messageFriendSearch" placeholder="Filter..." />
+    </div>
 
     <div class="UserFriendsList">
         @foreach (var user in Model.UserFriends)

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FriendBook.Migrations
 {
-    public partial class UpdatedMigrations : Migration
+    public partial class updatedMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -265,6 +265,39 @@ namespace FriendBook.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Tag",
+                columns: table => new
+                {
+                    TagId = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    PersonBeingTaggedId = table.Column<int>(nullable: false),
+                    PostId = table.Column<int>(nullable: false),
+                    TaggerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tag", x => x.TagId);
+                    table.ForeignKey(
+                        name: "FK_Tag_User_PersonBeingTaggedId",
+                        column: x => x.PersonBeingTaggedId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tag_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tag_User_TaggerId",
+                        column: x => x.TaggerId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Album_UserId",
                 table: "Album",
@@ -339,6 +372,21 @@ namespace FriendBook.Migrations
                 name: "IX_Style_UserId",
                 table: "Style",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tag_PersonBeingTaggedId",
+                table: "Tag",
+                column: "PersonBeingTaggedId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tag_PostId",
+                table: "Tag",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tag_TaggerId",
+                table: "Tag",
+                column: "TaggerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -362,13 +410,16 @@ namespace FriendBook.Migrations
                 name: "Style");
 
             migrationBuilder.DropTable(
-                name: "Post");
+                name: "Tag");
 
             migrationBuilder.DropTable(
                 name: "Album");
 
             migrationBuilder.DropTable(
                 name: "Conversation");
+
+            migrationBuilder.DropTable(
+                name: "Post");
 
             migrationBuilder.DropTable(
                 name: "User");

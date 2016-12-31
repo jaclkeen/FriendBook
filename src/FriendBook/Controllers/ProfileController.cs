@@ -41,7 +41,11 @@ namespace FriendBook.Controllers
 
             List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
 
-            ProfileIndexViewModel model = new ProfileIndexViewModel(context, id);
+            List<Post> ProfileUserTagPosts = (from t in context.Tag
+                                              join p in context.Post on t.PostId equals p.PostId
+                                              where t.PersonBeingTaggedId == id
+                                              select p).ToList();
+            ProfileUserTagPosts.ForEach(TaggedPost => posts.Add(TaggedPost));
 
             posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
             foreach (Post p in posts)
@@ -55,7 +59,10 @@ namespace FriendBook.Controllers
                 }
             }
 
+            ProfileIndexViewModel model = new ProfileIndexViewModel(context, id);
             model.Posts = posts.OrderByDescending(p => p.TimePosted).ToList();
+            model.Posts.ForEach(p => p.TaggedUsers = context.Tag.Where(t => t.PostId == p.PostId).ToList());
+            model.Posts.ForEach(p => p.TaggedUsers.ForEach(u => u.PersonBeingTagged = context.User.Where(us => us.UserId == u.PersonBeingTaggedId).SingleOrDefault()));
 
             return View(model);
         }

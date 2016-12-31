@@ -14,7 +14,21 @@
             <div class="datePosted">
                 <span>@s.TimePosted</span>
             </div>
+
+            @if (s.TaggedUsers.Count > 0)
+            {
+                <div class="TaggedUsers">
+                    <h4 class="TaggedUserWith">With: </h4>
+                    @foreach (var u in s.TaggedUsers)
+                    {
+                        <span class="TaggedUserName">
+                            <a asp-action="Index" asp-controller="Profile" asp-route-id="@u.PersonBeingTagged.UserId">@u.PersonBeingTagged.FirstName @u.PersonBeingTagged.LastName</a>
+                        </span>
+                    }
+                </div>
+            }
         </div>
+
 
         @if (s.ImgUrl != null)
         {
@@ -22,6 +36,7 @@
                 <img src="@s.ImgUrl" class="postImage" />
             </div>
         }
+
 
         <div class="postTextDiv">
             <span class="postText">@s.Text</span>
