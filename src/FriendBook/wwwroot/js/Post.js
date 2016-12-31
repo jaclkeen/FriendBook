@@ -122,7 +122,7 @@ $("body").on("click", function (e) {
     let context = $(e.target),
         TaggedUsersInputValue = $(".TaggedUsersInput").val()
 
-    if (TaggedUsersInputValue !== "") {
+    if (TaggedUsersInputValue !== "" && context.hasClass("RemoveTag")) {
         TaggedUsersInputValue = TaggedUsersInputValue.split(" ")
     }
 
@@ -140,9 +140,9 @@ $("body").on("click", function (e) {
 })
 
 //TaggedUsersInput is used to append each chosen tagged user as EX: "1 " that is appended to the form and then
-//      used by the viewmodel in the c# method. So each time another user is tagged, that userId is appended
-//      onto that input field in the form.
-$("body").on("click", function (e) {
+//used by the viewmodel in the c# method. So each time another user is tagged, that userId is appended
+//onto that input field in the form.
+$(".tagFriendsDiv").on("click", function (e) {
     let context = $(e.target),
         TaggedFriendName = null,
         TaggedUserId = null
@@ -153,25 +153,46 @@ $("body").on("click", function (e) {
         context.remove()
         TaggedUserId = context.attr("id")
         TaggedFriendName = context.children(".friendBeingTaggedName").text()
-        $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
+
+        if (TaggedUsersInput.indexOf(TaggedUserId) === -1) {
+            ToastNotification(`You tagged ${TaggedFriendName}, in this post!`)
+            AppendTag(TaggedUserId, TaggedFriendName)
+            $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
+        }
+        else {
+            ToastNotification(`${TaggedFriendName} is already tagged in this post!`)
+        }
     }
     else if (context.hasClass("friendBeingTaggedName")) {
         context.parent().remove()
         $(".tagFriendsInput").val("")
         TaggedUserId = context.parent().attr("id")
         TaggedFriendName = context.text()
-        $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
+
+        if (TaggedUsersInput.indexOf(TaggedUserId) === -1) {
+            ToastNotification(`You tagged ${TaggedFriendName}, in this post!`)
+            AppendTag(TaggedUserId, TaggedFriendName)
+            $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
+        }
+        else {
+            ToastNotification(`${TaggedFriendName} is already tagged in this post!`)
+        }
     }
     else if (context.hasClass("friendBeingTaggedProfileImg")) {
-        context.parent.remove()
+        context.parent().remove()
         $(".tagFriendsInput").val("")
         TaggedUserId = context.parent().attr("id")
         TaggedFriendName = context.siblings(".friendBeingTaggedName").text()
-        $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
-    }
 
-    TaggedFriendName !== null && TaggedUserId !== null ? ToastNotification(`You tagged ${TaggedFriendName}, in this post!`) : false
-    TaggedFriendName !== null && TaggedUserId !== null ? AppendTag(TaggedUserId, TaggedFriendName) : false
+        if (TaggedUsersInput.indexOf(TaggedUserId) === -1) {
+            ToastNotification(`You tagged ${TaggedFriendName}, in this post!`)
+            AppendTag(TaggedUserId, TaggedFriendName)
+            $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
+        }
+        else {
+            ToastNotification(`${TaggedFriendName} is already tagged in this post!`)
+        }
+    }
 })
 
 $(".tagFriends").on("click", function () {

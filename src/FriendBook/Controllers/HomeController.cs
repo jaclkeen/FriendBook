@@ -87,6 +87,8 @@ namespace FriendBook.Controllers
 
             model.Posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
             model.Posts = model.Posts.OrderByDescending(p => p.TimePosted).ToList();
+            model.Posts.ForEach(p => p.TaggedUsers = context.Tag.Where(t => t.PostId == p.PostId).ToList());
+
             model.UserStyle = styling;
             model.CurrentUserStyle = styling;
             model.CurrentUser = currentUser;
@@ -94,18 +96,15 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
-         /**
-         * Purpose: Used to Post a new status with or without an image
-         * Arguments:
-         *      HomePageViewModel model - Used to pass in all neccessary properties of a post
-         * Return:
-         *      redirects to the /Home view
-         */
-
+        /**
+        * Purpose: Used to Post a new status with or without an image
+        * Arguments:
+        *      HomePageViewModel model - Used to pass in all neccessary properties of a post
+        * Return:
+        *      redirects to the /Home view
+        */
         public async Task<IActionResult> NewStatus(HomePageViewModel model)
-        {
-            string[] TaggedUsers = model.TaggedUsers.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
-
+        {   
             var uploads = Path.Combine(_environment.WebRootPath, "images");
             User u = ActiveUser.Instance.User;
 
@@ -135,6 +134,25 @@ namespace FriendBook.Controllers
             catch
             {
                 throw;
+            }
+
+            if (model.TaggedUsers != null)
+            {
+                string[] TaggedUsers = model.TaggedUsers.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+
+                foreach(string id in TaggedUsers)
+                {
+                    Tag NewTag = new Tag
+                    {
+                        PostId = model.Post.PostId,
+                        PersonBeingTaggedId = Convert.ToInt16(id),
+                        TaggerId = u.UserId
+                    };
+
+                    context.Tag.Add(NewTag);
+                }
+
+                context.SaveChanges();
             }
 
             return RedirectToAction("Index");

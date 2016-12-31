@@ -24,12 +24,15 @@ namespace FriendBook.Models
         [Required]
         public DateTime TimePosted { get; set; }
 
+        public ICollection<Comment> Comments { get; set; }
+
+        public List<Tag> TaggedUsers { get; set; }
+
         public int Likes { get; set; }
 
         public int Dislikes { get; set; }
 
         public string ImgUrl { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
     }
 }

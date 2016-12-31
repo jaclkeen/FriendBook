@@ -14,7 +14,7 @@
                     <div class="photoSelectedArea"></div>
                 </label>
                 <input type="file" asp-for="@Model.PostImgUpload" name="PostImgUpload" id="addPToStatus" class="addPToStatus"/>
-                <input asp-for="@Model.TaggedUsers" type="text" class="TaggedUsersInput"/>
+                <input asp-for="@Model.TaggedUsers" type="text" class="TaggedUsersInput hidden"/>
 
                 <textarea asp-for="@Model.Post.Text" class="newStatus" placeholder="What's on your mind?"></textarea>
                 <input type="submit" class="submitStatus btn-success" value="Submit" />
@@ -28,7 +28,7 @@
     <div class="row tagFriendsDiv hidden">
         <div class="ActualTaggedFriends"></div>
 
-        <input type="text" class="tagFriendsInput" placeholder="With: " />
+        <input type="text" class="tagFriendsInput" placeholder="Who are you with? " />
 
         <div class="tagFriendSearchDiv"></div>
     </div>

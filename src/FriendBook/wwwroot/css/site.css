@@ -752,6 +752,7 @@ a{
 }
 
 .notYourProfileHeadImg{
+    background: white;
     cursor: inherit;
     width: 100%;
     border-radius: 122px;
@@ -1075,4 +1076,21 @@ a{
 
 .ActualTaggedFriends{
     width: 97%;
+}
+
+.TaggedUsers{
+    margin-bottom: -1%;
+}
+
+.TaggedUserWith{
+    margin-right: 2%;
+    margin-top: 0;
+    display: inline-block;
+}
+
+.TaggedUserName{
+    font-size: 1.3em;
+    display: inline-block;
+    font-weight: bolder;
+    margin-right: 2%;
 }
