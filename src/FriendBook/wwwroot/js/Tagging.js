@@ -1,5 +1,4 @@
-﻿
-function AppendTaggingSearch(friend) {
+﻿function AppendTaggingSearch(friend) {
     $(".tagFriendSearchDiv").append(`
         <div class="friendBeingTagged" id="${friend.userId}">
             <img src="${friend.profileImg}" class ="friendBeingTaggedProfileImg"/>

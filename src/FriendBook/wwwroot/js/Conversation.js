@@ -1,6 +1,5 @@
 ﻿let ActiveConversations = []
 let user;
-
 //Purpose: To set the current user
 GetCurrentUser()
 .then(function (u) {
@@ -154,18 +153,24 @@ function UpdateUnseenMessages() {
     GetUserMessageNotifications()
     .then(function (notifications) {
         $(".messageNotificationArea").html("")
-        notifications.forEach(function (n) {
-            console.log(n)
-            let noti =
-            `<div class='NewM' id='${n.sendingUser.userId}' data='${n.messageNotificationId}'>
-                <img src=${n.sendingUser.profileImg} class='MnImg'/>
-                <a asp-action="Index" asp-controller="Profile" asp-route-id="${n.sendingUser.userId}" class="MnName MnText">${n.sendingUser.firstName} ${n.sendingUser.lastName}</a>
-                <span class="MnText">sent you a new message!</span>
-            </div>`
 
-            $(".MnCount").html(`(${notifications.length})`)
+        if (notifications.length === 0) {
+            let noti = `<h4 style="text-align:center">No new messages!</h4>`
+            $(".messageNotificationArea").append(noti)
+        }
+
+        notifications.forEach(function (n) {
+            let noti =
+                `<div class='NewM' id='${n.sendingUser.userId}' data='${n.messageNotificationId}'>
+                    <img src=${n.sendingUser.profileImg} class='MnImg'/>
+                    <a asp-action="Index" asp-controller="Profile" asp-route-id="${n.sendingUser.userId}" class="MnName MnText">${n.sendingUser.firstName} ${n.sendingUser.lastName}</a>
+                    <span class="MnText">sent you a new message!</span>
+                </div>`
+
             $(".messageNotificationArea").append(noti)
         })
+
+        $(".MnCount").html(`(${notifications.length})`)
     })
 }
 
@@ -337,8 +342,6 @@ $("body").on("click", function (e) {
 //Purpose: To call ActiveConvo each time the page loads in order to always show the current user's active conversations
 ActiveConvo()
 
-//Purpose: If there is a user logged in, search for new messages, and message notifications every 5 seconds
-if (user != null) {
-    setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)
-    setInterval(UpdateUnseenMessages, 5000)
-}
+//Purpose: Search for new messages, and message notifications every 5 seconds
+setInterval(UpdateUnseenMessages, 5000)
+setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)

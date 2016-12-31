@@ -4,6 +4,7 @@
 /// <reference path="js/conversation.js" />
 /// <reference path="js/factory.js" />
 /// <reference path="js/login.js" />
+/// <reference path="js/notification.js" />
 /// <reference path="js/post.js" />
 /// <reference path="js/site.js" />
 /// <reference path="js/tagging.js" />

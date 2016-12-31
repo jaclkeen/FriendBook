@@ -47,8 +47,8 @@
     //Purpose: To show and hide the message notifications on click of the nav item and show the friend notifications
     //  and user notifications
     $('.messageNotifications').on("click", function () {
-        $('.notificationArea').addClass("hidden")
         $('.messageNotificationArea').toggleClass("hidden")
+        $('.notificationArea').addClass("hidden")
         $(".UserNotificationDiv").addClass("hidden")
     })
 
@@ -63,9 +63,9 @@
     //Purpose: To show and hide the UserNotifications on click of the nav item and hide the message notifications
     //  and friend request notifications
     $(".ShowUserNotifications").on("click", function () {
+        $(".UserNotificationDiv").toggleClass("hidden")
         $('.notificationArea').addClass("hidden")
         $('.messageNotificationArea').addClass("hidden")
-        $(".UserNotificationDiv").toggleClass("hidden")
     })
 
     //Purpose: To add an event listener to either accept or decline a friend request 

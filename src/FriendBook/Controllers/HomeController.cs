@@ -277,5 +277,15 @@ namespace FriendBook.Controllers
             relationship.Status = 2;
             context.SaveChanges();
         }
+
+        [HttpGet]
+        public List<Notification> UserNotifications()
+        {
+            List<Notification> notifications = context.Notification.Where(n => n.RecievingUserId == ActiveUser.Instance.User.UserId && n.Seen == false).ToList();
+            notifications.ForEach(n => n.RecievingUser = context.User.Where(u => u.UserId == n.RecievingUserId).SingleOrDefault());
+            notifications.ForEach(n => n.SendingUser = context.User.Where(u => u.UserId == n.SenderUserId).SingleOrDefault());
+
+            return notifications;
+        }
     }
 }
