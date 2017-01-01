@@ -1,8 +1,19 @@
 ﻿
 //Purpose: To toggle the form needed to create a new album when the add album button is clicked
-$(".addAlbum").on("click", function () {
-    $(".createNewAlbum").toggleClass("hidden")
-})
+function AddAlbumSpa() {
+    $(".addAlbum").on("click", function () {
+        $(this).removeClass("fa-plus-circle").addClass("fa-minus-circle minus")
+        $(".createNewAlbum").toggleClass("hidden")
+
+        $(".minus").on("click", function () {
+            $(this).removeClass("fa-minus-circle").addClass("fa-plus-circle")
+            $(".createNewAlbum").addClass("hidden")
+            AddAlbumSpa()
+        })
+    })
+}
+
+AddAlbumSpa()
 
 //Purpose: To gather input values and perform validation in order to create a new album
 $(".createAlbum").on("click", function () {
@@ -51,9 +62,11 @@ $(".ImageArea").on("click", function () {
             
             images.forEach(function (image) {
                 image.imageDescription === null ? image.imageDescription = "" : false
-                $(".SelectedAlbumImages").append(`<div id=${image.imageId} class='AlbumImageDiv'>
-                    <img class ='AlbumImage' src="${image.imagePath}">
-                    <p class ='ImageDescription'>${image.imageDescription}</p>
+                $(".SelectedAlbumImages").append(
+                    `<div id=${image.imageId} class='AlbumImageDiv'>
+                        <img class ='AlbumImage' src="${image.imagePath}">
+                        <p class ='ImageDescription'>${image.imageDescription}</p>
+                        <input type="button" class ="RemoveImageFromAlbum btn-danger" value="Delete Image">
                     </div>`)
             })
         })

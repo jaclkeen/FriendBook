@@ -53,12 +53,17 @@
                 <div class="ImageArea" id="@a.AlbumId">
                     <h3 class="albumName">@a.AlbumName</h3>
                     @if (a.AlbumImages != null)
-                {
+                    {
                         <img src="@a.AlbumImages[0].ImagePath" class="albumImg" />
                     }
                     else
                     {
                         <img src="~/images/egg.png" class="albumImg" />
+                    }
+
+                    @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+                    {
+                        <input type="button" class="DeleteAlbum btn-danger" value="Delete Album" />
                     }
                 </div>
             }
@@ -71,7 +76,7 @@
                 <h2 class="SelectedAlbumName"></h2>
 
                 @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
-            {
+                {
                     <div class="formArea">
                         <form asp-action="AddImageToAlbum" asp-controller="Album" class="AddImageToAlbum" enctype="multipart/form-data">
                             <label for="AddIToA">
