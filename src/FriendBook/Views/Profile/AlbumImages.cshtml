@@ -1,0 +1,49 @@
+﻿@model FriendBook.ViewModels.ProfileAlbumImagesViewModel
+
+@{Html.RenderPartial("MessageAreaPartial");}
+
+<div class="colorContainer">
+    <div class="row profileHead">
+        @{Html.RenderPartial("ProfileHeadPartial");}
+    </div>
+
+    <div class="SelectedAlbumDetailsArea">
+        <a href="/Profile/Albums/@Model.UserProfile.UserId/#!"><i class="fa fa-arrow-left addimg BackToAlbums">  </i><span class="BackToAlbums backSpan">   Back</span></a>
+
+        <div class="albumDetailDiv">
+            <h2 class="SelectedAlbumName">@Model.ChosenAlbum.AlbumName</h2>
+
+            @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+            {
+                <div class="formArea">
+                    <form asp-action="AddImageToAlbum" asp-controller="Album" class="AddImageToAlbum" enctype="multipart/form-data">
+                        <label for="AddIToA">
+                            <i class="fa fa-plus-square-o addimg"></i>
+                        </label>
+                        <input type="file" id="AddIToA" name="image" asp-for="@Model.image" class="hidden AddIToA" />
+                        <input type="text" class="hidden albumId" asp-for="@Model.AlbumId" />
+                        <input type="submit" class="hidden submitAddImg" />
+                    </form>
+                </div>
+            }
+
+            <p class="selectedAlbumDescription">@Model.ChosenAlbum.AlbumDescription</p>
+        </div>
+
+        <div class="SelectedAlbumImages">
+            @foreach (var image in Model.AlbumImages)
+            {
+                <div id="@image.ImageId" class='AlbumImageDiv'>
+                    <img class='AlbumImage' src="@image.ImagePath">
+                    <p class='ImageDescription'>@image.ImageDescription</p>
+                    @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
+                    {
+                        <a asp-action="DeleteImageFromAlbum" asp-controller="Album" asp-route-id="@image.ImageId">
+                            <input type="button" class="RemoveImageFromAlbum btn-danger" value="Delete Image">
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

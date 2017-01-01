@@ -98,4 +98,6 @@ $(".clearStatus").on("click", function () {
     $(".photoSelectedArea").html("")
     $(".addPToStatus").val("")
     $(".newStatus").val("")
+    $(".TaggedUsersInput").val("")
+    $(".ActualTaggedFriends").html("")
 })
