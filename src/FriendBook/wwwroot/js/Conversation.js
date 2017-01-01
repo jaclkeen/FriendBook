@@ -1,10 +1,11 @@
 ﻿let ActiveConversations = []
 let user;
-//Purpose: To set the current user
+
 GetCurrentUser()
 .then(function (u) {
     user = u
 })
+
 
 //Purpose: To create a DOM element for all messages to a particular conversation
 function AddMessagesToConversation(messages) {
@@ -170,7 +171,7 @@ function UpdateUnseenMessages() {
             $(".messageNotificationArea").append(noti)
         })
 
-        $(".MnCount").html(`(${notifications.length})`)
+        $(".messageNotifications").html(`<a class="glyphicon glyphicon-inbox navGlyph">(${notifications.length})</a>`)
     })
 }
 
@@ -338,10 +339,3 @@ $("body").on("click", function (e) {
         })
     }
 })
-
-//Purpose: To call ActiveConvo each time the page loads in order to always show the current user's active conversations
-ActiveConvo()
-
-//Purpose: Search for new messages, and message notifications every 5 seconds
-//setInterval(UpdateUnseenMessages, 5000)
-setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)
