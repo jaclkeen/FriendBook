@@ -213,6 +213,12 @@ namespace FriendBook.Controllers
         [HttpGet]
         public User GetCurrentUser()
         {
+            //USED TO PREVENT ERROR ON LOGIN PAGE WHEN ACTIVEUSER IS NULL
+            if(ActiveUser.Instance.User == null)
+            {
+                return null;
+            }
+
             int UserId = ActiveUser.Instance.User.UserId;
 
             User CurrentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();

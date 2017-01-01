@@ -3,7 +3,9 @@ let user;
 
 GetCurrentUser()
 .then(function (u) {
-    user = u
+    if (u !== undefined) {
+        user = u
+    }
 })
 
 

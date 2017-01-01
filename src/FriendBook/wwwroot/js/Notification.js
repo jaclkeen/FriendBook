@@ -7,6 +7,12 @@
             $(".UserNotificationDiv").append(NotificationDOMElement)
         })
 
+        if (notifications.length === 0) {
+            $(".UserNotificationDiv").append(`<div class="NoNewNotifications" id="0" data="0">
+                                                    <p class="NoNewNotificationsText">No new notifications!</p>
+                                              </div>`)
+        }
+
         $(".ShowUserNotifications").html(`<a class="UserNotifications glyphicon glyphicon-globe navGlyph">(${notifications.length})</a>`)
     })
 }

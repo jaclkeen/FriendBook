@@ -111,10 +111,13 @@
     //Purpose: Calls event listeners for comments on page load
     CommentEventsForDeleteAndEdit()
 
-    if (user !== null) {
-        ActiveConvo()
-        setInterval(UpdateUnseenMessages, 5000)
-        setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)
-        setInterval(GetCurrentUserNotifications, 5000)
-    }
+    GetCurrentUser()
+    .then(function (u) {
+        if (u !== undefined) {
+            ActiveConvo()
+            setInterval(UpdateUnseenMessages, 5000)
+            setInterval(UpdateConversationMessages, 5000)
+            setInterval(GetCurrentUserNotifications, 5000)
+        }
+    })
 })
