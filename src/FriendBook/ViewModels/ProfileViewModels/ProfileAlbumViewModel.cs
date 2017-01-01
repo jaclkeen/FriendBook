@@ -13,8 +13,7 @@ namespace FriendBook.ViewModels
         public ProfileAlbumViewModel(FriendBookContext ctx, int UserProfileId) : base(ctx, UserProfileId) { }
 
         public List<Album> UserAlbums { get; set; }
+
         public Album NewAlbum { get; set; }
-        public int AlbumId { get; set; }
-        public IFormFile image { get; set; }
     }
 }

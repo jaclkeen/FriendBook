@@ -51,46 +51,25 @@
             @foreach (var a in Model.UserAlbums)
             {
                 <div class="ImageArea" id="@a.AlbumId">
-                    <h3 class="albumName">@a.AlbumName</h3>
-                    @if (a.AlbumImages != null)
-                {
-                        <img src="@a.AlbumImages[0].ImagePath" class="albumImg" />
-                    }
-                    else
+                    <a href="/Profile/AlbumImages/@Model.UserProfile.UserId/@a.AlbumId/#!">
+                        <h3 class="albumName">@a.AlbumName</h3>
+                        @if (a.AlbumImages != null)
+                        {
+                            <img src="@a.AlbumImages[0].ImagePath" class="albumImg" />
+                        }
+                        else
+                        {
+                            <img src="~/images/egg.png" class="albumImg" />
+                        }
+                    </a>
+                    @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
                     {
-                        <img src="~/images/egg.png" class="albumImg" />
+                        <a asp-action="DeleteAlbum" asp-controller="Album" asp-route-id="@a.AlbumId">
+                            <input type="button" class="DeleteAlbum btn-danger" value="Delete Album" />
+                        </a>
                     }
                 </div>
             }
         </div>
-
-        <div class="SelectedAlbumDetailsArea hidden">
-            <i class="fa fa-arrow-left addimg BackToAlbums">  </i><span class="BackToAlbums backSpan">   Back</span>
-
-            <div class="albumDetailDiv">
-                <h2 class="SelectedAlbumName"></h2>
-
-                @if (Model.UserProfile.UserId == Model.CurrentUser.UserId)
-            {
-                    <div class="formArea">
-                        <form asp-action="AddImageToAlbum" asp-controller="Album" class="AddImageToAlbum" enctype="multipart/form-data">
-                            <label for="AddIToA">
-                                <i class="fa fa-plus-square-o addimg"></i>
-                            </label>
-                            <input type="file" id="AddIToA" name="image" asp-for="@Model.image" class="hidden AddIToA" />
-                            <input type="text" class="hidden albumId" asp-for="@Model.AlbumId" />
-                            <input type="submit" class="hidden submitAddImg" />
-                        </form>
-                    </div>
-                }
-
-                <p class="selectedAlbumDescription"></p>
-            </div>
-
-            <div class="SelectedAlbumImages">
-
-            </div>
-        </div>
-
     </div>
 </div>

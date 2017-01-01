@@ -111,10 +111,32 @@ namespace FriendBook.Controllers
                 context.Post.Add(NewImagePost);
 
                 await context.SaveChangesAsync();
-                return RedirectToAction("Albums", "Profile", new { id = u.UserId });
+                return RedirectToAction("AlbumImages", "Profile", new { id = u.UserId, id2 = model.AlbumId});
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult DeleteImageFromAlbum([FromRoute] int id)
+        {
+            Image DeletedImage = context.Image.Where(i => i.ImageId == id).SingleOrDefault();
+            context.Remove(DeletedImage);
+            context.SaveChanges();
+
+            return RedirectToAction("AlbumImages", "Profile", new { id = ActiveUser.Instance.User.UserId, id2 = DeletedImage.AlbumId });
+        }
+
+        public IActionResult DeleteAlbum([FromRoute] int id)
+        {
+            Album DeletedAlbum = context.Album.Where(a => a.AlbumId == id).SingleOrDefault();
+            context.Album.Remove(DeletedAlbum);
+
+            List<Image> ImagesInAlbum = context.Image.Where(i => i.AlbumId == id).ToList();
+            ImagesInAlbum.ForEach(image => context.Image.Remove(image));
+
+            context.SaveChanges();
+
+            return RedirectToAction("Albums", "Profile", new { id = ActiveUser.Instance.User.UserId, id2 = id });
         }
     }
 }

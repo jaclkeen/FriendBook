@@ -100,7 +100,11 @@
             border: 2px solid @Model.UserStyle.DetailColor;
         }
         .submitComment{
+            color: @Model.UserStyle.FontColor;
             border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .submitComment:hover{
+            color: @Model.UserStyle.FontColor;
         }
         .startPosts{
             border-top: 2px solid @Model.UserStyle.DetailColor;
@@ -176,8 +180,9 @@
         .albumImg{
             border-top: 2px solid @Model.UserStyle.DetailColor;
         }
-        .AlbumImage{
+        .AlbumImageDiv{
             border: 2px solid @Model.UserStyle.DetailColor;
+            background: @Model.UserStyle.PostHeaderColor;
         }
         .albumDetailDiv{
             border: 2px solid @Model.UserStyle.DetailColor;

@@ -67,6 +67,21 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        public IActionResult AlbumImages(int id, int id2)
+        {
+            Album album = context.Album.Where(a => a.AlbumId == id2).SingleOrDefault();
+            List<Image> ImagesForAlbum = context.Image.Where(i => i.AlbumId == id2).ToList();
+
+            ProfileAlbumImagesViewModel model = new ProfileAlbumImagesViewModel(context, id)
+            {
+                ChosenAlbum = album,
+                AlbumImages = ImagesForAlbum,
+                AlbumId = id2
+            };
+
+            return View(model);
+        }
+
         /**
         * Purpose: Method that is used to return the /Profile/Friends that shows all of a users friends 
         *           view and sets properties of the ProfileFriendsViewModel
