@@ -95,7 +95,7 @@ namespace FriendBook.ViewModels
             UserFriends = CurrentUserFriends.OrderBy(f => f.FirstName + f.LastName).ToList();
 
             //GETS LIST OF ALL THE CURRENT USER'S NOTIFICATIONS
-            List<Notification> UN = context.Notification.Where(n => n.RecievingUserId == UserId).ToList();
+            List<Notification> UN = context.Notification.Where(n => n.RecievingUserId == UserId && n.Seen == false).ToList();
             UN.ForEach(un => un.SendingUser = context.User.Where(u => u.UserId == un.SenderUserId).SingleOrDefault());
             UN.ForEach(un => un.RecievingUser = context.User.Where(u => u.UserId == un.RecievingUserId).SingleOrDefault());
 

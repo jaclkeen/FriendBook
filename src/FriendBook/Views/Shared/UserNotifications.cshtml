@@ -9,20 +9,16 @@
     {
         @if (un.NotificationType == "Tag" || un.NotificationType == "FR")
         {
-            <div class="NewUserNotification" id="@un.PostId" data="@un.SendingUser.UserId">
-                <a href="/Profile/Index/@un.SendingUser.UserId/#'@un.PostId'">
-                    <img src="@un.SendingUser.ProfileImg" class="UserNotificationsImage" />
-                    <p class="UserNotificationsText">@un.NotificationText</p>
-                </a>
+            <div class="NewUserNotification" id="@un.PostId" data="@un.SendingUser.UserId @un.NotificationId @un.NotificationType">
+                <img src="@un.SendingUser.ProfileImg" class="UserNotificationsImage" />
+                <p class="UserNotificationsText">@un.NotificationText</p>
             </div>
         }
         else
         {
-            <div class="NewUserNotification" id="@un.PostId" data="@un.RecievingUser.UserId">
-                <a href="/Profile/Index/@un.RecievingUser.UserId/#'@un.PostId'">
-                    <img src="@un.SendingUser.ProfileImg" class="UserNotificationsImage" />
-                    <p class="UserNotificationsText">@un.NotificationText</p>
-                </a>
+            <div class="NewUserNotification" id="@un.PostId" data="@un.RecievingUser.UserId @un.NotificationId @un.NotificationType">
+                <img src="@un.SendingUser.ProfileImg" class="UserNotificationsImage" />
+                <p class="UserNotificationsText">@un.NotificationText</p>
             </div>
         }
     }

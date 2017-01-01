@@ -343,5 +343,5 @@ $("body").on("click", function (e) {
 ActiveConvo()
 
 //Purpose: Search for new messages, and message notifications every 5 seconds
-setInterval(UpdateUnseenMessages, 5000)
+//setInterval(UpdateUnseenMessages, 5000)
 setTimeout(setInterval(UpdateConversationMessages, 5000), 3000)

@@ -6,6 +6,21 @@ function ToastNotification(message) {
     $(".toast").fadeOut(2000)
 }
 
+function UserNotificationSeen(NotificationId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Home/SeenUserNotification",
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(NotificationId)
+        }).done(function (success) {
+            resolve(success)
+        }).error(function (err){
+            reject(err)
+        })
+    })
+}
+
 function GetUserNotifications() {
     return new Promise(function (resolve, reject) {
         $.ajax({

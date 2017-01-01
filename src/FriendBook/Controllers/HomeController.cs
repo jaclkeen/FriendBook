@@ -287,5 +287,14 @@ namespace FriendBook.Controllers
 
             return notifications;
         }
+
+        [HttpPost]
+        public void SeenUserNotification([FromBody] int NotificationId)
+        {
+            Notification notification = context.Notification.Where(n => n.NotificationId == NotificationId).SingleOrDefault();
+            notification.Seen = true;
+
+            context.SaveChanges();
+        }
     }
 }
