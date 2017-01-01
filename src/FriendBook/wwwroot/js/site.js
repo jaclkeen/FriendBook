@@ -35,7 +35,7 @@
     }
 
     //Purpose: Adds event listener onto the user search input that gets all users and if the input is equal to any
-    //          current user, it gets appended to the dom and events are then added to it.
+    //  current user, it gets appended to the dom and events are then added to it.
     $('.userSearch').on("input", function(){
         getUsers()
         .then(function(users){
@@ -45,14 +45,26 @@
     })
 
     //Purpose: To show and hide the message notifications on click of the nav item and show the friend notifications
+    //  and user notifications
     $('.messageNotifications').on("click", function () {
-        $('.notificationArea').addClass("hidden")
         $('.messageNotificationArea').toggleClass("hidden")
+        $('.notificationArea').addClass("hidden")
+        $(".UserNotificationDiv").addClass("hidden")
     })
 
     //Purpose: To show and hide the Friend notifications on click of the nav item and hide the message notifications
+    //  and user notifications
     $('.Notifications').on("click", function () {
-        $('.notificationArea').toggleClass("hidden");
+        $('.notificationArea').toggleClass("hidden")
+        $('.messageNotificationArea').addClass("hidden")
+        $(".UserNotificationDiv").addClass("hidden")
+    })
+
+    //Purpose: To show and hide the UserNotifications on click of the nav item and hide the message notifications
+    //  and friend request notifications
+    $(".ShowUserNotifications").on("click", function () {
+        $(".UserNotificationDiv").toggleClass("hidden")
+        $('.notificationArea').addClass("hidden")
         $('.messageNotificationArea').addClass("hidden")
     })
 
@@ -98,4 +110,14 @@
 
     //Purpose: Calls event listeners for comments on page load
     CommentEventsForDeleteAndEdit()
+
+    GetCurrentUser()
+    .then(function (u) {
+        if (u !== undefined) {
+            ActiveConvo()
+            setInterval(UpdateUnseenMessages, 5000)
+            setInterval(UpdateConversationMessages, 5000)
+            setInterval(GetCurrentUserNotifications, 5000)
+        }
+    })
 })

@@ -32,7 +32,7 @@ function AppendPostEdit(e) {
 //Purpose: To provide event listeners to all posts such as like, dislike, edit, and submit comment events.
 $(".post").on("click", function (e) {
     let CurrentPost = $(e.currentTarget);
-    let CurrentPostId = CurrentPost.attr("id")
+    let CurrentPostId = CurrentPost.attr("data")
 
     if (e.target.classList.contains("like")) {
         let context = $(e.target)
@@ -77,14 +77,15 @@ $(".post").on("click", function (e) {
                     CurrentPost.children(".CommentArea").html("")
                     comments.forEach(function (comment) {
                         CommentCount = comments.length;
-                        let NewCommentDiv = $(`<div class="comment" id=${comment.commentId}><img src=${user.profileImg} /><span>${user.firstName} ${user.lastName}</span><p>${comment.text}</p></div>`)
+                        let NewCommentDiv = $(`<div class="comment" id=${comment.commentId}><img src=${user.profileImg} /><a href="/Profile/Index/${comment.user.userId}"><span>${comment.user.firstName} ${comment.user.lastName}</span></a><p>${comment.text}</p></div>`)
                         let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div><hr>`
-                        NewCommentDiv.append(EditOrDeleteComment)
+                        comment.userId === user.userId ? NewCommentDiv.append(EditOrDeleteComment) : false;
                         CurrentPost.children(".CommentArea").append(NewCommentDiv)
                         CommentEventsForDeleteAndEdit()
                         ClickedCommentButtonTextArea.val("")
-                        ToastNotification("Comment posted!")
                     })
+
+                    ToastNotification("Comment posted!")
                     $(CommentTag).html(`<span class="comments addSpaceRight"><i class="fa fa-comments statusIcon CSI"></i>(${CommentCount})</span>`)
                 })
             })

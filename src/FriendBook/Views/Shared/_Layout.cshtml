@@ -19,6 +19,21 @@
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
     <style>
+        .comment{
+            background: @Model.UserStyle.PostHeaderColor;
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .comment span, .comment img{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .NewUserNotification{
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;
+        }
+        .UserNotificationDiv, .messageNotificationArea{
+            border-left: 2px solid @Model.UserStyle.DetailColor;;
+            border-right: 2px solid @Model.UserStyle.DetailColor;;
+            border-bottom: 2px solid @Model.UserStyle.DetailColor;;
+        }
         .TaggedFriend{
             background-color: @Model.UserStyle.PostBackgroundColor;
             border: 2px solid @Model.UserStyle.DetailColor;
@@ -54,7 +69,7 @@
             background-color: @Model.UserStyle.BackgroundColor;
             border: 2px solid @Model.UserStyle.DetailColor;
         }
-        .notificationArea, .messageNotificationArea{
+        .notificationArea, .messageNotificationArea, .UserNotificationDiv{
             background-color: @Model.UserStyle.NavColor;            
         }
         .colorContainer{
@@ -242,15 +257,12 @@
             {
                 Html.RenderPartial("FriendRequests");
                 Html.RenderPartial("MessageNotifications");
+                Html.RenderPartial("UserNotifications");
 
-                <div class="row conversationWrapper">
-
-                </div>
+                <div class="row conversationWrapper"></div>
             }
 
-            <div class="toast hidden">
-
-            </div>
+            <div class="toast hidden"></div>
 
             @RenderBody()
         </div>
@@ -259,7 +271,6 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-
         <script src="~/js/Factory.js" asp-append-version="true"></script>
         <script src="~/js/Tagging.js" asp-append-version="true"></script>
         <script src="~/js/Login.js" asp-append-version="true"></script>
@@ -267,6 +278,7 @@
         <script src="~/js/Post.js" asp-append-version="true"></script>
         <script src="~/js/Album.js" asp-append-version="true"></script>
         <script src="~/js/Conversation.js" asp-append-version="true"></script>
+        <script src="~/js/Notification.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
@@ -285,6 +297,7 @@
         <script src="~/js/Post.js" asp-append-version="true"></script>
         <script src="~/js/Album.js" asp-append-version="true"></script>
         <script src="~/js/Conversation.js" asp-append-version="true"></script>
+        <script src="~/js/Notification.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 

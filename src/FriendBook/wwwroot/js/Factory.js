@@ -3,19 +3,30 @@ function ToastNotification(message) {
     $(".toast").removeClass("hidden")
     $(".toast").html(message)
     $(".toast").fadeIn(2000)
-    $(".toast").fadeOut(5000)
+    $(".toast").fadeOut(2000)
 }
 
-//Purpose: To post the tagged users onto the method of the post being submitted
-function PostTaggedFriends(TaggedUserIds) {
+function UserNotificationSeen(NotificationId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
-            url: "/Home/NewStatus",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(TaggedUserIds)
+            url: "/Home/SeenUserNotification",
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(NotificationId)
         }).done(function (success) {
             resolve(success)
+        }).error(function (err){
+            reject(err)
+        })
+    })
+}
+
+function GetUserNotifications() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Home/UserNotifications"
+        }).done(function (notifications) {
+            resolve(notifications)
         }).error(function (err) {
             reject(err)
         })

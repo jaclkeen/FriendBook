@@ -1,6 +1,6 @@
 ﻿@foreach (var s in Model.Posts)
 {
-    <div class="post" id="@s.PostId">
+    <div class="post" id="'@s.PostId'" data="@s.PostId">
 
         <div class="postHeadDiv">
             <div class="postProfileImg">
@@ -63,7 +63,7 @@
                 {
                     <div class="comment" id="@c.CommentId">
                         <img src="@c.User.ProfileImg" />
-                        <a asp-action="Profile" asp-controller="Profile" asp-route-id="@c.UserId"><span>@c.User.FirstName @c.User.LastName</span></a>
+                        <a asp-action="Index" asp-controller="Profile" asp-route-id="@c.UserId"><span>@c.User.FirstName @c.User.LastName</span></a>
                         <p>@c.Text</p>
                         @if (c.UserId == Model.CurrentUser.UserId)
                         {
