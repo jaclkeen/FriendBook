@@ -6,6 +6,20 @@ function ToastNotification(message) {
     $(".toast").fadeOut(2000)
 }
 
+//Purpose: To get all of the current user's pending friend request
+function GetUserFriendRequests() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Home/UserFriendRequests"
+        }).done(function (FRs) {
+            resolve(FRs)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+//Purpose: To update that a notification has been seen
 function UserNotificationSeen(NotificationId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -21,6 +35,7 @@ function UserNotificationSeen(NotificationId) {
     })
 }
 
+//Purpose: To get all of the current user's notifications
 function GetUserNotifications() {
     return new Promise(function (resolve, reject) {
         $.ajax({

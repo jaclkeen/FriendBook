@@ -34,6 +34,27 @@
         })
     }
 
+    //Purpose to provide color styling and disable the submit post button if the post length is === 0 or greater than 200
+    //  characters
+    function StatusValidate(StatusVal) {
+        if (StatusVal.length === 0) {
+            $(".submitStatus").attr("disabled", true)
+            $(".statusLengthValidation").css("color", "black")
+        }
+        if (StatusVal.length > 0 && StatusVal.length < 200) {
+            $(".submitStatus").attr("disabled", false)
+            $(".statusLengthValidation").css("color", "black")
+        }
+        if (StatusVal.length > 170 && StatusVal.length < 201) {
+            $(".statusLengthValidation").css("color", "yellow")
+        }
+        if (StatusVal.length > 200) {
+            $(".statusLengthValidation").css("color", "red")
+        }
+
+        $(".statusLengthValidation").text(`${200 - StatusVal.length} characters remaining!`)
+    }
+
     //Purpose: Adds event listener onto the user search input that gets all users and if the input is equal to any
     //  current user, it gets appended to the dom and events are then added to it.
     $('.userSearch').on("input", function(){
@@ -68,24 +89,6 @@
         $('.messageNotificationArea').addClass("hidden")
     })
 
-    //Purpose: To add an event listener to either accept or decline a friend request 
-    $('.frButton').on("click", function () {
-        let frId = $(this).attr("id")
-
-        if ($(this).hasClass("declineFR")) {
-            DeclineFR(frId)
-            .then(function (data) {
-                location.reload();
-            })
-        }
-        else {
-            AcceptFR(frId)
-            .then(function(){
-                location.reload();
-            })
-        }
-    })
-
     //Purpose: submits a form when there is a change in the current user's cover image
     $(".profileBannerUpload").on("change", function () {
         $(".changeBannerImg").submit();
@@ -103,9 +106,30 @@
         $(".photoSelectedArea").append(`Selected file: ${selectedFile}`)
     })
 
+    //Purpose: To disable the submit button and show toast if the status length is 0 or greater than 200
+    $(".submitStatus").on("click", function () {
+        let PostTextCount = $(".newStatus").val()
+
+        if (PostTextCount.length === 0) {
+            $(".submitStatus").attr("disabled", true)
+            ToastNotification("You cannot post an empty status!")
+        }
+        else if (PostTextCount.length > 200) {
+            $(".submitStatus").attr("disabled", true)
+            ToastNotification("Your status must be less than 200 characters in length")
+        }
+    })
+
+    //Purpose calls the new status validation function above to validate the new status in the post
+    $(".newStatus").on("input", function () {
+        let StatusValue = $(this).val()
+        StatusValidate(StatusValue)
+    })
+
     //Purpose: Calls event listeners for comments on page load
     CommentEventsForDeleteAndEdit()
 
+    //Purpose: Auto updates all notifications and friend requests if there is a user logged in
     GetCurrentUser()
     .then(function (u) {
         if (u !== undefined) {
@@ -113,6 +137,7 @@
             setInterval(UpdateUnseenMessages, 5000)
             setInterval(UpdateConversationMessages, 5000)
             setInterval(GetCurrentUserNotifications, 5000)
+            setInterval(GetAllPendingUserFriendRequests, 5000)
         }
     })
 })

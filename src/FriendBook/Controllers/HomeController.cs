@@ -284,6 +284,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: HttpGet method that returns all of the current user's notifications
+        * Arguments:
+        *      None
+        * Return:
+        *      A list of all the current user's notifications
+        */
         [HttpGet]
         public List<Notification> UserNotifications()
         {
@@ -295,6 +302,13 @@ namespace FriendBook.Controllers
             return notifications;
         }
 
+        /**
+        * Purpose: HttpPost method that is called to update that a notification has been seen
+        * Arguments:
+        *      RelationshipId
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void SeenUserNotification([FromBody] int NotificationId)
         {
@@ -302,6 +316,24 @@ namespace FriendBook.Controllers
             notification.Seen = true;
 
             context.SaveChanges();
+        }
+
+        /**
+        * Purpose: HttpGet method that gets all of the sent to him/her current user's pending friend requests
+        * Arguments:
+        *      None
+        * Return:
+        *      A list of all the current user's recieved pending friend requests
+        */
+        [HttpGet]
+        public List<Relationship> UserFriendRequests()
+        {
+            User CurrentUser = ActiveUser.Instance.User;
+            List<Relationship> requests = context.Relationship.Where(r => r.ReciverUserId == CurrentUser.UserId && r.Status == 0).ToList();
+            requests.ForEach(r => r.SenderUser = context.User.Where(u => u.UserId == r.SenderUserId).SingleOrDefault());
+
+
+            return requests;
         }
     }
 }
