@@ -1,4 +1,14 @@
-﻿.NewUserNotification a:hover{
+﻿::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+.NewUserNotification a:hover{
     text-decoration: none!important;
 }
 .comment{
@@ -70,7 +80,7 @@
     padding: 0 2% 0 2%;
 }
 .NotificationDate{
-    width: 60%;
+    width: 65%;
     margin-left: 35%;
     margin-top: -7%;
     font-weight: bolder;
@@ -897,9 +907,9 @@ a{
     border-radius: 15px;
     display: inline-block;
     margin-left: 2%;
-    width: 30%;
+    width: 46%;
     margin-bottom: 2%;
-    height: 268px;
+    height: 325px;
 }
 .SelectedAlbumName{
     margin-right: 5%;
@@ -920,9 +930,10 @@ a{
     margin-bottom: 2%;
 }
 .AlbumImage{
-    border-radius: 12px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     background: white;
-    height: 220px;
+    height: 275px;
     width: 100%
 }
 .backSpan{

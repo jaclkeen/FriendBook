@@ -287,9 +287,10 @@ namespace FriendBook.Controllers
         [HttpGet]
         public List<Notification> UserNotifications()
         {
-            List<Notification> notifications = context.Notification.Where(n => n.RecievingUserId == ActiveUser.Instance.User.UserId && n.Seen == false).ToList();
+            List<Notification> notifications = context.Notification.Where(n => n.RecievingUserId == ActiveUser.Instance.User.UserId && n.Seen == false).OrderByDescending(d => d.NotificatonDate).ToList();
             notifications.ForEach(n => n.RecievingUser = context.User.Where(u => u.UserId == n.RecievingUserId).SingleOrDefault());
             notifications.ForEach(n => n.SendingUser = context.User.Where(u => u.UserId == n.SenderUserId).SingleOrDefault());
+
 
             return notifications;
         }

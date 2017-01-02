@@ -19,11 +19,19 @@
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
     <style>
+        ::-webkit-scrollbar-thumb {
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background-color: @Model.CurrentUserStyle.WallBackgroundColor;
+        }
+        ::-webkit-scrollbar-track {
+            border: none;
+            background-color: @Model.CurrentUserStyle.NavColor;
+        }
         .NewM:hover, .FR:hover, .NewUserNotification:hover{
-            background-color: @Model.UserStyle.BackgroundColor;
+            background-color: @Model.CurrentUserStyle.BackgroundColor;
         }
         .notificationProfileImg, .frButton, .MnImg, .UserNotificationsImage{
-            border: 2px solid @Model.UserStyle.DetailColor;
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .comment{
             background: @Model.UserStyle.PostHeaderColor;

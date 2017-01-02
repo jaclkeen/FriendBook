@@ -70,12 +70,7 @@
 
     //Purpose: To add an event listener to either accept or decline a friend request 
     $('.frButton').on("click", function () {
-        let frId = $(this).attr("id"),
-            frText = $(this).parent().parent().text(),
-            frHtml = $(this).parent().parent().html("")
-
-        frHtml = frText.split(" ")
-        frHtml.join("")
+        let frId = $(this).attr("id")
 
         if ($(this).hasClass("declineFR")) {
             DeclineFR(frId)
@@ -115,9 +110,9 @@
     .then(function (u) {
         if (u !== undefined) {
             ActiveConvo()
-            //setInterval(UpdateUnseenMessages, 5000)
-            //setInterval(UpdateConversationMessages, 5000)
-            //setInterval(GetCurrentUserNotifications, 5000)
+            setInterval(UpdateUnseenMessages, 5000)
+            setInterval(UpdateConversationMessages, 5000)
+            setInterval(GetCurrentUserNotifications, 5000)
         }
     })
 })
