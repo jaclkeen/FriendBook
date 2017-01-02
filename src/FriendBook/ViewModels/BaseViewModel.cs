@@ -99,7 +99,7 @@ namespace FriendBook.ViewModels
             UN.ForEach(un => un.SendingUser = context.User.Where(u => u.UserId == un.SenderUserId).SingleOrDefault());
             UN.ForEach(un => un.RecievingUser = context.User.Where(u => u.UserId == un.RecievingUserId).SingleOrDefault());
 
-            UserNotifications = UN.OrderBy(un => un.NotificatonDate).ToList();
+            UserNotifications = UN.OrderByDescending(un => un.NotificatonDate).ToList();
         }
     }
 }

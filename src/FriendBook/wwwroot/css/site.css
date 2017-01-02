@@ -1,18 +1,28 @@
-﻿.NewUserNotification a:hover{
+﻿::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+.statusLengthValidation{
+    float: right;
+}
+.NewUserNotification a:hover{
     text-decoration: none!important;
 }
-
 .comment{
-    padding: 1%;
+    margin-left: 4%;
+    padding: 2%;
     margin-bottom: 1%;
 }
-
 .navbar{
     position: fixed;
     z-index: -1;
 }
-
-
 .BackToAlbums{
     margin-top: 2%;
 }
@@ -23,76 +33,88 @@
     bottom: 0;
     left: 1.3%;
 }
-
 .like, .dislike{
     cursor: pointer;
 }
-
 .MnImg{
-    min-height: 53px;
+    background: white;
+    width: 30%;
+    min-height: 65px;
+    margin-left: 2%;
+    max-height: 65px;
+    float: left;
+    margin-right: 2%;
+    /*min-height: 53px;
     max-height: 53px;
     height: 53px;
     width: 30%;
     min-width: 30%;
     max-width: 30%;
-    padding-right: 3%;
+    background: white;
     float: left;
+    margin-right: 2%;*/
 }
-
 .MnName{
     font-weight: bolder;
 }
-
 .messageNotifications{
     font-size: 1.7em;
     cursor: pointer;
 }
-
 .messageNotifications a {
     margin-top: 5px!important;
 } 
-
 .UserNotificationDiv{
+    max-height: 347px;
+    overflow-x: overlay;
     position: fixed;
     margin-top: 3%;
-    margin-left: 56%;
+    margin-left: 52%;
     float: right;
-    width: 16%;
+    width: 20%;
     cursor: pointer;
 }
-
 .NoNewNotificationsText{
     text-align: center;
     font-size: 1.3em;
     padding-top: 4%;
 }
-
+.NewUserNotification{
+    padding: 0 2% 0 2%;
+}
+.NotificationDate{
+    width: 65%;
+    margin-left: 35%;
+    margin-top: -7%;
+    font-weight: bolder;
+}
 .UserNotificationsImage{
+    min-height: 65px;
+    max-height: 65px;
     display: inline-block;
-    width: 25%;
+    width: 30%;
     margin-bottom: 3%;
     margin-top: 3%;
+    background: white;
 }
-
 .UserNotificationsText{
-    vertical-align: bottom;
+    vertical-align: middle;
     display: inline-block;
-    width: 70%;
+    width: 65%;
     margin-top: 2%;
 }
-
 .messageNotificationArea{
+    max-height: 347px;
+    overflow-x: overlay;
     position: fixed;
     margin-top: 3%;
-    margin-left: 39%;
+    margin-left: 52%;
     float: right;
-    width: 16%;
+    width: 20%;
 }
-
 .convoMessage{
     padding: .5%;
 }
-
 .convoMessageContainer{
     height: 212px;
     max-height: 212px;
@@ -101,7 +123,6 @@
     clear: both;
     padding-top: 1%;
 }
-
 .convoName{
     float: left;
     width: 75%;
@@ -109,19 +130,15 @@
     padding: 1%;
     border-bottom: 2px solid black;
 }
-
 .hideConversation:hover{
     color: yellow;
 }
-
 .showConversation:hover{
     color: lightgreen;
 }
-
 .removeConversation:hover{
     color: red;
 }
-
 .hideConversation, .showConversation{
     margin-left: 10%;
     font-size: 1.5em;
@@ -129,20 +146,17 @@
     cursor: pointer;
     margin-top: 6%;
 }
-
 .removeConversation{
     cursor: pointer;
     font-size: 1.5em;
     margin-left: 15%;
 }
-
 .minifyOrExpand{
     float: right;
     height: 40px;
     border-bottom: 2px solid black;
     width: 25%
 }
-
 .conversation{
     bottom: 325px;
     height: 325px;
@@ -153,11 +167,9 @@
     margin-right: .4%;
     display: inline-block;
 }
-
 .minifiedConversation{
     bottom: 42px;
 }
-
 .messagingContainer{
     padding: 1%;
     z-index: -1;
@@ -171,7 +183,6 @@
     height: 535px;
     background: white;
 }
-
 .messageFriendSearch{
     margin-bottom: 2%!important;
     padding: 2%;
@@ -179,18 +190,15 @@
     border: 2px solid black;
     margin: auto;
 }
-
 .MessageAreaName{
     font-size: 1.2em;
     margin-left: 3%;
 }
-
 .MessageAreaUser{
     margin-right: 4%;
     cursor: pointer;
     margin-bottom: 2%;
 }
-
 .submitNewMessage{
     float: right;
     width: 25%;
@@ -200,12 +208,13 @@
     height: 69px;
     cursor: pointer;
 }
-
+.NewM .MnText{
+    margin-top: 3%;
+}
 .NewM{
-    padding-top: 1%;
+    padding: 6% 0 16% 0;
     cursor: pointer;
 }
-
 .newMessage{
     position: absolute;
     bottom: -1px;
@@ -217,13 +226,11 @@
     max-width: 85%;
     padding-left: 1%;
 }
-
 .convoName h5{
     font-weight: bolder;
     font-size: 1.1em;
     margin-top: 0!important;
 }
-
 .message{
     margin-bottom: 2%;
     margin-top: 2%;
@@ -231,14 +238,12 @@
     padding-bottom: 2%;
     padding-left: 2%;
 }
-
 .messageSenderImage{
     min-height: 35px;
     background: white;
     width: 15%;
     display: inline-block;
 }
-
 .convoMessage{
     border: 2px solid black;
     width: 80%;
@@ -249,7 +254,6 @@
     display: inline-block;
     border-radius: 10px;
 }
-
 .messageProfileImg{
     background: white;
     vertical-align: middle;
@@ -260,58 +264,49 @@
     min-height: 45px;
     max-height: 45px;
 }
-
 .nav img{
     width: 24%;
 }
-
 .Notifications{
     margin-top: 5px!important;
 }
-
 .FRUserName{
     font-weight: bolder;
 }
-
 .notificationArea{
     position: fixed;
     margin-top: 3%;
-    margin-left: 49%;
+    margin-left: 52%;
     float: right;
-    width: 16%;
+    width: 20%;
     border-left: 2px solid black;
     border-right: 2px solid black;
     border-bottom: 2px solid black;
     max-height: 347px;
     overflow-x: overlay;
 }
-
 .messageFriendCount{
     margin-top: 0;
 }
-
 .notificationProfileImg{
     background: white;
-    width: 35%;
+    width: 30%;
     min-height: 65px;
+    margin-left: 2%;
     max-height: 65px;
     float: left;
-    margin-right: 3%;
+    margin-right: 2%
 }
-
 .bodyWrapper{
     margin-top: 3%;
     padding-bottom: 5%;
 }
-
 .body{
     z-index: -2!important;
 }
-
 .nav a{
     margin-top: 8%;
 }
-
 .nav span img{
     background: white;
     min-height: 55px;
@@ -319,7 +314,6 @@
     margin-bottom: .5%;
     max-height: 55px;
 }
-
 .newStatus{
     font-size: 1.5em;
     width: 100%;
@@ -330,12 +324,10 @@
     min-height: 130px;
     color: black;
 }
-
 .postTextDiv{
     margin-top: 2%;
     font-size: 1.3em;
 }
-
 .deletePost{
     font-size: 1.1em;
     padding-left: 10%;
@@ -346,7 +338,6 @@
     border-radius: 20px;
     margin-right: 5%;
 }
-
 .toast{
     text-align: center;
     width: 14%;
@@ -359,22 +350,18 @@
     padding: .5%;
     border-radius: 10px;
 }
-
 .deletePost:hover{
     border: 2px solid red;
 }
-
 hr{
     margin-top: 2%;
     margin-bottom: 2%;
 }
-
 .deleteEditDiv{
     float: right;
     width: 40%;
     margin-bottom: 1%;
 }
-
 .EditPost{
     font-size: 1.1em;
     padding-left: 16%;
@@ -384,114 +371,97 @@ hr{
     background: #449d44;
     border-radius: 20px
 }
-
 .EditPost:hover{
     cursor: pointer;
     border: 2px solid green;
 }
-
 .submitStatus, .tagFriends{
     padding-left: 5%;
     padding-right: 5%;
     border-radius: 30px;
     margin-right: 2%;
 }
-
 .clearStatus{
     padding-left: 5%;
     padding-right: 5%;
     border-radius: 30px;
-    margin-left: 30%;
+    float: right;
 }
-
 .tagFriendsDiv{
     margin-top: 2%;
     margin-left: 0%;
 }
-
 .tagFriendsDiv input {
     padding: .5%;
     width: 97%;
 }
-
 .postUser{
     display: inline-block;
     width: 52%;
 }
-
 .postProfileImg{
     display: inline-block;
     width: 14%;
     height: 70px;
     margin-bottom: 2%;
 }
-
 .postUser a{
     margin-left: 5%;
     padding: 4%;
     font-size: 1.5em;
     border-radius: 31px;
 }
-
 .postProfileImg img{
     background: white;
     width: 100%;
     min-height: 75px;
     max-height: 75px;
 }
-
 .userSearchArea{
     margin-top: -.8%;
     margin-left: 17%;
     width: 40%;
 }
-
 .body{
     z-index: -1;
     width: 80%;
     margin-left: 10%;
     position: absolute;
 }
-
 .userSearch{
     color: black;
     vertical-align: middle;
     width: 100%;
     border-bottom: 2px solid black;
 }
-
 .searchResults{
     position: fixed;
     margin-top: 4.4%;
     width: 50%;
 }
-
 .searchProfilePic{
+    background: white;
     min-height: 60px;
-    margin-left: -10%;
+    margin-left: -25%;
+    margin-right: 2%;
     width: 25%;
     display: inline-block;
 }
-
 .searchProfileName{
     display: inline-block;
     font-size: 1.3em;
     margin-left: 2%;
 }
-
 .icon{
     font-size: 2.2em;
     margin-top: 58%;
 }
-
 .navThing{
     margin-left: 2%;
 }
-
 .Notifications, .HomeLink, .UserNotifications{
     font-size: 1.7em;
 }
-
 .userInSearch{
     cursor: pointer;
     position: relative;
@@ -505,21 +475,17 @@ hr{
     margin-bottom: 0;
     margin-top: -1%;
 }
-
 .hidden{
     display: none;
 }
-
 .frButton{
-    margin-left: 5%;
-    width:41%;
+    border-radius: 15px;
+    margin-left: 1%;
+    width:30%;
 }
-
 .frButtonDiv{
     margin-top: 2%;
-    margin-bottom: 2%;
 }
-
 .colorContainer{
     padding-bottom: 5%!important;
     margin-top: 3%;
@@ -530,34 +496,24 @@ hr{
     position: absolute;
     width: 60%;
 }
-
 .successFR p{
     margin-bottom: 0;
     width: 90%;
     margin: auto;
 }
-
 .NoFR{
     font-size: 1.2em;
     text-align: center;
     padding: 4%;
 }
-
-.receivedFR{
-    padding-top: 2%;
-}
-
 a{
     color: black!important;
 }
-
 .LoginNav{
     width: 100%;
     margin: auto;
     background-color: lightgray;
-    /*border-bottom: 2px solid black;*/
 }
-
 .LoginNav a{
     padding-top: 1%;
     margin-left: .5%;
@@ -568,7 +524,6 @@ a{
     cursor: pointer;
     padding-bottom: 1%;
 }
-
 .active{
     background-color: dodgerblue;
     border-right: 2px solid black;
@@ -577,18 +532,15 @@ a{
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
-
 .LoginNav h2{
     text-align: center;
 }
-
 .userSearch{
     margin-top: 2%;
     padding-left: .3%;
     position: fixed;
     width: 20%;
 }
-
 .LoginOrRegister{
     font-size: 1.3em;
     background-color: dodgerblue;
@@ -599,53 +551,43 @@ a{
     box-shadow: 4px 4px 4px black;
     opacity: .8;
 }
-
 .Login{
     padding: 5% 5% 0 5%;
 }
-
 .Register{
     padding: 5% 5% 0 5%;
 }
-
 .val{
     color: red;
     font-weight: bold;
 }
-
 .pInfo{
     z-index: 3;
     width: 30%;
     margin-left: 3%;
 }
-
 .navNamePic{
     display: inline!important;
     width: 50%;
     margin-left: 0%;
 }
-
 .submitLogin, .submitRegister{
     padding-left: 15%;
     padding-right: 15%;
 }
-
 .navbar-right{
     margin-right: 0!important;
     width: 65%;
 }
-
 .submitComment{
     vertical-align: text-top;
     margin-top: -4.5%;
     margin-left: 3%;
     border-radius: 20px;
 }
-
 .submitComment:hover{
     border: 2px solid green;
 }
-
 .AddNewComment{
     width: 80%;
     max-width: 80%;
@@ -654,32 +596,25 @@ a{
     min-height: 50px;
     max-height: 50px;
 }
-
 .startPosts{
     margin-top: 2%;
     padding-top: 2%;
 }
-
 .statusIcon{
     font-size: 2em;
 }
-
 .addSpaceRight{
     margin-right: 3%;
 }
-
 .like:hover{
     color: green!important;
 }
-
 .dislike:hover{
     color: red!important;
 }
-
 .comments{
     cursor: pointer;
 }
-
 .editInput{
     width: 80%!important;
     min-width: 80%;
@@ -688,7 +623,6 @@ a{
     min-height: 110px;
     max-height: 110px;
 }
-
 .updatePost{
     margin-top: 8%;
     margin-right: 1%;
@@ -697,27 +631,26 @@ a{
     padding-left: 3%;
     padding-right: 3%;
 }
-
 .updatePost:hover{
     border: 2px solid green;
 }
-
 .comment img{
     width: 15%;
+    background: white;
+    min-height: 75px;
+    max-height: 75px;
+    height: 75px;
 }
-
 .comment span{
     margin-left: 2%;
     padding: 3%;
     font-size: 1.5em;
     border-radius: 31px;
 }
-
 .comment p{
     font-size: 1.1em;
     margin-top: 1%;
 }
-
 .DeleteComment{
     font-size: 1.1em;
     padding-left: 5%;
@@ -729,11 +662,9 @@ a{
     margin-right: 3%;
     cursor: pointer;
 }
-
 .DeleteComment:hover{
     border: 2px solid red;
 }
-
 .EditComment{
     cursor: pointer;
     font-size: 1.1em;
@@ -745,15 +676,9 @@ a{
     border-radius: 20px;
     margin-right: 5%;
 }
-
 .EditComment:hover {
     border: 2px solid green;
 }
-
-.comment{
-    margin-left: 4%;
-}
-
 .updateComment{
     float: right;
     margin-right: 1.5%;
@@ -762,15 +687,12 @@ a{
     border-radius: 20px;
     margin-top: 8%;
 }
-
 .updateComment:hover{
     border: 2px solid green;
 }
-
 .logout{
     margin-left: 130%;
 }
-
 .brandImg{
     color: white;
     font-size: 5em;
@@ -779,13 +701,11 @@ a{
     margin-bottom: 2%;
     margin-top: 1%;
 }
-
 .brandName{
     color:white;
     text-align:center;
     margin-top: 0;
 }
-
 .notYourProfileHeadImg{
     background: white;
     cursor: inherit;
@@ -794,7 +714,6 @@ a{
     max-height: 253px;
     min-height: 253px;
 }
-
 .profileHeadImg{
     cursor: pointer;
     width: 100%;
@@ -802,12 +721,10 @@ a{
     max-height: 253px;
     min-height: 253px;
 }
-
 .profileHeadName{
     text-align:center;
     margin-top: -43%;
 }
-
 .navTab{
     padding: 1%;
     text-align:center;
@@ -816,43 +733,34 @@ a{
     display: inline-block;
     cursor: pointer;
 }
-
 .updateStyling :hover{
     text-decoration: none!important;
 }
-
 .profileNav{
     margin-left: 1%;
 }
-
 .profileNavIcon{
     font-size: 2.5em;
     width: 100%;
 }
-
 .friends{
     display: block!important;
 }
-
 .datePosted{
     float: right;
 }
-
 .friendImg{
     display: inline-block;
     width: 18%;
     height: 103px;
 }
-
 .friendArea{
     padding: 1%;
 }
-
 .friendHeadImg{
     width: 100%;
     height:inherit;
 }
-
 .friendName{
     width: 40%;
     margin-left: 5%;
@@ -862,69 +770,57 @@ a{
     display: inline-block;
     width: 10%;
 }
-
 .actualFriend{
     margin-bottom: 1.4%;
     padding: 1%;
     border: 2px solid black;
 }
-
 .friendHead, .postHead{
     display: inline-block;
 }
-
 .friendIcon, .postIcon{
     font-size: 3.5em;
     margin-top: 3%;
     margin-left: 2%;
     margin-right: 2%;
 }
-
 .stylingHead{
     display: inline-block;
     margin-bottom: 7%
 }
-
 .profileImgUpload, .profileBannerUpload{
     display: none!important;
 }
-
 .profileImgUploadLabel, .profileBannerUploadLabel{
     min-width: 100%;
     max-width: 100%!important;
 }
-
 .notYours{
     cursor: auto!important;
 }
-
 .FR{
-    margin-top: 6%;
+    padding: 6% 0 2% 0;
 }
-
 .addPToStatus{
     display: none!important;
 }
-
 .addPhotoToStatusDiv{
     display: inline-block;
     cursor: pointer;
-    width: 20%;
+    width: 27%;
     padding-left: 3%;
     padding-right: 3%;
     border-left: 2px solid black;
     border-right: 2px solid black;
     border-top: 2px solid black;
 }
-
 .addPToStatusLabel{
-    width: 100%;
+    width: 65%;
     margin-bottom: 0!important;
 }
 .photoSelectedArea{
     display: inline-block;
 }
-
 .postImage{
     background: white;
     max-width: 54%;
@@ -933,7 +829,6 @@ a{
     margin-top: 3%;
     margin-left: 23%;
 }
-
 .postHeadDiv{
     padding-top: 0%;
     margin-top: -1%;
@@ -941,7 +836,6 @@ a{
     margin-right: -1%;
     padding: 1%;
 }
-
 .notYourProfileBannerImg{
     cursor: inherit;
     border-bottom-left-radius: 70px;
@@ -951,7 +845,6 @@ a{
     min-height: 400px;
     max-height: 400px;
 }
-
 .profileBannerImg{
     cursor: pointer!important;
     border-bottom-left-radius: 70px;
@@ -961,23 +854,19 @@ a{
     min-height: 400px;
     max-height: 400px;
 }
-
 .changeProfileImg{
     margin-left: 30%;
     position: relative;
     top: -325px;
     width: 40%;
 }
-
 .profileHead{
     margin-top: -2%;
 }
-
 .changeBannerImg{
     min-width: 100%;
     max-width: 100%;
 }
-
 .addAlbum{
     cursor: pointer;
     font-size: 4em;
@@ -985,14 +874,12 @@ a{
     margin-top: 2%;
     margin-right: 3%
 }
-
 .albumImg{
     margin-bottom: 4%;
     background: white;
     height: 180px;
     width: 100%
 }
-
 .ImageArea{
     border-radius: 10px;
     cursor: pointer;
@@ -1002,51 +889,42 @@ a{
     display: inline-block;
     padding-bottom: 1%;
 }
-
 .albumName{
     margin-top: 10px;
     text-align: center;
 }
-
 .createNewAlbum h3{
     margin-left: 2%;
 }
-
 .createNewAlbum{
     padding: 1%;
     border-radius: 30px;
     margin-top: 2%;
     margin-bottom: 2%;
 }
-
 .albumNameValidation, .albumDescriptionValidation{
     color: red;
 }
-
 .albumName{
     font-size: 20px;
 }
-
 .AlbumImageDiv{
     border-radius: 15px;
     display: inline-block;
     margin-left: 2%;
-    width: 30%;
+    width: 46%;
     margin-bottom: 2%;
-    height: 268px;
+    height: 325px;
 }
-
 .SelectedAlbumName{
     margin-right: 5%;
     display: inline-block;
 }
-
 .addimg{
     cursor: pointer;
     font-size: 2em;
     margin-left: 2%;
 }
-
 .albumDetailDiv{
     width: 96%;
     margin-left: 2%;
@@ -1056,24 +934,20 @@ a{
     padding-bottom: .5%;
     margin-bottom: 2%;
 }
-
 .AlbumImage{
-    border-radius: 12px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     background: white;
-    height: 220px;
+    height: 275px;
     width: 100%
 }
-
-
 .backSpan{
     vertical-align: super;
     cursor: pointer;
 }
-
 .AddImageToAlbum, .formArea{
     display: inline-block;
 }
-
 .friendBeingTaggedProfileImg{
     width: 30%;
     min-width: 30%;
@@ -1083,59 +957,48 @@ a{
     display: inline-block;
     background: white;
 }
-
 .friendBeingTaggedName{
     display: inline-block;
     font-size: 1.2em;
 }
-
 .friendBeingTagged{
     cursor: pointer;
     width: 40%;
 }
-
 .TaggedFriend{
     border-radius: 30px;
     margin-bottom: .5%;
     padding: 1%;
     display: inline-block;
 }
-
 .TaggedFriend p{
     margin-bottom: 0;
     display: inline-block;
 }
-
 .RemoveTag{
     cursor: pointer;
     display: inline-block;
 }
-
 .RemoveTag:hover {
     color: red;
 }
-
 .ActualTaggedFriends{
     width: 97%;
 }
-
 .TaggedUsers{
     margin-bottom: -1%;
 }
-
 .TaggedUserWith{
     margin-right: 1%;
     margin-top: 0;
     display: inline-block;
 }
-
 .TaggedUserName{
     font-size: 1.3em;
     display: inline-block;
     font-weight: bolder;
     margin-right: 2%;
 }
-
 .RemoveImageFromAlbum, .DeleteAlbum{
     width: 80%;
     margin-left: 10%;

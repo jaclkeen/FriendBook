@@ -117,6 +117,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /**
+        * Purpose: This method is used to delete a single image from a photo album
+        * Arguments:
+        *      [FromRoute] int id - The id of the particular image being deleted
+        * Return:
+        *      Redirects to the user back to the current album they are viewing
+        */
         public IActionResult DeleteImageFromAlbum([FromRoute] int id)
         {
             Image DeletedImage = context.Image.Where(i => i.ImageId == id).SingleOrDefault();
@@ -126,6 +133,13 @@ namespace FriendBook.Controllers
             return RedirectToAction("AlbumImages", "Profile", new { id = ActiveUser.Instance.User.UserId, id2 = DeletedImage.AlbumId });
         }
 
+        /**
+        * Purpose: This method is used to delete an entire album along with the images in that album
+        * Arguments:
+        *      [FromRoute] int id - The id of the particular album being deleted
+        * Return:
+        *      Redirects to the user back to the list of user albums page
+        */
         public IActionResult DeleteAlbum([FromRoute] int id)
         {
             Album DeletedAlbum = context.Album.Where(a => a.AlbumId == id).SingleOrDefault();

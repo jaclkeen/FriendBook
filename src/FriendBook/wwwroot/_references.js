@@ -3,6 +3,7 @@
 /// <reference path="js/comment.js" />
 /// <reference path="js/conversation.js" />
 /// <reference path="js/factory.js" />
+/// <reference path="js/frnotifications.js" />
 /// <reference path="js/login.js" />
 /// <reference path="js/notification.js" />
 /// <reference path="js/post.js" />

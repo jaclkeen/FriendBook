@@ -77,7 +77,7 @@ $(".post").on("click", function (e) {
                     CurrentPost.children(".CommentArea").html("")
                     comments.forEach(function (comment) {
                         CommentCount = comments.length;
-                        let NewCommentDiv = $(`<div class="comment" id=${comment.commentId}><img src=${user.profileImg} /><a href="/Profile/Index/${comment.user.userId}"><span>${comment.user.firstName} ${comment.user.lastName}</span></a><p>${comment.text}</p></div>`)
+                        let NewCommentDiv = $(`<div class="comment" id=${comment.commentId}><img src=${comment.user.profileImg} /><a href="/Profile/Index/${comment.user.userId}"><span>${comment.user.firstName} ${comment.user.lastName}</span></a><p>${comment.text}</p></div>`)
                         let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div><hr>`
                         comment.userId === user.userId ? NewCommentDiv.append(EditOrDeleteComment) : false;
                         CurrentPost.children(".CommentArea").append(NewCommentDiv)

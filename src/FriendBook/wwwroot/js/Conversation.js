@@ -166,7 +166,7 @@ function UpdateUnseenMessages() {
             let noti =
                 `<div class='NewM' id='${n.sendingUser.userId}' data='${n.messageNotificationId}'>
                     <img src=${n.sendingUser.profileImg} class='MnImg'/>
-                    <a asp-action="Index" asp-controller="Profile" asp-route-id="${n.sendingUser.userId}" class="MnName MnText">${n.sendingUser.firstName} ${n.sendingUser.lastName}</a>
+                    <a href="/Profile/Index/${n.sendingUser.userId}" class ="MnName MnText">${n.sendingUser.firstName} ${n.sendingUser.lastName}</a>
                     <span class="MnText">sent you a new message!</span>
                 </div>`
 
