@@ -19,6 +19,12 @@
     </environment>
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
     <style>
+        .NewM:hover, .FR:hover, .NewUserNotification:hover{
+            background-color: @Model.UserStyle.BackgroundColor;
+        }
+        .notificationProfileImg, .frButton, .MnImg, .UserNotificationsImage{
+            border: 2px solid @Model.UserStyle.DetailColor;
+        }
         .comment{
             background: @Model.UserStyle.PostHeaderColor;
             border: 2px solid @Model.UserStyle.DetailColor;

@@ -115,9 +115,9 @@
     .then(function (u) {
         if (u !== undefined) {
             ActiveConvo()
-            setInterval(UpdateUnseenMessages, 5000)
-            setInterval(UpdateConversationMessages, 5000)
-            setInterval(GetCurrentUserNotifications, 5000)
+            //setInterval(UpdateUnseenMessages, 5000)
+            //setInterval(UpdateConversationMessages, 5000)
+            //setInterval(GetCurrentUserNotifications, 5000)
         }
     })
 })

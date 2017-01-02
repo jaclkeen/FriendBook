@@ -3,8 +3,7 @@
         <div class="friendBeingTagged" id="${friend.userId}">
             <img src="${friend.profileImg}" class ="friendBeingTaggedProfileImg"/>
             <p class ="friendBeingTaggedName">${friend.firstName} ${friend.lastName}</p>
-        </div>
-    `)
+        </div>`)
 }
 
 function AppendTag(FriendUserId, FriendName) {
@@ -12,8 +11,7 @@ function AppendTag(FriendUserId, FriendName) {
         <div class ="TaggedFriend" id="${FriendUserId}">
             <p class="TaggedFriendName">${FriendName}</p>
             <i class ="fa fa-times RemoveTag" aria-hidden="true"></i>
-        </div>
-    `)
+        </div>`)
 }
 
 $("body").on("click", function (e) {
@@ -43,8 +41,8 @@ $("body").on("click", function (e) {
 $(".tagFriendsDiv").on("click", function (e) {
     let context = $(e.target),
         TaggedFriendName = null,
-        TaggedUserId = null
-    TaggedUsersInput = $(".TaggedUsersInput").val()
+        TaggedUserId = null,
+        TaggedUsersInput = $(".TaggedUsersInput").val()
 
     if (context.hasClass("friendBeingTagged")) {
         $(".tagFriendsInput").val("")

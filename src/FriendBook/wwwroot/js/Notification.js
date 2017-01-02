@@ -21,13 +21,15 @@ function AddSingleUserNotificationToDom(un) {
     if (un.notificationType == "Tag" || un.notificationType == "FR"){
         return `<div class="NewUserNotification" id="${un.postId}" data="${un.sendingUser.userId} ${un.notificationId} ${un.notificationType}">
                     <img src="${un.sendingUser.profileImg}" class="UserNotificationsImage" />
-                    <p class="UserNotificationsText">${un.notificationText}</p>
+                    <p class ="UserNotificationsText">${un.notificationText}</p>
+                    <p class ="NotificationDate">${un.notificatonDate}</p>
                 </div>`
     }
     else{
         return `<div class="NewUserNotification" id="${un.postId}" data="${un.recievingUser.userId} ${un.notificationId} ${un.notificationType}">
                     <img src="${un.sendingUser.profileImg}" class="UserNotificationsImage" />
-                    <p class="UserNotificationsText">${un.notificationText}</p>
+                    <p class ="UserNotificationsText">${un.notificationText}</p>
+                    <p class ="NotificationDate">${un.notificatonDate}</p>
                 </div>`
     }
 }
