@@ -43,14 +43,12 @@ $(".UserNotificationDiv").on("click", function (e) {
             PostId = context.parent().attr("id")
 
         if (NotificationType === "Tag" || NotificationType === "FR") {
-            console.log(NotificationId)
             UserNotificationSeen(NotificationId)
             .then(function(){
                 window.location = `/Profile/Index/${SendingOrRecieverId}/#'${PostId}'`
             })
         }
         else {
-            console.log(NotificationId)
             UserNotificationSeen(NotificationId)
             .then(function(){
                 window.location = `/Profile/Index/${SendingOrRecieverId}/#'${PostId}'`

@@ -134,10 +134,10 @@
     .then(function (u) {
         if (u !== undefined) {
             ActiveConvo()
-            setInterval(UpdateUnseenMessages, 5000)
-            setInterval(UpdateConversationMessages, 5000)
-            setInterval(GetCurrentUserNotifications, 5000)
-            setInterval(GetAllPendingUserFriendRequests, 5000)
+            setInterval(UpdateUnseenMessages, 3000)
+            setInterval(UpdateConversationMessages, 3000)
+            setInterval(GetCurrentUserNotifications, 3000)
+            setInterval(GetAllPendingUserFriendRequests, 3000)
         }
     })
 })
