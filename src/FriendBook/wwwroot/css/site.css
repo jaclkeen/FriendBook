@@ -397,7 +397,7 @@ hr{
 }
 .postUser{
     display: inline-block;
-    width: 60%;
+    width: 65%;
 }
 .wallPostUpdate{
     font-size: .8em;
@@ -419,7 +419,7 @@ hr{
 }
 .postUser a{
     margin-left: 5%;
-    padding: 4%;
+    padding: 3%;
     font-size: 1.5em;
     border-radius: 31px;
 }
