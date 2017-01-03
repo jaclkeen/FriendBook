@@ -15,9 +15,11 @@
             else
             {
                 <div class="postUsers">
-                    <a asp-action="Index" asp-controller="Profile" asp-route-id="@s.User.UserId"><span>@s.User.FirstName @s.User.LastName</span></a> 
-                    <span class="glyphicon glyphicon-play"></span>
-                    <a asp-action="Index" asp-controller="Profile" asp-route-id="@s.RecievingUser.UserId">@s.RecievingUser.FirstName @s.RecievingUser.LastName</a><br />
+                    <p class="postUserContainer">
+                        <a asp-action="Index" asp-controller="Profile" asp-route-id="@s.User.UserId"><span>@s.User.FirstName @s.User.LastName</span></a>
+                        <span class="glyphicon glyphicon-play"></span>
+                        <a asp-action="Index" asp-controller="Profile" asp-route-id="@s.RecievingUser.UserId">@s.RecievingUser.FirstName @s.RecievingUser.LastName</a><br />
+                    </p>
                     <span class="wallPostUpdate">@s.User.FirstName wrote on @s.RecievingUser.FirstName's wall!</span>
                 </div>
             }
