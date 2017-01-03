@@ -7,9 +7,22 @@
                 <img src="@s.User.ProfileImg" />
             </div>
 
-            <div class="postUser">
-                <a asp-action="Index" asp-controller="Profile" asp-route-id="@s.UserId"><span>@s.User.FirstName @s.User.LastName</span></a>
-            </div>
+            @if (s.PostType == "Status") {
+                <div class="postUser">
+                    <a asp-action="Index" asp-controller="Profile" asp-route-id="@s.UserId"><span>@s.User.FirstName @s.User.LastName</span></a>
+                </div>
+            }
+            else
+            {
+                <div class="postUsers">
+                    <p class="postUserContainer">
+                        <a asp-action="Index" asp-controller="Profile" asp-route-id="@s.User.UserId"><span>@s.User.FirstName @s.User.LastName</span></a>
+                        <span class="glyphicon glyphicon-play"></span>
+                        <a asp-action="Index" asp-controller="Profile" asp-route-id="@s.RecievingUser.UserId">@s.RecievingUser.FirstName @s.RecievingUser.LastName</a><br />
+                    </p>
+                    <span class="wallPostUpdate">@s.User.FirstName wrote on @s.RecievingUser.FirstName's wall!</span>
+                </div>
+            }
 
             <div class="datePosted">
                 <span>@s.TimePosted</span>
@@ -42,7 +55,7 @@
             <span class="postText">@s.Text</span>
         </div><hr />
 
-        @if (s.UserId == Model.CurrentUser.UserId)
+        @if (s.UserId == Model.CurrentUser.UserId || s.RecievingUserId == Model.CurrentUser.UserId)
         {
             <div class="deleteEditDiv">
                 <a class="deletePost" asp-action="DeletePost" asp-controller="Post" asp-route-id="@s.PostId"><span>Delete</span></a>

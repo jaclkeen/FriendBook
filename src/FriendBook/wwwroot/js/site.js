@@ -36,23 +36,24 @@
 
     //Purpose to provide color styling and disable the submit post button if the post length is === 0 or greater than 200
     //  characters
-    function StatusValidate(StatusVal) {
+    function StatusValidate(StatusVal, button, valDiv) {
         if (StatusVal.length === 0) {
-            $(".submitStatus").attr("disabled", true)
-            $(".statusLengthValidation").css("color", "black")
+            $(button).attr("disabled", true)
+            $(valDiv).css("color", "black")
         }
-        if (StatusVal.length > 0 && StatusVal.length < 200) {
-            $(".submitStatus").attr("disabled", false)
-            $(".statusLengthValidation").css("color", "black")
+        if (StatusVal.length > 0 && StatusVal.length < 201) {
+            $(button).attr("disabled", false)
+            $(valDiv).css("color", "black")
         }
-        if (StatusVal.length > 170 && StatusVal.length < 201) {
-            $(".statusLengthValidation").css("color", "yellow")
+        if (StatusVal.length > 149 && StatusVal.length < 201) {
+            $(valDiv).css("color", "orange")
         }
         if (StatusVal.length > 200) {
-            $(".statusLengthValidation").css("color", "red")
+            $(button).attr("disabled", true)
+            $(valDiv).css("color", "red")
         }
 
-        $(".statusLengthValidation").text(`${200 - StatusVal.length} characters remaining!`)
+        $(valDiv).text(`${200 - StatusVal.length} characters remaining!`)
     }
 
     //Purpose: Adds event listener onto the user search input that gets all users and if the input is equal to any
@@ -123,8 +124,25 @@
     //Purpose calls the new status validation function above to validate the new status in the post
     $(".newStatus").on("input", function () {
         let StatusValue = $(this).val()
-        StatusValidate(StatusValue)
+        let button = $(".submitStatus")
+        let valDiv = $(".statusLengthValidation")
+
+        StatusValidate(StatusValue, button, valDiv)
     })
+
+    $(".wallPostText").on("input", function () {
+        let wallPostValue = $(this).val()
+        let button = $(".submitWallPost")
+        let valDiv = $(".wallPostValidation")
+
+        StatusValidate(wallPostValue, button, valDiv)
+    })
+
+    $(".clearWallPost").on("click", function () {
+        $(".wallPostText").val("")
+    })
+
+    $(".submitWallPost").attr("disabled", true)
 
     //Purpose: Calls event listeners for comments on page load
     CommentEventsForDeleteAndEdit()
@@ -134,10 +152,10 @@
     .then(function (u) {
         if (u !== undefined) {
             ActiveConvo()
-            setInterval(UpdateUnseenMessages, 5000)
-            setInterval(UpdateConversationMessages, 5000)
-            setInterval(GetCurrentUserNotifications, 5000)
-            setInterval(GetAllPendingUserFriendRequests, 5000)
+            setInterval(UpdateUnseenMessages, 3000)
+            setInterval(UpdateConversationMessages, 3000)
+            setInterval(GetCurrentUserNotifications, 3000)
+            setInterval(GetAllPendingUserFriendRequests, 3000)
         }
     })
 })

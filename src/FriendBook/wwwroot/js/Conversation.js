@@ -330,7 +330,7 @@ $("body").on("click", function (e) {
         })
     }
 
-    else if($(context).hasClass("MnText")){
+    else if($(context).hasClass("MnText") || $(context).hasClass("MnImg")){
         let newContext = $(context).parent();
         let UserId = $(newContext).attr("id")
         $(newContext).remove()

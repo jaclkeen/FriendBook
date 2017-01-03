@@ -21,11 +21,26 @@
     <style>
         ::-webkit-scrollbar-thumb {
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
-            background-color: @Model.CurrentUserStyle.WallBackgroundColor;
+            background: red; /* For browsers that do not support gradients */
+            background: -webkit-linear-gradient(left top, @Model.CurrentUserStyle.WallBackgroundColor, white); /* For Safari 5.1 to 6.0 */
+            background: -o-linear-gradient(bottom right, @Model.CurrentUserStyle.WallBackgroundColor, white); /* For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(bottom right, @Model.CurrentUserStyle.WallBackgroundColor, white); /* For Firefox 3.6 to 15 */
+            background: linear-gradient(to bottom right, @Model.CurrentUserStyle.WallBackgroundColor, white); /* Standard syntax */
         }
         ::-webkit-scrollbar-track {
-            border: none;
-            background-color: @Model.CurrentUserStyle.NavColor;
+            border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.NavColor;
+        }
+        .postUserContainer{
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.BackgroundColor;
+        }
+        .wallPostForm{
+            border: 2px solid @Model.UserStyle.DetailColor;
+            background-color: @Model.UserStyle.PostHeaderColor;
+        }
+        .FR, .NewM{
+            border-bottom: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .NewM:hover, .FR:hover, .NewUserNotification:hover{
             background-color: @Model.CurrentUserStyle.BackgroundColor;
@@ -84,7 +99,7 @@
             border: 2px solid @Model.UserStyle.DetailColor;
         }
         .notificationArea, .messageNotificationArea, .UserNotificationDiv{
-            background-color: @Model.UserStyle.NavColor;            
+            background-color: @Model.UserStyle.NavColor;
         }
         .colorContainer{
             background-color: @Model.UserStyle.BackgroundColor;
@@ -166,10 +181,10 @@
             background-color: @Model.UserStyle.NavColor;
         }
         .addPhotoToStatusDiv{
-            background-color: @Model.UserStyle.NavColor;  
+            background-color: @Model.UserStyle.NavColor;
             border-top: 2px solid @Model.UserStyle.DetailColor;
             border-left: 2px solid @Model.UserStyle.DetailColor;
-            border-right: 2px solid @Model.UserStyle.DetailColor;     
+            border-right: 2px solid @Model.UserStyle.DetailColor;
         }
         .postHeadDiv{
             background-color: @Model.UserStyle.PostHeaderColor;

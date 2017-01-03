@@ -24,6 +24,13 @@ namespace FriendBook.Models
         [Required]
         public DateTime TimePosted { get; set; }
 
+        [Required]
+        public string PostType { get; set; }
+        ////Status, WallPost
+
+        public int? RecievingUserId { get; set; }
+        public User RecievingUser { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
 
         public List<Tag> TaggedUsers { get; set; }
@@ -33,6 +40,5 @@ namespace FriendBook.Models
         public int Dislikes { get; set; }
 
         public string ImgUrl { get; set; }
-
     }
 }

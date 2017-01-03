@@ -17,6 +17,8 @@ namespace FriendBook.ViewModels
 
         public string AreFriends { get; set; }
 
+        public Post WallPost { get; set; }
+
         /**
         * Purpose:  Provide a BaseViewModel for all Profile type views to prevent copying code, by setting properties
         *           common to all profile based views on creation of each profile based view model. Each of these profile
