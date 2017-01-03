@@ -39,7 +39,7 @@ namespace FriendBook.Controllers
         {
             int UserId = ActiveUser.Instance.User.UserId;
 
-            List<Post> posts = context.Post.Where(p => p.UserId == id).ToList();
+            List<Post> posts = context.Post.Where(p => p.UserId == id || p.RecievingUserId == id).ToList();
 
             List<Post> ProfileUserTagPosts = (from t in context.Tag
                                               join p in context.Post on t.PostId equals p.PostId
@@ -56,6 +56,11 @@ namespace FriendBook.Controllers
                     {
                         c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault();
                     }
+                }
+
+                if(p.RecievingUserId != null)
+                {
+                    p.RecievingUser = context.User.Where(u => u.UserId == p.RecievingUserId).SingleOrDefault();
                 }
             }
 
@@ -292,6 +297,36 @@ namespace FriendBook.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult CreateWallPost([FromRoute] int id, ProfileBaseViewModel model)
+        {
+            User PostingUser = ActiveUser.Instance.User;
+            User RecievingUser = context.User.Where(u => u.UserId == id).SingleOrDefault();
+
+            model.WallPost.PostType = "WallPost";
+            model.WallPost.RecievingUserId = RecievingUser.UserId;
+            model.WallPost.TimePosted = DateTime.Now;
+            model.WallPost.UserId = PostingUser.UserId;
+
+            context.Post.Add(model.WallPost);
+            context.SaveChanges();
+
+            Notification WallPostNotification = new Notification
+            {
+                NotificationText = $"{PostingUser.FirstName} {PostingUser.LastName} wrote on your wall!",
+                NotificationType = "Tag",
+                NotificatonDate = DateTime.Now,
+                RecievingUserId = RecievingUser.UserId,
+                Seen = false,
+                SenderUserId = PostingUser.UserId,
+                PostId = model.WallPost.PostId,
+            };
+
+            context.Notification.Add(WallPostNotification);
+            context.SaveChanges();
+
+            return RedirectToAction("Index", "Profile", new { id = RecievingUser.UserId });
         }
 
     }

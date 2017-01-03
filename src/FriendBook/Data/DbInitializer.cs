@@ -80,19 +80,22 @@ namespace FriendBook.Data
                     {
                         UserId = 1,
                         Text = "This is the first seeded post!",
-                        TimePosted = DateTime.Parse("06/23/2016")
+                        TimePosted = DateTime.Parse("06/23/2016"),
+                        PostType = "Status"
                     },
                     new Post
                     {
                         UserId = 2,
                         Text = "This is the second seeded post!! Go me!",
-                        TimePosted = DateTime.Parse("09/26/2008")
+                        TimePosted = DateTime.Parse("09/26/2008"),
+                        PostType = "Status"
                     },
                     new Post
                     {
                         UserId = 3,
                         Text = "This is the third seeded post!!! Finally!",
-                        TimePosted = DateTime.Parse("01/06/2009")
+                        TimePosted = DateTime.Parse("01/06/2009"),
+                        PostType = "Status"
                     }
                 };
 

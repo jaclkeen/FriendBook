@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20161231200046_UpdatedMigrations")]
+    [Migration("20170103193845_UpdatedMigrations")]
     partial class UpdatedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -189,6 +189,11 @@ namespace FriendBook.Migrations
 
                     b.Property<int>("Likes");
 
+                    b.Property<string>("PostType")
+                        .IsRequired();
+
+                    b.Property<int?>("RecievingUserId");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 200);
@@ -198,6 +203,8 @@ namespace FriendBook.Migrations
                     b.Property<int>("UserId");
 
                     b.HasKey("PostId");
+
+                    b.HasIndex("RecievingUserId");
 
                     b.HasIndex("UserId");
 
@@ -393,6 +400,10 @@ namespace FriendBook.Migrations
 
             modelBuilder.Entity("FriendBook.Models.Post", b =>
                 {
+                    b.HasOne("FriendBook.Models.User", "RecievingUser")
+                        .WithMany()
+                        .HasForeignKey("RecievingUserId");
+
                     b.HasOne("FriendBook.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

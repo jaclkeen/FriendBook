@@ -72,8 +72,12 @@ namespace FriendBook.Controllers
                 }
             }
 
-            List<Post> UserPosts = context.Post.Where(p => p.UserId == UserId).ToList();
-            if (UserPosts != null) { UserPosts.ForEach(up => model.Posts.Add(up)); }
+            List<Post> UserPosts = context.Post.Where(p => p.UserId == UserId || p.RecievingUserId == UserId).ToList();
+
+            if (UserPosts != null) {
+                UserPosts.ForEach(p => { if (p.RecievingUserId != null) { p.RecievingUser = context.User.Where(u => u.UserId == p.RecievingUserId).SingleOrDefault(); } });
+                UserPosts.ForEach(up => model.Posts.Add(up));
+            }
 
             if (model.Posts.Count == 0)
             {
@@ -108,13 +112,14 @@ namespace FriendBook.Controllers
             var uploads = Path.Combine(_environment.WebRootPath, "images");
             User u = ActiveUser.Instance.User;
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
+            model.Post.PostType = "Status";
             model.Post.UserId = u.UserId;
             model.Post.TimePosted = DateTime.Now;
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             if (model.PostImgUpload != null && model.PostImgUpload.ContentType.Contains("image"))
             {

@@ -142,6 +142,8 @@ namespace FriendBook.Migrations
                     Dislikes = table.Column<int>(nullable: false),
                     ImgUrl = table.Column<string>(nullable: true),
                     Likes = table.Column<int>(nullable: false),
+                    PostType = table.Column<string>(nullable: false),
+                    RecievingUserId = table.Column<int>(nullable: true),
                     Text = table.Column<string>(maxLength: 200, nullable: false),
                     TimePosted = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
@@ -149,6 +151,12 @@ namespace FriendBook.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Post", x => x.PostId);
+                    table.ForeignKey(
+                        name: "FK_Post_User_RecievingUserId",
+                        column: x => x.RecievingUserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Post_User_UserId",
                         column: x => x.UserId,
@@ -394,6 +402,11 @@ namespace FriendBook.Migrations
                 name: "IX_Notification_SendingUserUserId",
                 table: "Notification",
                 column: "SendingUserUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Post_RecievingUserId",
+                table: "Post",
+                column: "RecievingUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Post_UserId",
