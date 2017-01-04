@@ -85,7 +85,8 @@ namespace FriendBook.Controllers
                 {
                     Text = "Welcome to FriendBook!",
                     User = context.User.Where(u => u.UserId == 1).SingleOrDefault(),
-                    UserId = 1
+                    UserId = 1,
+                    PostType = "Status"
                 });
             }
 

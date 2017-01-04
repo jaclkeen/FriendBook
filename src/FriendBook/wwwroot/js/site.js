@@ -121,7 +121,7 @@
         }
     })
 
-    //Purpose calls the new status validation function above to validate the new status in the post
+    //Purpose: calls the new status validation function above to validate the new status in the post
     $(".newStatus").on("input", function () {
         let StatusValue = $(this).val()
         let button = $(".submitStatus")
@@ -130,6 +130,7 @@
         StatusValidate(StatusValue, button, valDiv)
     })
 
+    //Purpose: to provide validation of all wall posts
     $(".wallPostText").on("input", function () {
         let wallPostValue = $(this).val()
         let button = $(".submitWallPost")
@@ -158,4 +159,8 @@
             setInterval(GetAllPendingUserFriendRequests, 3000)
         }
     })
+
+    //https://randomuser.me/api/?results=5000
+    //function PopulateUsers()
+    
 })

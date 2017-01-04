@@ -64,6 +64,14 @@ $(".post").on("click", function (e) {
         let ClickedCommentButtonTextArea = CurrentPost.children(".AddNewComment"),
             CommentTextValue = ClickedCommentButtonTextArea.val()
 
+        if(CommentTextValue.length === 0){
+            return ToastNotification("You cannot post an empty comment")
+        }
+
+        if (CommentTextValue.length > 200) {
+            return ToastNotification("Your comment must be less than 200 characters long")
+        }
+
         CreateNewComment(CurrentPostId, CommentTextValue)
         .then(function (comment) {
             GetCurrentUser()
