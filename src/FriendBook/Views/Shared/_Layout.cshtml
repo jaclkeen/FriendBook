@@ -21,7 +21,6 @@
     <style>
         ::-webkit-scrollbar-thumb {
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
-            background: red; /* For browsers that do not support gradients */
             background: -webkit-linear-gradient(left top, @Model.CurrentUserStyle.WallBackgroundColor, white); /* For Safari 5.1 to 6.0 */
             background: -o-linear-gradient(bottom right, @Model.CurrentUserStyle.WallBackgroundColor, white); /* For Opera 11.1 to 12.0 */
             background: -moz-linear-gradient(bottom right, @Model.CurrentUserStyle.WallBackgroundColor, white); /* For Firefox 3.6 to 15 */
@@ -30,6 +29,16 @@
         ::-webkit-scrollbar-track {
             border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
             background: @Model.CurrentUserStyle.NavColor;
+        }
+        .statusLengthValidation{
+            border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-right: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-top: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.NavColor;
+        }
+        .activeNavTab{
+            font-weight: bolder;
+            color: @Model.CurrentUserStyle.WallBackgroundColor!important;
         }
         .postUserContainer{
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
@@ -222,7 +231,7 @@
             background-color: @Model.CurrentUserStyle.BackgroundColor;
         }
         .MessageAreaUser{
-            background: @Model.CurrentUserStyle.PostHeaderColor;
+            background: @Model.CurrentUserStyle.NavColor;
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .newMessage{

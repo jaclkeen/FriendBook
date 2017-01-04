@@ -85,7 +85,8 @@ namespace FriendBook.Controllers
                 {
                     Text = "Welcome to FriendBook!",
                     User = context.User.Where(u => u.UserId == 1).SingleOrDefault(),
-                    UserId = 1
+                    UserId = 1,
+                    PostType = "Status"
                 });
             }
 
@@ -204,6 +205,8 @@ namespace FriendBook.Controllers
                     CurrentUserFriends.Add(context.User.Where(u => u.UserId == r.SenderUserId).SingleOrDefault());
                 }
             }
+
+            CurrentUserFriends = CurrentUserFriends.OrderBy(f => f.FirstName + f.LastName).ToList();
 
             return CurrentUserFriends;
         }

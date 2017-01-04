@@ -121,7 +121,7 @@
         }
     })
 
-    //Purpose calls the new status validation function above to validate the new status in the post
+    //Purpose: calls the new status validation function above to validate the new status in the post
     $(".newStatus").on("input", function () {
         let StatusValue = $(this).val()
         let button = $(".submitStatus")
@@ -130,6 +130,7 @@
         StatusValidate(StatusValue, button, valDiv)
     })
 
+    //Purpose: to provide validation of all wall posts
     $(".wallPostText").on("input", function () {
         let wallPostValue = $(this).val()
         let button = $(".submitWallPost")
@@ -139,7 +140,9 @@
     })
 
     $(".clearWallPost").on("click", function () {
+        $(".wallPostValidation").html("200 characters remaining!").css("color", "black")
         $(".wallPostText").val("")
+        $(".submitWallPost").attr("disabled", true)
     })
 
     $(".submitWallPost").attr("disabled", true)
@@ -158,4 +161,53 @@
             setInterval(GetAllPendingUserFriendRequests, 3000)
         }
     })
+
+    ////Purpose: Used strictly for dummy user data only
+    //function GetDummyUsers() {
+    //    return new Promise(function (resolve, reject) {
+    //        $.ajax({
+    //            url: "https://randomuser.me/api/?results=100&format=json&nat=US"
+    //        }).done(function (users) {
+    //            resolve(users.results)
+    //        }).error(function (err) {
+    //            reject(err)
+    //        })
+    //    })
+    //}
+
+    //function CreateDummyUser(DummyUser) {
+    //    return new Promise(function (resolve, reject) {
+    //        $.ajax({
+    //            url: "/Login/RegisterDummyUsers",
+    //            method: "POST",
+    //            contentType: "application/json",
+    //            data: JSON.stringify(DummyUser)
+    //        }).done(function (nothing) {
+    //            resolve(nothing)
+    //        }).error(function (err) {
+    //            reject(err)
+    //        })
+    //    })
+    //}
+
+    //function Capitalize(string) {
+    //    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    //}
+
+    //GetDummyUsers()
+    //.then(function (users) {
+    //    let DummyUser = {}
+    //    users.forEach(function (user) {
+    //        DummyUser.FirstName = Capitalize(user.name.first)
+    //        DummyUser.LastName = Capitalize(user.name.last)
+    //        DummyUser.Email = user.email
+    //        DummyUser.Password = user.name.first
+    //        DummyUser.ProfileImg = user.picture.large
+
+    //        CreateDummyUser(DummyUser)
+    //    })
+
+    //    console.log("Seeding complete")
+    //})
+    
 })

@@ -33,14 +33,26 @@ function AddSingleUserNotificationToDom(un) {
 }
 
 $(".UserNotificationDiv").on("click", function (e) {
-    let context = $(e.target)
+    let context = $(e.target),
+        ClickedNotification = false,
+        NotificationData = null,
+        PostId = null
 
     if (context.hasClass("UserNotificationsText") || context.hasClass("UserNotificationsImage")) {
-        let NotificationData = context.parent().attr("data").split(" "),
-            NotificationType = NotificationData[2],
+        NotificationData = context.parent().attr("data").split(" ")
+        PostId = context.parent().attr("id")
+        ClickedNotification = true
+    }
+    else if (context.hasClass("NewUserNotification")) {
+        NotificationData = context.attr("data").split(" ")
+        PostId = context.attr("id")
+        ClickedNotification = true
+    }
+
+    if(ClickedNotification){
+        let NotificationType = NotificationData[2],
             NotificationId = NotificationData[1],
-            SendingOrRecieverId = NotificationData[0],
-            PostId = context.parent().attr("id")
+            SendingOrRecieverId = NotificationData[0]
 
         if (NotificationType === "Tag" || NotificationType === "FR") {
             UserNotificationSeen(NotificationId)
