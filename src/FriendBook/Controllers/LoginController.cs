@@ -104,5 +104,26 @@ namespace FriendBook.Controllers
 
             return CreatedUser.UserId;
         }
+
+        [HttpPost]
+        public void RegisterDummyUsers([FromBody] User DummyUser)
+        {
+
+            context.User.Add(DummyUser);
+            context.SaveChanges();
+
+            Relationship NewRelationship = new Relationship
+            {
+                ReciverUserId = 1,
+                SenderUserId = DummyUser.UserId,
+                Status = 0,
+            };
+
+            Style s = new Style(DummyUser.UserId);
+
+            context.Style.Add(s);
+            context.Relationship.Add(NewRelationship);
+            context.SaveChanges();
+        }
     }
 }

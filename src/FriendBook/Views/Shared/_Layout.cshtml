@@ -30,6 +30,16 @@
             border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
             background: @Model.CurrentUserStyle.NavColor;
         }
+        .statusLengthValidation{
+            border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-right: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-top: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.NavColor;
+        }
+        .activeNavTab{
+            font-weight: bolder;
+            color: @Model.CurrentUserStyle.WallBackgroundColor!important;
+        }
         .postUserContainer{
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
             background: @Model.CurrentUserStyle.BackgroundColor;
@@ -221,7 +231,7 @@
             background-color: @Model.CurrentUserStyle.BackgroundColor;
         }
         .MessageAreaUser{
-            background: @Model.CurrentUserStyle.PostHeaderColor;
+            background: @Model.CurrentUserStyle.NavColor;
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .newMessage{

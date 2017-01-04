@@ -206,6 +206,8 @@ namespace FriendBook.Controllers
                 }
             }
 
+            CurrentUserFriends = CurrentUserFriends.OrderBy(f => f.FirstName + f.LastName).ToList();
+
             return CurrentUserFriends;
         }
 

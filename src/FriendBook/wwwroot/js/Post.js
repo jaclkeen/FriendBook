@@ -108,4 +108,5 @@ $(".clearStatus").on("click", function () {
     $(".newStatus").val("")
     $(".TaggedUsersInput").val("")
     $(".ActualTaggedFriends").html("")
+    $(".statusLengthValidation").html("200 characters remaining!").css("color", "black")
 })
