@@ -34,7 +34,7 @@ namespace FriendBook.Models
 
         public User()
         {
-            //this.ProfileImg = "/images/egg.png";
+            this.ProfileImg = "/images/egg.png";
             this.CoverImg = "/images/mountains.jpg";
         }
     }

@@ -25,6 +25,13 @@ namespace FriendBook.Data
                 {
                     new User
                     {
+                        FirstName = "Jacob",
+                        LastName = "Keen",
+                        Email = "jaclkeen@gmail.com",
+                        Password = "jkeen33",
+                    },
+                    new User
+                    {
                         FirstName = "Mason",
                         LastName = "Keen",
                         Email = "mason@mason.com",
@@ -103,6 +110,7 @@ namespace FriendBook.Data
                     {
                         UserId = 1,
                         PostId = 1,
+                        YardSaleItemId = null,
                         Text = "This is the first comment on the first seeded post!",
                         TimePosted = DateTime.Parse("03/13/2016")
                     },
@@ -110,6 +118,7 @@ namespace FriendBook.Data
                     {
                         UserId = 2,
                         PostId = 2,
+                        YardSaleItemId = null,
                         Text = "This is the first comment on the second seeded post!",
                         TimePosted = DateTime.Parse("05/29/2010")
                     },
@@ -117,6 +126,7 @@ namespace FriendBook.Data
                     {
                         UserId = 3,
                         PostId = 3,
+                        YardSaleItemId = null,
                         Text = "This is the third comment on the third seeded post!",
                         TimePosted = DateTime.Parse("07/18, 2016")
                     }

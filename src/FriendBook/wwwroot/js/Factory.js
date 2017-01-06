@@ -341,7 +341,6 @@ function EditSpecificPost(pID, PostText) {
         }).done(function (data) {
             resolve(data)
         }).error(function (err) {
-            console.log(err)
             reject(err)
         })
     })

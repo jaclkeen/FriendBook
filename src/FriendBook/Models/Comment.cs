@@ -14,9 +14,11 @@ namespace FriendBook.Models
         [Required]
         public int UserId { get; set; }
         public User User { get; set; }
+        
+        public int? YardSaleItemId { get; set; }
+        public YardSaleItem YardSaleItem { get; set; }
 
-        [Required]
-        public int PostId { get; set; }
+        public int? PostId { get; set; }
         public Post Post { get; set; }
 
         [Required]

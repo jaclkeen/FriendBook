@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20170103193845_UpdatedMigrations")]
+    [Migration("20170106010452_UpdatedMigrations")]
     partial class UpdatedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace FriendBook.Migrations
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("PostId");
+                    b.Property<int?>("PostId");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -49,11 +49,15 @@ namespace FriendBook.Migrations
 
                     b.Property<int>("UserId");
 
+                    b.Property<int?>("YardSaleItemId");
+
                     b.HasKey("CommentId");
 
                     b.HasIndex("PostId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("YardSaleItemId");
 
                     b.ToTable("Comment");
                 });
@@ -313,6 +317,39 @@ namespace FriendBook.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("FriendBook.Models.YardSaleItem", b =>
+                {
+                    b.Property<int>("YardSaleItemId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DatePosted");
+
+                    b.Property<string>("ItemDescription")
+                        .IsRequired();
+
+                    b.Property<string>("ItemImage1")
+                        .IsRequired();
+
+                    b.Property<string>("ItemImage2");
+
+                    b.Property<string>("ItemImage3");
+
+                    b.Property<string>("ItemImage4");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired();
+
+                    b.Property<double>("ItemPrice");
+
+                    b.Property<int>("PostingUserId");
+
+                    b.HasKey("YardSaleItemId");
+
+                    b.HasIndex("PostingUserId");
+
+                    b.ToTable("YardSaleItem");
+                });
+
             modelBuilder.Entity("FriendBook.Models.Album", b =>
                 {
                     b.HasOne("FriendBook.Models.User", "AlbumUser")
@@ -325,13 +362,16 @@ namespace FriendBook.Migrations
                 {
                     b.HasOne("FriendBook.Models.Post", "Post")
                         .WithMany("Comments")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PostId");
 
                     b.HasOne("FriendBook.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FriendBook.Models.YardSaleItem", "YardSaleItem")
+                        .WithMany()
+                        .HasForeignKey("YardSaleItemId");
                 });
 
             modelBuilder.Entity("FriendBook.Models.Conversation", b =>
@@ -445,6 +485,14 @@ namespace FriendBook.Migrations
                     b.HasOne("FriendBook.Models.User", "Tagger")
                         .WithMany()
                         .HasForeignKey("TaggerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FriendBook.Models.YardSaleItem", b =>
+                {
+                    b.HasOne("FriendBook.Models.User", "PostingUser")
+                        .WithMany()
+                        .HasForeignKey("PostingUserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

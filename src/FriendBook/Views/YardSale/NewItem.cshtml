@@ -1,0 +1,44 @@
+﻿@model FriendBook.ViewModels.YardSaleNewItemViewModel
+
+@{Html.RenderPartial("MessageAreaPartial");}
+
+<div class="colorContainer">
+    <form asp-action="AddNewItem" asp-controller="YardSale" enctype="multipart/form-data">
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <label asp-for="@Model.NewItem.ItemName" class="col-lg-4 control-label">Item Name: </label>
+                <div class="col-md-8">
+                    <input type="text" asp-for="@Model.NewItem.ItemName" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.NewItem.ItemPrice" class="col-lg-4 control-label">Price: </label>
+                <div class="col-md-8">
+                    <input type="number" asp-for="@Model.NewItem.ItemPrice" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.NewItem.ItemDescription" class="col-lg-4 control-label">Description: </label>
+                <div class="col-md-8">
+                    <input type="text" asp-for="@Model.NewItem.ItemDescription" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.NewItemImages" class="col-lg-4 control-label">Wall Background Color: </label>
+                <div class="col-md-8">
+                    <input type="file" asp-for="@Model.NewItemImages" class="form-control" multiple/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" value="Add Item!" class="btn btn-default" />
+                </div>
+            </div>
+         </div>
+    </form>
+</div>

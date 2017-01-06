@@ -114,7 +114,7 @@ function OpenConversation(ClickedUserId) {
 }
 
 //Purpose: On page load, get all active conversation and append them with their messages to the DOM. This is used to 
-//          carry conversations over from page to page.
+//          carry conversations over from page to page.                                                                                                                                     
 function ActiveConvo() {
     UserActiveConversations()
     .then(function (conversations) {

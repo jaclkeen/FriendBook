@@ -8,6 +8,21 @@
     border-radius: 20px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+.NewItemLink{
+    font-weight: bolder;
+}
+.NoSaleItems{
+    border: 2px solid black;
+    background: grey;
+    text-align: center;
+    padding: 2%
+}
+.NoSaleItems h3{
+    margin-top: 10px;
+}
+.YardSaleHome{
+    margin-top: 8%;
+}
 .postUserContainer{
     padding: 2%;
     border-radius: 30px;
@@ -479,9 +494,6 @@ hr{
     font-size: 2.2em;
     margin-top: 58%;
 }
-.navThing{
-    margin-left: 2%;
-}
 .Notifications, .HomeLink, .UserNotifications{
     font-size: 1.7em;
 }
@@ -715,7 +727,7 @@ a{
     border: 2px solid green;
 }
 .logout{
-    margin-left: 130%;
+    margin-left: 80%;
 }
 .brandImg{
     color: white;
