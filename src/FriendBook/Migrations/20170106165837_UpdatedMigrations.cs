@@ -227,6 +227,7 @@ namespace FriendBook.Migrations
                 {
                     YardSaleItemId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
+                    Category = table.Column<string>(nullable: false),
                     DatePosted = table.Column<DateTime>(nullable: false),
                     ItemDescription = table.Column<string>(nullable: false),
                     ItemImage1 = table.Column<string>(nullable: false),

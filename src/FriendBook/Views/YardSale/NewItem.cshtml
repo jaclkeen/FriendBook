@@ -7,30 +7,55 @@
         <div class="form-horizontal">
 
             <div class="form-group">
-                <label asp-for="@Model.NewItem.ItemName" class="col-lg-4 control-label">Item Name: </label>
-                <div class="col-md-8">
-                    <input type="text" asp-for="@Model.NewItem.ItemName" class="form-control" />
+                <label asp-for="@Model.NewItem.ItemName" class="col-lg-3 control-label">Item Name: </label>
+                <div class="col-md-9">
+                    <input type="text" asp-for="@Model.NewItem.ItemName" class="NewItemName form-control" />
+                    <span class="ItemNameValidation"></span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.NewItem.ItemPrice" class="col-lg-4 control-label">Price: </label>
-                <div class="col-md-8">
-                    <input type="number" asp-for="@Model.NewItem.ItemPrice" class="form-control" />
+                <label asp-for="@Model.NewItem.ItemPrice" class="col-lg-3 control-label">Price: </label>
+                <div class="col-md-9">
+                    <input type="number" asp-for="@Model.NewItem.ItemPrice" class="NewItemPrice form-control" />
+                    <span class="ItemPriceValidation"></span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.NewItem.ItemDescription" class="col-lg-4 control-label">Description: </label>
-                <div class="col-md-8">
-                    <input type="text" asp-for="@Model.NewItem.ItemDescription" class="form-control" />
+                <label asp-for="@Model.NewItemImages" class="col-lg-3 control-label">Item Category: </label>
+                <div class="col-md-9">
+                    <select class="NewItemCategory form-control" asp-for="@Model.NewItem.Category">
+                        <option value="0">Select a Category</option>
+                        <option>Electronics</option>
+                        <option>Movies</option>
+                        <option>Books</option>
+                        <option>Video Games</option>
+                        <option>Pets</option>
+                        <option>Beauty</option>
+                        <option>Household</option>
+                        <option>Automotive</option>
+                        <option>Clothing</option>
+                        <option>Sports and Fitness</option>
+                        <option>Jewelry</option>
+                    </select>
+                    <span class="ItemCategoryValidation"></span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.NewItemImages" class="col-lg-4 control-label">Wall Background Color: </label>
-                <div class="col-md-8">
-                    <input type="file" asp-for="@Model.NewItemImages" class="form-control" multiple/>
+                <label asp-for="@Model.NewItemImages" class="col-lg-3 control-label">Item Images: </label>
+                <div class="col-md-9">
+                    <input type="file" asp-for="@Model.NewItemImages" class="NewItemImages form-control" multiple/>
+                    <span class="ItemImagesValidation"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.NewItem.ItemDescription" class="col-lg-3 control-label">Description: </label>
+                <div class="col-md-9">
+                    <textarea asp-for="@Model.NewItem.ItemDescription" class="NewItemDescription form-control"></textarea>
+                    <span class="ItemDescriptionValidation"></span>
                 </div>
             </div>
 
@@ -39,6 +64,7 @@
                     <input type="submit" value="Add Item!" class="btn btn-default" />
                 </div>
             </div>
+
          </div>
     </form>
 </div>

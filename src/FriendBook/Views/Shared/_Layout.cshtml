@@ -30,6 +30,21 @@
             border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
             background: @Model.CurrentUserStyle.NavColor;
         }
+        .YSImage, .SubmitNewItemComment, .AddNewItemComment{
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+        }
+        .SaleItemHead p, .YardSaleItemComment, .comment p{
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background-color: @Model.CurrentUserStyle.BackgroundColor;
+        }
+        .ItemPosterContainer{
+            border-bottom: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.PostHeaderColor;
+        }
+        .YardSaleItem{
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.NavColor;
+        }
         .NoSaleItems{
             border: 2px solid @Model.CurrentUserStyle.DetailColor;;
             background: @Model.CurrentUserStyle.NavColor;
@@ -327,6 +342,7 @@
         <script src="~/js/Conversation.js" asp-append-version="true"></script>
         <script src="~/js/FRNotifications.js" asp-append-version="true"></script>
         <script src="~/js/Notification.js" asp-append-version="true"></script>
+        <script src="~/js/Yardsale.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
@@ -347,6 +363,7 @@
         <script src="~/js/Conversation.js" asp-append-version="true"></script>
         <script src="~/js/FRNotifications.js" asp-append-version="true"></script>
         <script src="~/js/Notification.js" asp-append-version="true"></script>
+        <script src="~/js/Yardsale.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 

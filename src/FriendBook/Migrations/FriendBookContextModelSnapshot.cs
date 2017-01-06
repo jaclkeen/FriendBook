@@ -321,6 +321,9 @@ namespace FriendBook.Migrations
                     b.Property<int>("YardSaleItemId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Category")
+                        .IsRequired();
+
                     b.Property<DateTime>("DatePosted");
 
                     b.Property<string>("ItemDescription")
@@ -369,7 +372,7 @@ namespace FriendBook.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FriendBook.Models.YardSaleItem", "YardSaleItem")
-                        .WithMany()
+                        .WithMany("ItemComments")
                         .HasForeignKey("YardSaleItemId");
                 });
 

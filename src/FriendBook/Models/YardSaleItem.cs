@@ -31,6 +31,9 @@ namespace FriendBook.Models
         public DateTime DatePosted { get; set; }
 
         [Required]
+        public string Category { get; set; }
+
+        [Required]
         public string ItemImage1 { get; set; }
 
         public string ItemImage2 { get; set; }
@@ -39,9 +42,7 @@ namespace FriendBook.Models
 
         public string ItemImage4 { get; set; }
 
-        [NotMapped]
-        public List<int> ItemCommentIds { get; set; }
-        List<Comment> ItemComments { get; set; }
+        public ICollection<Comment> ItemComments { get; set; }
     }
 
 }

@@ -29,6 +29,7 @@ namespace FriendBook.Controllers
             YardSaleHomeViewModel model = new YardSaleHomeViewModel(context);
             model.UserStyle = context.Style.Where(s => s.UserId == CurrentUser.UserId).SingleOrDefault();
             model.YardSaleItems = context.YardSaleItem.Where(y => y.PostingUserId == CurrentUser.UserId).OrderBy(d => d.DatePosted).ToList();
+            model.YardSaleItems.ForEach(i => i.PostingUser = context.User.Where(u => u.UserId == i.PostingUserId).SingleOrDefault());
 
             return View(model);
         }
@@ -51,7 +52,8 @@ namespace FriendBook.Controllers
                 ItemName = model.NewItem.ItemName,
                 ItemPrice = model.NewItem.ItemPrice,
                 PostingUserId = ActiveUser.Instance.User.UserId,
-                ItemImage1 = model.NewItemImages[0].FileName
+                ItemImage1 = model.NewItemImages[0].FileName,
+                Category = model.NewItem.Category,
             };
 
             NewItem.ItemImage2 = (model.NewItemImages.Count == 2) ? model.NewItemImages[1].FileName : null;

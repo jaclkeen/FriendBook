@@ -8,6 +8,106 @@
     border-radius: 20px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+.SubmitNewItemComment{
+    border-radius: 20px;
+    float: right;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-top: 4.5%;
+    margin-right: 1.5%;
+}
+.AddNewItemComment{
+    width: 80%;
+    max-width: 80%;
+    min-width: 80%;
+    height: 70px;
+    min-height: 70px;
+    max-height: 70px;
+}
+.ViewItemComments:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.ViewItemComments {
+    margin-bottom: 1%;
+    display: block;
+    text-align: center;
+}
+.YSImage{
+    display: inline-block;
+    width: 45%;
+    margin-bottom: 2%;
+    margin-left: 3%;
+    background: white;
+    height: 270px;
+}
+.plusSign{
+    font-size: 3.5em;
+}
+.YardSaleItemComment, .comment p{
+    padding: 1%;
+    border-radius: 6px;
+    width: 75%;
+    display: inline-block;
+}
+.yardSaleDeleteComment{
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+    display: inline-block;
+    width: 20%;
+}
+.SaleItemHead h3{
+    display: inline-block;
+    width: 80%;
+    font-weight: bolder;
+}
+.SaleItemHead p{
+    border-radius: 30px;
+    text-align: center;
+    padding: 1%;
+    display: inline-block;
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+.YardSaleWelcome h2{
+    margin-bottom: 4%;
+    margin-top: 1.5%;
+    display: inline-block;
+    width: 70%;
+}
+.SellNewItemLinkDiv{
+    display: inline-block;
+    float: right;
+} 
+.YardSaleItem {
+    padding: 1%;
+}
+.ItemPosterContainer{
+    margin-left: -1%;
+    margin-top: -1%;
+    width: 102%;
+    padding: 1%;
+}
+.ItemPosterProfileImg{
+    display: inline-block;
+    background: white;
+    width: 15%;
+    margin-right: 3%;
+}
+.ItemDatePosted{
+    float: right;
+    margin-top: -4%;
+    margin-right: 56%;
+}
+.ItemPosterName:hover {
+    text-decoration: underline;
+}
+.ItemPosterName{
+    font-weight: bolder;
+    margin-top: 10px;
+    display: inline-block;
+    width: 80%;
+}
 .NewItemLink{
     font-weight: bolder;
 }

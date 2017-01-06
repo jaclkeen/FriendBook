@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20170106010452_UpdatedMigrations")]
+    [Migration("20170106165837_UpdatedMigrations")]
     partial class UpdatedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -322,6 +322,9 @@ namespace FriendBook.Migrations
                     b.Property<int>("YardSaleItemId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Category")
+                        .IsRequired();
+
                     b.Property<DateTime>("DatePosted");
 
                     b.Property<string>("ItemDescription")
@@ -370,7 +373,7 @@ namespace FriendBook.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FriendBook.Models.YardSaleItem", "YardSaleItem")
-                        .WithMany()
+                        .WithMany("ItemComments")
                         .HasForeignKey("YardSaleItemId");
                 });
 
