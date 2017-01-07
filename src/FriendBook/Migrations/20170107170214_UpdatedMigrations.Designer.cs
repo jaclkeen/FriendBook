@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20170106165837_UpdatedMigrations")]
+    [Migration("20170107170214_UpdatedMigrations")]
     partial class UpdatedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

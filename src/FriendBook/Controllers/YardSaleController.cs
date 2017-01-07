@@ -133,5 +133,35 @@ namespace FriendBook.Controllers
             context.Comment.Remove(c);
             context.SaveChanges();
         }
+
+        [HttpGet]
+        public List<YardSaleItem> YardSaleItems()
+        {
+            User CurrentUser = ActiveUser.Instance.User;
+
+            //GET ALL FRIEND ITEMS WHERE THE CURRENT USER IS THE SENDING USER IN THE FRIEND REQUEST RELATIONSHIP
+            //  AND THE RELATIONSHIP STATUS IS 1 (ARE FRIENDS)
+            List<YardSaleItem> FriendItems1 = (from r in context.Relationship
+                                               join ysi in context.YardSaleItem on r.ReciverUserId equals ysi.PostingUserId
+                                               where r.SenderUserId == CurrentUser.UserId && r.Status == 1
+                                               select ysi).ToList();
+
+            //GET ALL FRIEND ITEMS WHERE THE CURRENT USER IS THE RECIEVING USER IN THE FRIEND REQUEST RELATIONSHIP
+            //  AND THE RELATIONSHIP STATUS IS 1 (ARE FRIENDS)
+            List<YardSaleItem> FriendItems2 = (from r in context.Relationship
+                                               join ysi in context.YardSaleItem on r.SenderUserId equals ysi.PostingUserId
+                                               where r.ReciverUserId == CurrentUser.UserId && r.Status == 1
+                                               select ysi).ToList();
+
+            //GET ALL OF THE CURRENT USERS YARDSALE ITEMS
+            List<YardSaleItem> UserItems = context.YardSaleItem.Where(ysi => ysi.PostingUserId == CurrentUser.UserId).ToList();
+
+            //ADD ALL OF THE 3 LISTS ABOVE TOGETHER INTO ONE MODEL LIST, AND ORDER BY THE DATE POSTED
+            List<YardSaleItem> Items = FriendItems1.Concat(FriendItems2).Concat(UserItems).OrderByDescending(i => i.DatePosted).ToList();
+            Items.ForEach(i => i.PostingUser = context.User.Where(u => u.UserId == i.PostingUserId).SingleOrDefault());
+            //Items.ForEach(i => i.ItemComments = context.Comment.Where(c => c.YardSaleItemId == i.YardSaleItemId).ToList());
+
+            return Items;
+        }
     }
 }

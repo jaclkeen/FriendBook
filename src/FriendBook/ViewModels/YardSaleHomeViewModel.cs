@@ -11,8 +11,14 @@ namespace FriendBook.ViewModels
     {
         public YardSaleHomeViewModel(FriendBookContext ctx) : base(ctx) { }
 
+        public YardSaleHomeViewModel() { }
+
         public Style UserStyle { get; set; }
 
         public List<YardSaleItem> YardSaleItems { get; set;}
+
+        public string ItemNameFilter { get; set; }
+
+        public string ItemCategoryFilter { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace FriendBook.Models
         public string ItemDescription { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         public double ItemPrice { get; set; }
 
         [Required]
