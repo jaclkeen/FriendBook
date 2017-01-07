@@ -6,6 +6,36 @@ function ToastNotification(message) {
     $(".toast").fadeOut(2000)
 }
 
+function RemoveCommentToYardSaleItem(Id) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/YardSale/RemoveCommentOnYardSaleItem",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(Id)
+        }).done(function (ListOfComments) {
+            resolve(ListOfComments)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function AddCommentToYardSaleItem(YardSaleId, CommentText) {
+    return new Promise(function(resolve, reject){
+        $.ajax({
+            url: "/YardSale/CommentOnYardSaleItem",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ YardSaleItemId : YardSaleId, Text: CommentText})
+        }).done(function (ListOfComments) {
+            resolve(ListOfComments)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
 //Purpose: To get all of the current user's pending friend request
 function GetUserFriendRequests() {
     return new Promise(function (resolve, reject) {

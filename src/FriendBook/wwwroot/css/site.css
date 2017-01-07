@@ -8,6 +8,14 @@
     border-radius: 20px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+.ExtraMarginTop{
+    margin-top: 2%;
+    width: 100%;
+    margin-left: -1%;
+}
+.ViewCommentCount{
+    margin-left: -4px;
+}
 .SubmitNewItemComment{
     border-radius: 20px;
     float: right;
@@ -44,7 +52,13 @@
 .plusSign{
     font-size: 3.5em;
 }
-.YardSaleItemComment, .comment p{
+.CommentArea p{
+    padding: 1%;
+    border-radius: 6px;
+    width: 100%;
+    display: inline-block;
+}
+.YardSaleItemComment{
     padding: 1%;
     border-radius: 6px;
     width: 75%;
@@ -80,6 +94,7 @@
     float: right;
 } 
 .YardSaleItem {
+    margin-bottom: 1%;
     padding: 1%;
 }
 .ItemPosterContainer{
@@ -787,7 +802,7 @@ a{
     font-size: 1.1em;
     margin-top: 1%;
 }
-.DeleteComment{
+.DeleteComment, .yardSaleDeleteComment{
     font-size: 1.1em;
     padding-left: 5%;
     padding-top: .5%;
@@ -798,7 +813,7 @@ a{
     margin-right: 3%;
     cursor: pointer;
 }
-.DeleteComment:hover{
+.DeleteComment:hover, .yardSaleDeleteComment:hover{
     border: 2px solid red;
 }
 .EditComment{
@@ -864,7 +879,7 @@ a{
 .navTab{
     padding: 1%;
     text-align:center;
-    width: 19%;
+    width: 16%;
     float: left;
     display: inline-block;
     cursor: pointer;

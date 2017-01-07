@@ -1,0 +1,69 @@
+﻿@foreach (var i in Model.YardSaleItems)
+{
+    <div class="YardSaleItem" id="@i.YardSaleItemId">
+
+        <div class="ItemPosterContainer">
+            <img src="@i.PostingUser.ProfileImg" class="ItemPosterProfileImg" />
+            <a asp-action="Index" asp-controller="Profile" asp-route-id="@i.PostingUser.UserId"><h3 class="ItemPosterName">@i.PostingUser.FirstName @i.PostingUser.LastName</h3></a>
+            <span class="ItemDatePosted">@i.DatePosted</span>
+        </div>
+
+        <div class="SaleItemHead">
+            <h3>@i.ItemName</h3>
+            <p>$@i.ItemPrice</p>
+        </div>
+
+        <div class="SaleItemMain">
+
+            <p><strong>Description: </strong>@i.ItemDescription</p>
+            <p><strong>Category: </strong>@i.Category</p><hr />
+
+            <div class="YardSaleItemImages">
+                <img src="/images/@i.ItemImage1" class="YSImage" />
+                @if (i.ItemImage2 != null)
+                { <img src="/images/@i.ItemImage2" class="YSImage" /> }
+                @if (i.ItemImage3 != null)
+                { <img src="/images/@i.ItemImage3" class="YSImage" /> }
+                @if (i.ItemImage4 != null)
+                { <img src="/images/@i.ItemImage4" class="YSImage" /> }
+            </div>
+            <hr />
+        </div>
+
+        <div class="LikeDislikeCommentDiv">
+            @if (i.ItemComments == null)
+            {<strong class="ViewItemComments">
+                        <span class="ViewCommentText">View comments (</span>
+                        <span class="ViewCommentCount">0</span>)
+                    </strong>}
+            else
+            {<strong class="ViewItemComments">
+                        <span class="ViewCommentText">View comments (</span>
+                        <span class="ViewCommentCount">@i.ItemComments.Count</span>)
+                    </strong>}
+        </div>
+
+        <div class="ItemComments hidden">
+            @foreach (var comment in i.ItemComments)
+            {
+                <div class="comment" id="@comment.CommentId">
+                    <img src="@i.PostingUser.ProfileImg" />
+                    <a asp-action="Index" asp-controller="Profile" asp-route-id="@comment.User.UserId"><span>@comment.User.FirstName @comment.User.LastName</span></a>
+                    <p class="YardSaleItemComment">@comment.Text</p>
+                    @if (i.PostingUser.UserId == Model.CurrentUser.UserId)
+                    {
+                        <a class="yardSaleDeleteComment">Delete</a>
+                    }
+                </div>
+            }
+
+        </div>
+
+        <div class="AddAndSeeItemComments" id="@i.YardSaleItemId">
+            <hr />
+            <textarea class="AddNewItemComment" placeholder="Add Comment.."></textarea>
+            <input type="button" class="SubmitNewItemComment btn-success" value="Comment" />
+        </div>
+
+    </div>
+}
