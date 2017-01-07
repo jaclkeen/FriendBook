@@ -6,10 +6,28 @@ function ToastNotification(message) {
     $(".toast").fadeOut(2000)
 }
 
-function GetYardSaleItems() {
+function GetYardSaleItemComments(ItemId) {
     return new Promise(function (resolve, reject) {
         $.ajax({
-            url: "/YardSale/YardSaleItems",
+            url: "/YardSale/GetYardSaleItemComments",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(ItemId)
+        }).done(function (comments) {
+            resolve(comments)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetFilteredYardSaleItems(Name, Category) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/YardSale/FilteredYardSaleItems",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ ItemNameFilter: Name, ItemCategoryFilter: Category })
         }).done(function (Items) {
             resolve(Items)
         }).error(function (err) {

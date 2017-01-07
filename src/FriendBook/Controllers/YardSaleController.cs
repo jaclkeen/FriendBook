@@ -127,6 +127,15 @@ namespace FriendBook.Controllers
         }
 
         [HttpPost]
+        public List<Comment> GetYardSaleItemComments([FromBody] int YardSaleCommentId)
+        {
+            List<Comment> comments = context.Comment.Where(c => c.YardSaleItemId == YardSaleCommentId).ToList();
+            comments.ForEach(c => c.User = context.User.Where(u => u.UserId == c.UserId).SingleOrDefault());
+
+            return comments;
+        }
+
+        [HttpPost]
         public void RemoveCommentOnYardSaleItem([FromBody] int CommentId)
         {
             Comment c = context.Comment.Where(co => co.CommentId == CommentId).SingleOrDefault();
@@ -134,34 +143,36 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
-        [HttpGet]
-        public List<YardSaleItem> YardSaleItems()
+        [HttpPost]
+        public List<YardSaleItem> FilteredYardSaleItems([FromBody] YardSaleHomeViewModel model)
         {
-            User CurrentUser = ActiveUser.Instance.User;
+            List<YardSaleItem> FilteredItems = new List<YardSaleItem> { };
 
-            //GET ALL FRIEND ITEMS WHERE THE CURRENT USER IS THE SENDING USER IN THE FRIEND REQUEST RELATIONSHIP
-            //  AND THE RELATIONSHIP STATUS IS 1 (ARE FRIENDS)
-            List<YardSaleItem> FriendItems1 = (from r in context.Relationship
-                                               join ysi in context.YardSaleItem on r.ReciverUserId equals ysi.PostingUserId
-                                               where r.SenderUserId == CurrentUser.UserId && r.Status == 1
-                                               select ysi).ToList();
+            if(model.ItemCategoryFilter == "0" && model.ItemNameFilter == "")
+            {
+                FilteredItems = context.YardSaleItem.OrderBy(d => d.DatePosted).ToList();
+            }
 
-            //GET ALL FRIEND ITEMS WHERE THE CURRENT USER IS THE RECIEVING USER IN THE FRIEND REQUEST RELATIONSHIP
-            //  AND THE RELATIONSHIP STATUS IS 1 (ARE FRIENDS)
-            List<YardSaleItem> FriendItems2 = (from r in context.Relationship
-                                               join ysi in context.YardSaleItem on r.SenderUserId equals ysi.PostingUserId
-                                               where r.ReciverUserId == CurrentUser.UserId && r.Status == 1
-                                               select ysi).ToList();
+            else if(model.ItemNameFilter == "")
+            {
+                FilteredItems = context.YardSaleItem.Where(ysi => ysi.Category == model.ItemCategoryFilter).OrderBy(d => d.DatePosted).ToList();
+            }
 
-            //GET ALL OF THE CURRENT USERS YARDSALE ITEMS
-            List<YardSaleItem> UserItems = context.YardSaleItem.Where(ysi => ysi.PostingUserId == CurrentUser.UserId).ToList();
+            else if(model.ItemCategoryFilter == "0")
+            {
+                FilteredItems = context.YardSaleItem.Where(ysi => ysi.ItemName.ToLower() == model.ItemNameFilter.ToLower()).OrderBy(d => d.DatePosted).ToList();
+            }
 
-            //ADD ALL OF THE 3 LISTS ABOVE TOGETHER INTO ONE MODEL LIST, AND ORDER BY THE DATE POSTED
-            List<YardSaleItem> Items = FriendItems1.Concat(FriendItems2).Concat(UserItems).OrderByDescending(i => i.DatePosted).ToList();
-            Items.ForEach(i => i.PostingUser = context.User.Where(u => u.UserId == i.PostingUserId).SingleOrDefault());
-            //Items.ForEach(i => i.ItemComments = context.Comment.Where(c => c.YardSaleItemId == i.YardSaleItemId).ToList());
+            else
+            {
+                FilteredItems = context.YardSaleItem.OrderBy(d => d.DatePosted).ToList();
+            }
 
-            return Items;
+            //FilteredItems.ForEach(i => i.ItemComments = context.Comment.Where(c => c.YardSaleItemId == i.YardSaleItemId).ToList());
+            FilteredItems.ForEach(i => i.PostingUser = context.User.Where(u => u.UserId == i.PostingUserId).SingleOrDefault());
+            FilteredItems.ForEach(d => d.DatePosted = d.DatePosted.Date);
+
+            return FilteredItems;
         }
     }
 }

@@ -1,17 +1,30 @@
 ﻿//Purpose: To change the text of the 'show comments' when it is clicked
-$(".ViewItemComments").on("click", function () {
-    $(".ItemComments").toggleClass("hidden")
+$(".YardSaleItemsContainer").on("click", function (e) {
+    let context = $(e.target)
+    if (context.hasClass("ViewItemComments")) {
+        $(context).parent().siblings(".ItemComments").toggleClass("hidden")
 
-    if ($(".ItemComments").hasClass("hidden")) {
-        $(this).children(".ViewCommentText").text("View comments (")
+        if ($(".ItemComments").hasClass("hidden")) {
+            $(context).children(".ViewCommentText").text("View comments (")
+        }
+        else {
+            $(context).children(".ViewCommentText").text("Hide comments (")
+        }
     }
-    else {
-        $(this).children(".ViewCommentText").text("Hide comments (")
+    else if (context.hasClass("ViewCommentText")) {
+        $(context).parent().parent().siblings(".ItemComments").toggleClass("hidden")
+
+        if ($(".ItemComments").hasClass("hidden")) {
+            $(context).children(".ViewCommentText").text("View comments (")
+        }
+        else {
+            $(context).children(".ViewCommentText").text("Hide comments (")
+        }
     }
 })
 
 //Purpose: To delete a comment on a yardsaleitem when the delete button is clicked
-$(".ItemComments").on("click", function (e) {
+$(".YardSaleItemsContainer").on("click", function (e) {
     let context = $(e.target);
 
     if (context.hasClass("yardSaleDeleteComment")) {
@@ -20,16 +33,13 @@ $(".ItemComments").on("click", function (e) {
 
         RemoveCommentToYardSaleItem(CommentId)
         .then(function () {
-            let commentCount = parseInt($(".ViewCommentCount").text())
-
-            $(".ViewCommentCount").text(`${commentCount - 1}`)
             ToastNotification("Comment deleted")
         })
     }
 })
 
 //Purpose: to submit a new comment onto a yardsale item
-$(".YardSaleItem").on("click", function (e) {
+$(".YardSaleItemsContainer").on("click", function (e) {
     let context = $(e.target);
     let CurrentUser = null
 
@@ -52,10 +62,11 @@ $(".YardSaleItem").on("click", function (e) {
                         <a class ="DeleteComment yardSaleDeleteComment">Delete</a>
                     </div>`)
 
-                let commentCount = parseInt($(".ViewCommentCount").text())
-
-                $(".ViewCommentCount").text(`${commentCount + 1}`)
+                let CommentCount = context.parent().siblings(".LikeDislikeCommentDiv").children(".ViewItemComments").children(".ViewCommentCount")
+                CommentCount = parseInt(CommentCount.text()) + 1
+                context.parent().siblings(".LikeDislikeCommentDiv").children(".ViewItemComments").children(".ViewCommentCount").text(`${CommentCount}`)
                 context.siblings(".AddNewItemComment").val("")
+
                 ToastNotification("Comment added!")
             })
         })
@@ -66,20 +77,12 @@ $(".YardSaleItem").on("click", function (e) {
 $(".FilterByName").on("input", function () {
     let NameInput = $(this).val();
     let CategoryInput = $(".FilterByCategory").val();
+    $(".YardSaleItemsContainer").html("")
 
-    GetYardSaleItems()
+    GetFilteredYardSaleItems(NameInput, CategoryInput)
     .then(function (items) {
-        $(".YardSaleItemsContainer").html("")
         items.forEach(function (item) {
-            if (item.itemName.toLowerCase() === NameInput.toLowerCase() && CategoryInput === "0") {
-                let DOMItem = AddFilteredYardSaleItemsToDom(item)
-                $(".YardSaleItemsContainer").append(DOMItem)
-            }
-            
-            else if (item.itemName.toLowerCase() === NameInput.toLowerCase() && CategoryInput === item.category) {
-                let DOMItem = AddFilteredYardSaleItemsToDom(item)
-                $(".YardSaleItemsContainer").append(DOMItem)
-            }
+            AddFilteredYardSaleItemsToDom(item)
         })
     })
 })
@@ -87,35 +90,62 @@ $(".FilterByName").on("input", function () {
 $(".FilterByCategory").on("change", function () {
     let CategoryInput = $(this).val();
     let NameInput = $(".FilterByName").val();
+    $(".YardSaleItemsContainer").html("")
 
-    GetYardSaleItems()
+    GetFilteredYardSaleItems(NameInput, CategoryInput)
     .then(function (items) {
-        $(".YardSaleItemsContainer").html("")
         items.forEach(function (item) {
-            let DOMItem = AddFilteredYardSaleItemsToDom(item)
-            $(".YardSaleItemsContainer").append(DOMItem)
+            AddFilteredYardSaleItemsToDom(item)
         })
     })
 })
 
-function AddFilteredYardSaleItemsToDom(YardSaleItem) {
-    let images = `<img src="/images/${YardSaleItem.itemImage1}" class="YSImage" />`
-    if (YardSaleItem.itemImage2 !== null) {
-        images += `<img src="/images/${YardSaleItem.itemImage2}" class="YSImage" />`
+function AddDOMCommentsToItem(comment) {
+    if (user.userId === comment.user.userId) {
+        DOMComments =
+                `<div class="ItemComments hidden">
+                    <div class="comment" id="${comment.commentId}">
+                        <img src="${comment.user.profileImg}" />
+                        <a href="/Profile/Index/${comment.user.userId}"><span>${comment.user.firstName} ${comment.user.lastName}</span></a>
+                        <p class="YardSaleItemComment">${comment.text}</p>
+                        <a class="yardSaleDeleteComment">Delete</a>
+                    </div>
+            </div>`
     }
-    if (YardSaleItem.itemImage3 !== null) {
-        images += `<img src="/images/${YardSaleItem.itemImage3}" class="YSImage" />`
-    }
-    if (YardSaleItem.itemImage4 !== null) {
-        images += `<img src="/images/${YardSaleItem.itemImage4}" class="YSImage" />`
+    else {
+        DOMComments =
+        `<div class="ItemComments hidden">
+                    <div class="comment" id="${comment.commentId}">
+                        <img src="${comment.user.profileImg}" />
+                        <a href="/Profile/Index/${comment.user.userId}"><span>${comment.user.firstName} ${comment.user.lastName}</span></a>
+                        <p class="YardSaleItemComment">${comment.text}</p>
+                    </div>
+            </div>`
     }
 
-    let YardSaleItemDOM =
-        `<div class="YardSaleItem" id="${YardSaleItem.yardSaleItemId}">
+
+    return DOMComments;
+}
+
+function AddFilteredYardSaleItemsToDom(YardSaleItem) {
+    GetYardSaleItemComments(YardSaleItem.yardSaleItemId)
+    .then(function (comments) {
+        let images = `<img src="/images/${YardSaleItem.itemImage1}" class="YSImage" />`
+        if (YardSaleItem.itemImage2 !== null) {
+            images += `<img src="/images/${YardSaleItem.itemImage2}" class="YSImage" />`
+        }
+        if (YardSaleItem.itemImage3 !== null) {
+            images += `<img src="/images/${YardSaleItem.itemImage3}" class="YSImage" />`
+        }
+        if (YardSaleItem.itemImage4 !== null) {
+            images += `<img src="/images/${YardSaleItem.itemImage4}" class="YSImage" />`
+        }
+
+        let YardSaleItemDOM =
+            $(`<div class="YardSaleItem" id="${YardSaleItem.yardSaleItemId}">
             <div class="ItemPosterContainer">
                 <img src="${YardSaleItem.postingUser.profileImg}" class ="ItemPosterProfileImg" />
                 <a asp-action="Index" asp-controller="Profile" asp-route-id="${YardSaleItem.postingUser.userId}"><h3 class ="ItemPosterName">${YardSaleItem.postingUser.firstName} ${YardSaleItem.postingUser.lastName}</h3></a>
-                <span class="ItemDatePosted">${YardSaleItem.datePosted}</span>
             </div>
 
             <div class="SaleItemHead">
@@ -130,9 +160,27 @@ function AddFilteredYardSaleItemsToDom(YardSaleItem) {
 
                 <div class="YardSaleItemImages">
                     ${images}
-                </div>
-                <hr />
-            </div>`
+                </div><hr />
+            </div>
 
-    return YardSaleItemDOM;
+            <div class="LikeDislikeCommentDiv">
+                <strong class="ViewItemComments">
+                    <span class="ViewCommentText">View comments (</span>
+                    <span class="ViewCommentCount">${comments.length}</span>)
+                </strong>
+            </div>`)
+
+        comments.forEach(function (comment) {
+            YardSaleItemDOM.append(AddDOMCommentsToItem(comment))
+        })
+
+        YardSaleItemDOM.append(`
+            <div class ="AddAndSeeItemComments" id="${YardSaleItem.yardSaleItemId}"><hr />
+                <textarea class="AddNewItemComment" placeholder="Add Comment.."></textarea>
+                <input type="button" class="SubmitNewItemComment btn-success" value="Comment" />
+            </div>
+        </div>`)
+
+        $(".YardSaleItemsContainer").append(YardSaleItemDOM)
+    })
 }
