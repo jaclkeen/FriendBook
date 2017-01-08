@@ -8,7 +8,7 @@ using FriendBook.Data;
 namespace FriendBook.Migrations
 {
     [DbContext(typeof(FriendBookContext))]
-    [Migration("20170107170214_UpdatedMigrations")]
+    [Migration("20170108023051_UpdatedMigrations")]
     partial class UpdatedMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,6 +172,8 @@ namespace FriendBook.Migrations
                     b.Property<int>("SenderUserId");
 
                     b.Property<int?>("SendingUserUserId");
+
+                    b.Property<int>("YardSaleItemId");
 
                     b.HasKey("NotificationId");
 

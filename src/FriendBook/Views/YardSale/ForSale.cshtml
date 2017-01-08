@@ -13,7 +13,7 @@
     @if (Model.YardSaleItems.Count == 0)
     {
         <div class="NoSaleItems ExtraMarginTop">
-            <h3>@Model.UserProfile.FirstName, currently has no items up for sale!</h3>
+            <h3>@Model.UserProfile.FirstName, currently has no items up for sale. Click <a asp-action="NewItem" asp-controller="YardSale" class="NewItemLink">here</a> to put an item up for sale!</h3>
         </div>
     }
     else
