@@ -47,11 +47,13 @@ $(".UserNotificationDiv").on("click", function (e) {
     if (context.hasClass("UserNotificationsText") || context.hasClass("UserNotificationsImage")) {
         NotificationData = context.parent().attr("data").split(" ")
         PostId = context.parent().attr("id")
+        context.parent().remove();
         ClickedNotification = true
     }
     else if (context.hasClass("NewUserNotification")) {
         NotificationData = context.attr("data").split(" ")
         PostId = context.attr("id")
+        context.remove()
         ClickedNotification = true
     }
 

@@ -22,6 +22,13 @@ namespace FriendBook.Controllers
             context = ctx;
         }
 
+        /**
+        * Purpose: Returns the main view for all yardsale items
+        * Arguments:
+        *      None
+        * Return:
+        *      returns the view for the yardsale index(home) page
+        */
         public IActionResult Index()
         {
             YardSaleHomeViewModel model = new YardSaleHomeViewModel(context);
@@ -62,6 +69,13 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        /**
+        * Purpose: Returns the main view for the form to create a new item for sale
+        * Arguments:
+        *      None
+        * Return:
+        *      returns the view to the form in order to create a new product
+        */
         public IActionResult NewItem()
         {
             YardSaleNewItemViewModel model = new YardSaleNewItemViewModel(context);
@@ -70,6 +84,13 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        /**
+        * Purpose: Post method that takes a new item and saves it to the DB
+        * Arguments:
+        *      model - contains all the neccessary properties that are needed to put a new item up for sale
+        * Return:
+        *      redirects to the main view of yardsale products "YardSale/Index"
+        */
         public async Task<IActionResult> AddNewItem(YardSaleNewItemViewModel model)
         {
             var uploads = Path.Combine(_environment.WebRootPath, "images");
@@ -104,16 +125,29 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "YardSale");
         }
 
+        /**
+        * Purpose: Returns the view for that contains all of a specific user's products that are for sale
+        * Arguments:
+        *      int id - the UserId of which products are being requested
+        * Return:
+        *      returns the view that contains that specific user's products that are up for sale
+        */
         public IActionResult ForSale([FromRoute] int id)
         {
             ProfileForSaleViewModel model = new ProfileForSaleViewModel(context, id);
             model.YardSaleItems = context.YardSaleItem.Where(ysi => ysi.PostingUserId == id).ToList();
             model.YardSaleItems.ForEach(ysi => ysi.ItemComments = context.Comment.Where(c => c.YardSaleItemId == ysi.YardSaleItemId).ToList());
 
-
             return View(model);
         }
 
+        /**
+        * Purpose: Deletes a specific yardsale item
+        * Arguments:
+        *      ItemId - the id of the item being deleted
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void DeleteYardSaleItem([FromBody] int ItemId)
         {
@@ -126,6 +160,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: To post a new comment onto a yardsale item and to create a notification when completed
+        * Arguments:
+        *      comment - Contains all the neccessary properties needed to add a new comment onto a yardsale item
+        * Return:
+        *      comment.commentId - the comment id of the comment that was just saved
+        */
         [HttpPost]
         public int CommentOnYardSaleItem([FromBody] Comment comment)
         {
@@ -137,23 +178,33 @@ namespace FriendBook.Controllers
 
             context.Comment.Add(comment);
 
-            Notification NewNotification = new Notification
+            if (RecievingUser.UserId != ActiveUser.Instance.User.UserId)
             {
-                NotificationText = $"{RecievingUser.FirstName} {RecievingUser.LastName}, commented on your {item.ItemName} that is up for sale!",
-                NotificationType = "Sale",
-                NotificatonDate = DateTime.Now,
-                RecievingUserId = RecievingUser.UserId,
-                YardSaleItemId = item.YardSaleItemId,
-                Seen = false,
-                SenderUserId = ActiveUser.Instance.User.UserId        
-            };
+                Notification NewNotification = new Notification
+                {
+                    NotificationText = $"{RecievingUser.FirstName} {RecievingUser.LastName}, commented on your {item.ItemName} that is up for sale!",
+                    NotificationType = "Sale",
+                    NotificatonDate = DateTime.Now,
+                    RecievingUserId = RecievingUser.UserId,
+                    YardSaleItemId = item.YardSaleItemId,
+                    Seen = false,
+                    SenderUserId = ActiveUser.Instance.User.UserId
+                };
+                context.Notification.Add(NewNotification);
+            }
 
-            context.Notification.Add(NewNotification);
             context.SaveChanges();
 
             return comment.CommentId;
         }
 
+        /**
+        * Purpose: Gets all of the comments on a specific yardsale item
+        * Arguments:
+        *      YardSaleCommentId - The Id of the yardsale item of which comments are being requested
+        * Return:
+        *      returns a list of comments found for that yardsale item
+        */
         [HttpPost]
         public List<Comment> GetYardSaleItemComments([FromBody] int YardSaleCommentId)
         {
@@ -163,6 +214,13 @@ namespace FriendBook.Controllers
             return comments;
         }
 
+        /**
+        * Purpose: Deletes a single comment on a yardsale item
+        * Arguments:
+        *      CommentId - The id of the comment being deleted
+        * Return:
+        *      None
+        */
         [HttpPost]
         public void RemoveCommentOnYardSaleItem([FromBody] int CommentId)
         {
@@ -171,6 +229,13 @@ namespace FriendBook.Controllers
             context.SaveChanges();
         }
 
+        /**
+        * Purpose: Returns all the yardsale items that contain the certain filters
+        * Arguments:
+        *      model - contains the filter values gathered from user input
+        * Return:
+        *      returns all the yardsale items that have these filter values
+        */
         [HttpPost]
         public List<YardSaleItem> FilteredYardSaleItems([FromBody] YardSaleHomeViewModel model)
         {
@@ -196,9 +261,9 @@ namespace FriendBook.Controllers
                 FilteredItems = context.YardSaleItem.OrderBy(d => d.DatePosted).ToList();
             }
 
-            //FilteredItems.ForEach(i => i.ItemComments = context.Comment.Where(c => c.YardSaleItemId == i.YardSaleItemId).ToList());
             FilteredItems.ForEach(i => i.PostingUser = context.User.Where(u => u.UserId == i.PostingUserId).SingleOrDefault());
             FilteredItems.ForEach(d => d.DatePosted = d.DatePosted.Date);
+            FilteredItems = FilteredItems.OrderByDescending(d => d.DatePosted).ToList();
 
             return FilteredItems;
         }

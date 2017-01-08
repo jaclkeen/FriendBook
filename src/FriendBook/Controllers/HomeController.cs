@@ -54,6 +54,14 @@ namespace FriendBook.Controllers
                 if (r.ReciverUserId == UserId && r.Status == 1)
                 {
                     UserPost = context.Post.Where(p => p.UserId == r.SenderUserId).ToList();
+
+                    List<Post> ProfileUserTagPosts = (from t in context.Tag
+                                                      join p in context.Post on t.PostId equals p.PostId
+                                                      where t.PersonBeingTaggedId == r.SenderUserId
+                                                      select p).ToList();
+
+                    ProfileUserTagPosts.ForEach(TaggedPost => { if (UserPost.Contains(TaggedPost)) { UserPost.Add(TaggedPost); } });
+
                     if (UserPost != null)
                     {
                         UserPost.ForEach(up => up.User = context.User.Where(user => user.UserId == up.UserId).SingleOrDefault());
@@ -64,6 +72,13 @@ namespace FriendBook.Controllers
                 {
                     UserPost = context.Post.Where(p => p.UserId == r.ReciverUserId).ToList();
 
+                    List<Post> ProfileUserTagPosts = (from t in context.Tag
+                                                      join p in context.Post on t.PostId equals p.PostId
+                                                      where t.PersonBeingTaggedId == r.ReciverUserId
+                                                      select p).ToList();
+
+                    ProfileUserTagPosts.ForEach(TaggedPost => { if (UserPost.Contains(TaggedPost)) { UserPost.Add(TaggedPost); } });
+
                     if (UserPost != null)
                     {
                         UserPost.ForEach(up => up.User = context.User.Where(user => user.UserId == up.UserId).SingleOrDefault());
@@ -72,22 +87,19 @@ namespace FriendBook.Controllers
                 }
             }
 
+            //GETS ALL OF THE CURRENTS USER'S POSTS AND MENTIONS
             List<Post> UserPosts = context.Post.Where(p => p.UserId == UserId || p.RecievingUserId == UserId).ToList();
 
+            //IF POSTS AND MENTIONS != NULL AND THE POSTS DON'T ALREADY INCLUDE THE WALLPOST OF THE RECIEVING USER ADD TO TOTAL POST LIST
             if (UserPosts != null) {
                 UserPosts.ForEach(p => { if (p.RecievingUserId != null) { p.RecievingUser = context.User.Where(u => u.UserId == p.RecievingUserId).SingleOrDefault(); } });
-                UserPosts.ForEach(up => model.Posts.Add(up));
+
+                model.Posts = model.Posts.Union(UserPosts).ToList();
             }
 
             if (model.Posts.Count == 0)
             {
-                model.Posts.Add(new Post
-                {
-                    Text = "Welcome to FriendBook!",
-                    User = context.User.Where(u => u.UserId == 1).SingleOrDefault(),
-                    UserId = 1,
-                    PostType = "Status"
-                });
+                model.Posts.Add(context.Post.Where(p => p.PostId == 0).SingleOrDefault());
             }
 
             model.Posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());

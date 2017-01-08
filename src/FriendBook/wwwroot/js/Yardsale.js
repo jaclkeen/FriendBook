@@ -87,6 +87,8 @@ $(".FilterByName").on("input", function () {
     })
 })
 
+//Purpose: Event listener for the category filter that sends its value and the names value to return items that fall into
+//  those filters
 $(".FilterByCategory").on("change", function () {
     let CategoryInput = $(this).val();
     let NameInput = $(".FilterByName").val();
@@ -100,6 +102,7 @@ $(".FilterByCategory").on("change", function () {
     })
 })
 
+//Purpose: To deleted a specific yardsale item
 $(".YardSaleItemsContainer").on("click", function (e) {
     let context = $(e.target)
 
@@ -113,6 +116,7 @@ $(".YardSaleItemsContainer").on("click", function (e) {
     }
 })
 
+//Purpose: To add a single comment to the DOM
 function AddDOMCommentsToItem(comment) {
     if (user.userId === comment.user.userId) {
         DOMComments =
@@ -140,6 +144,7 @@ function AddDOMCommentsToItem(comment) {
     return DOMComments;
 }
 
+//Purpose: Adds a yardsale item to the DOM. Done for the filtered items that are being returned
 function AddFilteredYardSaleItemsToDom(YardSaleItem) {
     GetYardSaleItemComments(YardSaleItem.yardSaleItemId)
     .then(function (comments) {
@@ -189,9 +194,14 @@ function AddFilteredYardSaleItemsToDom(YardSaleItem) {
                 </strong>
             </div>`)
 
-        comments.forEach(function (comment) {
-            YardSaleItemDOM.append(AddDOMCommentsToItem(comment))
-        })
+        if (comments.length > 0) {
+            comments.forEach(function (comment) {
+                YardSaleItemDOM.append(AddDOMCommentsToItem(comment))
+            })
+        }
+        else {
+            YardSaleItemDOM.append(`<div class="ItemComments hidden"></div>`)
+        }
 
         YardSaleItemDOM.append(`
             <div class ="AddAndSeeItemComments" id="${YardSaleItem.yardSaleItemId}"><hr />
@@ -204,6 +214,7 @@ function AddFilteredYardSaleItemsToDom(YardSaleItem) {
     })
 }
 
+//Purpose: To add validation to the form when putting a new yardsale item for sale
 $(".AddNewYardSaleItem").on("click", function () {
     let ValidName = false,
         ValidCategory = false,

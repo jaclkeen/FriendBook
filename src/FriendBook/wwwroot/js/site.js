@@ -162,7 +162,7 @@
         }
     })
 
-    ////Purpose: Used strictly for dummy user data only
+    //Purpose: Used strictly for dummy user data only
     //function GetDummyUsers() {
     //    return new Promise(function (resolve, reject) {
     //        $.ajax({

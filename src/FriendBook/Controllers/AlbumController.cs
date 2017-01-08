@@ -104,6 +104,7 @@ namespace FriendBook.Controllers
                     UserId = u.UserId,
                     Text = $"{u.FirstName} added a new photo to their {selectedAlbum.AlbumName} album!",
                     TimePosted = DateTime.Now,
+                    PostType = "Status",
                     ImgUrl = $"/images/{file.FileName}"
                 };
 
