@@ -9,6 +9,7 @@
 /// <reference path="js/post.js" />
 /// <reference path="js/site.js" />
 /// <reference path="js/tagging.js" />
+/// <reference path="js/yardsale.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />
 /// <reference path="lib/jquery/dist/jquery.js" />
 /// <reference path="lib/jquery-validation/dist/jquery.validate.js" />

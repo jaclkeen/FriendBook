@@ -222,6 +222,34 @@ namespace FriendBook.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "YardSaleItem",
+                columns: table => new
+                {
+                    YardSaleItemId = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Category = table.Column<string>(nullable: false),
+                    DatePosted = table.Column<DateTime>(nullable: false),
+                    ItemDescription = table.Column<string>(nullable: false),
+                    ItemImage1 = table.Column<string>(nullable: false),
+                    ItemImage2 = table.Column<string>(nullable: true),
+                    ItemImage3 = table.Column<string>(nullable: true),
+                    ItemImage4 = table.Column<string>(nullable: true),
+                    ItemName = table.Column<string>(nullable: false),
+                    ItemPrice = table.Column<double>(nullable: false),
+                    PostingUserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_YardSaleItem", x => x.YardSaleItemId);
+                    table.ForeignKey(
+                        name: "FK_YardSaleItem_User_PostingUserId",
+                        column: x => x.PostingUserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Image",
                 columns: table => new
                 {
@@ -278,34 +306,6 @@ namespace FriendBook.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
-                columns: table => new
-                {
-                    CommentId = table.Column<int>(nullable: false)
-                        .Annotation("Autoincrement", true),
-                    PostId = table.Column<int>(nullable: false),
-                    Text = table.Column<string>(maxLength: 200, nullable: false),
-                    TimePosted = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comment", x => x.CommentId);
-                    table.ForeignKey(
-                        name: "FK_Comment_Post_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Post",
-                        principalColumn: "PostId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comment_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Tag",
                 columns: table => new
                 {
@@ -338,6 +338,41 @@ namespace FriendBook.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    PostId = table.Column<int>(nullable: true),
+                    Text = table.Column<string>(maxLength: 200, nullable: false),
+                    TimePosted = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    YardSaleItemId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comment_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "PostId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comment_YardSaleItem_YardSaleItemId",
+                        column: x => x.YardSaleItemId,
+                        principalTable: "YardSaleItem",
+                        principalColumn: "YardSaleItemId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Album_UserId",
                 table: "Album",
@@ -352,6 +387,11 @@ namespace FriendBook.Migrations
                 name: "IX_Comment_UserId",
                 table: "Comment",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_YardSaleItemId",
+                table: "Comment",
+                column: "YardSaleItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Conversation_ConversationRecieverId",
@@ -442,6 +482,11 @@ namespace FriendBook.Migrations
                 name: "IX_Tag_TaggerId",
                 table: "Tag",
                 column: "TaggerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_YardSaleItem_PostingUserId",
+                table: "YardSaleItem",
+                column: "PostingUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -469,6 +514,9 @@ namespace FriendBook.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tag");
+
+            migrationBuilder.DropTable(
+                name: "YardSaleItem");
 
             migrationBuilder.DropTable(
                 name: "Album");

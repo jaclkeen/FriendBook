@@ -119,7 +119,7 @@ namespace FriendBook.Controllers
                 NotificatonDate = DateTime.Now,
                 RecievingUserId = comment.Post.UserId,
                 SenderUserId = user.UserId,
-                PostId = comment.PostId,
+                PostId = (int)comment.PostId,
                 Seen = false,
                 NotificationType = "LikeDislikeOrComment"
             };

@@ -38,11 +38,11 @@ namespace FriendBook.Controllers
         {
             int UserId = ActiveUser.Instance.User.UserId;
 
-            var relationships = context.Relationship.Where(r => r.ReciverUserId == UserId || r.SenderUserId == UserId).ToList();
-            var styling = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
+            List<Relationship> relationships = context.Relationship.Where(r => r.ReciverUserId == UserId || r.SenderUserId == UserId).ToList();
+            Style styling = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
 
-            var users = context.User.ToList();
-            var currentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
+            List<User> users = context.User.ToList();
+            User currentUser = context.User.Where(u => u.UserId == UserId).SingleOrDefault();
 
             HomePageViewModel model = new HomePageViewModel(context);
             model.Posts = new List<Post> { };
@@ -116,11 +116,6 @@ namespace FriendBook.Controllers
             model.Post.PostType = "Status";
             model.Post.UserId = u.UserId;
             model.Post.TimePosted = DateTime.Now;
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
 
             if (model.PostImgUpload != null && model.PostImgUpload.ContentType.Contains("image"))
             {

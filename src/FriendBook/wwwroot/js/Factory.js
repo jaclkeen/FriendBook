@@ -6,6 +6,81 @@ function ToastNotification(message) {
     $(".toast").fadeOut(2000)
 }
 
+function DeleteYardSaleItem(ItemId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/YardSale/DeleteYardSaleItem",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(ItemId)
+        }).done(function (nothing) {
+            resolve(nothing)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetYardSaleItemComments(ItemId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/YardSale/GetYardSaleItemComments",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(ItemId)
+        }).done(function (comments) {
+            resolve(comments)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function GetFilteredYardSaleItems(Name, Category) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/YardSale/FilteredYardSaleItems",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ ItemNameFilter: Name, ItemCategoryFilter: Category })
+        }).done(function (Items) {
+            resolve(Items)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function RemoveCommentToYardSaleItem(Id) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/YardSale/RemoveCommentOnYardSaleItem",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(Id)
+        }).done(function (ListOfComments) {
+            resolve(ListOfComments)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
+function AddCommentToYardSaleItem(YardSaleId, CommentText) {
+    return new Promise(function(resolve, reject){
+        $.ajax({
+            url: "/YardSale/CommentOnYardSaleItem",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ YardSaleItemId : YardSaleId, Text: CommentText})
+        }).done(function (ListOfComments) {
+            resolve(ListOfComments)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
 //Purpose: To get all of the current user's pending friend request
 function GetUserFriendRequests() {
     return new Promise(function (resolve, reject) {
@@ -341,7 +416,6 @@ function EditSpecificPost(pID, PostText) {
         }).done(function (data) {
             resolve(data)
         }).error(function (err) {
-            console.log(err)
             reject(err)
         })
     })

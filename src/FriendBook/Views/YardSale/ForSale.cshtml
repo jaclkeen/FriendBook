@@ -1,0 +1,23 @@
+﻿@model FriendBook.ViewModels.ProfileForSaleViewModel
+
+@{Html.RenderPartial("MessageAreaPartial");}
+
+<div class="colorContainer">
+    <div class="row profileHead">
+        @{Html.RenderPartial("ProfileHeadPartial");}
+    </div>
+
+    <i class="fa fa-tag friendIcon"></i>
+    <h3 class="friendHead">For Sale (@Model.YardSaleItems.Count)</h3>
+
+    @if (Model.YardSaleItems.Count == 0)
+    {
+        <div class="NoSaleItems ExtraMarginTop">
+            <h3>@Model.UserProfile.FirstName, currently has no items up for sale!</h3>
+        </div>
+    }
+    else
+    {
+        Html.RenderPartial("ItemsForSalePartial");
+    }
+</div>

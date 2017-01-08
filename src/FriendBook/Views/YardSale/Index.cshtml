@@ -1,0 +1,27 @@
+﻿@model FriendBook.ViewModels.YardSaleHomeViewModel
+
+@{Html.RenderPartial("MessageAreaPartial");}
+
+<div class="colorContainer">
+
+    <div class="YardSaleWelcome">
+        <h2>Buy, Sell, or Trade</h2>
+
+        <a asp-action="NewItem" asp-controller="YardSale">
+            <div class="SellNewItemLinkDiv">
+                <span class="glyphicon glyphicon-plus-sign plusSign"></span>
+            </div>
+        </a>
+    </div>
+
+    @if (Model.YardSaleItems.Count == 0)
+    {
+        <div class="NoSaleItems">
+            <h3>You currently have no friends that have items for sale. Click <a asp-action="NewItem" asp-controller="YardSale" class="NewItemLink">here</a> to put an item up for sale!</h3>
+        </div>
+    }
+    else
+    {
+            Html.RenderPartial("ItemsForSalePartial");
+    }
+</div>
