@@ -100,6 +100,19 @@ $(".FilterByCategory").on("change", function () {
     })
 })
 
+$(".YardSaleItemsContainer").on("click", function (e) {
+    let context = $(e.target)
+
+    if (context.hasClass("deleteItem")) {
+        let ItemId = $(context).parent().parent().attr("id")
+        $(context).parent().parent().remove()
+        DeleteYardSaleItem(ItemId)
+        .then(function () {
+            ToastNotification("Item deleted!")
+        })
+    }
+})
+
 function AddDOMCommentsToItem(comment) {
     if (user.userId === comment.user.userId) {
         DOMComments =
@@ -130,6 +143,7 @@ function AddDOMCommentsToItem(comment) {
 function AddFilteredYardSaleItemsToDom(YardSaleItem) {
     GetYardSaleItemComments(YardSaleItem.yardSaleItemId)
     .then(function (comments) {
+        let deleteButton = ""
         let images = `<img src="/images/${YardSaleItem.itemImage1}" class="YSImage" />`
         if (YardSaleItem.itemImage2 !== null) {
             images += `<img src="/images/${YardSaleItem.itemImage2}" class="YSImage" />`
@@ -141,11 +155,16 @@ function AddFilteredYardSaleItemsToDom(YardSaleItem) {
             images += `<img src="/images/${YardSaleItem.itemImage4}" class="YSImage" />`
         }
 
+        if (user.userId === YardSaleItem.postingUser.userId) {
+            deleteButton = `<span class ="glyphicon glyphicon-remove deleteItem"></span>`
+        }
+
         let YardSaleItemDOM =
             $(`<div class="YardSaleItem" id="${YardSaleItem.yardSaleItemId}">
             <div class="ItemPosterContainer">
                 <img src="${YardSaleItem.postingUser.profileImg}" class ="ItemPosterProfileImg" />
-                <a asp-action="Index" asp-controller="Profile" asp-route-id="${YardSaleItem.postingUser.userId}"><h3 class ="ItemPosterName">${YardSaleItem.postingUser.firstName} ${YardSaleItem.postingUser.lastName}</h3></a>
+                <a href="Profile/Index/${YardSaleItem.postingUser.userId}"><h3 class ="ItemPosterName">${YardSaleItem.postingUser.firstName} ${YardSaleItem.postingUser.lastName}</h3></a>
+                ${deleteButton}
             </div>
 
             <div class="SaleItemHead">

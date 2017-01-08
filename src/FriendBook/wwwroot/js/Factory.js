@@ -6,6 +6,21 @@ function ToastNotification(message) {
     $(".toast").fadeOut(2000)
 }
 
+function DeleteYardSaleItem(ItemId) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/YardSale/DeleteYardSaleItem",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(ItemId)
+        }).done(function (nothing) {
+            resolve(nothing)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
 function GetYardSaleItemComments(ItemId) {
     return new Promise(function (resolve, reject) {
         $.ajax({

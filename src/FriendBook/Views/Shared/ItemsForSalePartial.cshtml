@@ -28,6 +28,11 @@
             <img src="@i.PostingUser.ProfileImg" class="ItemPosterProfileImg" />
             <a asp-action="Index" asp-controller="Profile" asp-route-id="@i.PostingUser.UserId"><h3 class="ItemPosterName">@i.PostingUser.FirstName @i.PostingUser.LastName</h3></a>
             <span class="ItemDatePosted">@i.DatePosted</span>
+
+            @if (i.PostingUser.UserId == Model.CurrentUser.UserId)
+            {
+                <span class="glyphicon glyphicon-remove deleteItem"></span>
+            }
         </div>
 
         <div class="SaleItemHead">

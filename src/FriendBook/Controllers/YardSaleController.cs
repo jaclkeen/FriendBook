@@ -113,7 +113,19 @@ namespace FriendBook.Controllers
 
             return View(model);
         }
-       
+
+        [HttpPost]
+        public void DeleteYardSaleItem([FromBody] int ItemId)
+        {
+            List<Comment> ItemComments = context.Comment.Where(c => c.YardSaleItemId == ItemId).ToList();
+
+            ItemComments.ForEach(ic => context.Comment.Remove(ic));
+            YardSaleItem item = context.YardSaleItem.Where(ysi => ysi.YardSaleItemId == ItemId).SingleOrDefault();
+
+            context.YardSaleItem.Remove(item);
+            context.SaveChanges();
+        }
+
         [HttpPost]
         public int CommentOnYardSaleItem([FromBody] Comment comment)
         {

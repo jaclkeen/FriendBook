@@ -8,6 +8,15 @@
     border-radius: 20px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+.deleteItem{
+    float: right;
+    font-size: 2.5em;
+    margin-top: -15%;
+    cursor: pointer;
+}
+.deleteItem:hover{
+    color: red;
+}
 .YardSaleFilters input, .YardSaleFilters select {
     height: 30px;
     padding: .5%;
