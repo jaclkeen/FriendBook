@@ -29,6 +29,10 @@ namespace FriendBook.Controllers
         {
             Post post = context.Post.Where(p => p.PostId == id).SingleOrDefault();
             context.Post.Remove(post);
+
+            List<Comment> Comments = context.Comment.Where(c => c.PostId == id).ToList();
+            Comments.ForEach(c => context.Comment.Remove(c));
+
             context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
@@ -113,18 +117,22 @@ namespace FriendBook.Controllers
             comment.TimePosted = DateTime.Now;
             comment.Post = context.Post.Where(p => p.PostId == comment.PostId).SingleOrDefault();
 
-            Notification NewNotification = new Notification
+            if (comment.Post.UserId != ActiveUser.Instance.User.UserId)
             {
-                NotificationText = $"{user.FirstName} {user.LastName}, commented on your post!",
-                NotificatonDate = DateTime.Now,
-                RecievingUserId = comment.Post.UserId,
-                SenderUserId = user.UserId,
-                PostId = (int)comment.PostId,
-                Seen = false,
-                NotificationType = "LikeDislikeOrComment"
-            };
+                Notification NewNotification = new Notification
+                {
+                    NotificationText = $"{user.FirstName} {user.LastName}, commented on your post!",
+                    NotificatonDate = DateTime.Now,
+                    RecievingUserId = comment.Post.UserId,
+                    SenderUserId = user.UserId,
+                    PostId = (int)comment.PostId,
+                    Seen = false,
+                    NotificationType = "LikeDislikeOrComment"
+                };
 
-            context.Notification.Add(NewNotification);
+                context.Notification.Add(NewNotification);
+            }
+
             context.Comment.Add(comment);
 
             try

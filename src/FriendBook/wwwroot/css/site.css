@@ -634,7 +634,7 @@ hr{
 .searchProfilePic{
     background: white;
     min-height: 60px;
-    margin-left: -25%;
+    margin-left: -15%;
     margin-right: 2%;
     width: 25%;
     display: inline-block;
@@ -642,7 +642,6 @@ hr{
 .searchProfileName{
     display: inline-block;
     font-size: 1.3em;
-    margin-left: 2%;
 }
 .icon{
     font-size: 2.2em;
@@ -767,7 +766,7 @@ a{
 }
 .navbar-right{
     margin-right: 0!important;
-    width: 65%;
+    width: 67%;
 }
 .submitComment{
     vertical-align: text-top;
@@ -881,7 +880,7 @@ a{
     border: 2px solid green;
 }
 .logout{
-    margin-left: 80%;
+    margin-left: 100%;
 }
 .brandImg{
     color: white;

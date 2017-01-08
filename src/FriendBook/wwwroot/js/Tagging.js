@@ -43,14 +43,16 @@ $(".tagFriendsDiv").on("click", function (e) {
         TaggedFriendName = null,
         TaggedUserId = null,
         TaggedUsersInput = $(".TaggedUsersInput").val()
+        TaggedUsersArray = TaggedUsersInput.split(" ")
 
+    console.log(TaggedUsersInput)
     if (context.hasClass("friendBeingTagged")) {
         $(".tagFriendsInput").val("")
         context.remove()
         TaggedUserId = context.attr("id")
         TaggedFriendName = context.children(".friendBeingTaggedName").text()
 
-        if (TaggedUsersInput.indexOf(TaggedUserId) === -1) {
+        if (TaggedUsersArray.indexOf(TaggedUserId) === -1) {
             ToastNotification(`You tagged ${TaggedFriendName}, in this post!`)
             AppendTag(TaggedUserId, TaggedFriendName)
             $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
@@ -65,7 +67,7 @@ $(".tagFriendsDiv").on("click", function (e) {
         TaggedUserId = context.parent().attr("id")
         TaggedFriendName = context.text()
 
-        if (TaggedUsersInput.indexOf(TaggedUserId) === -1) {
+        if (TaggedUsersArray.indexOf(TaggedUserId) === -1) {
             ToastNotification(`You tagged ${TaggedFriendName}, in this post!`)
             AppendTag(TaggedUserId, TaggedFriendName)
             $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())
@@ -80,7 +82,7 @@ $(".tagFriendsDiv").on("click", function (e) {
         TaggedUserId = context.parent().attr("id")
         TaggedFriendName = context.siblings(".friendBeingTaggedName").text()
 
-        if (TaggedUsersInput.indexOf(TaggedUserId) === -1) {
+        if (TaggedUsersArray.indexOf(TaggedUserId) === -1) {
             ToastNotification(`You tagged ${TaggedFriendName}, in this post!`)
             AppendTag(TaggedUserId, TaggedFriendName)
             $(".TaggedUsersInput").val(TaggedUsersInput + " " + TaggedUserId.toString())

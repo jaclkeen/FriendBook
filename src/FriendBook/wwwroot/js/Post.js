@@ -7,9 +7,9 @@ function AppendPostEdit(e) {
             postText = postTextDiv.children(".postText").html()
 
     let editArea = `<div class="editInputArea">
-                    <textarea style="color: black; width: 50%;" class ="editInput">${postText}</textarea>
-                    <input type="button" value="Update" class ="btn-success EditBtn updatePost">
-                </div>`
+                        <textarea style="color: black; width: 50%;" class ="editInput">${postText}</textarea>
+                        <input type="button" value="Update" class ="btn-success EditBtn updatePost">
+                    </div>`
 
     postTextDiv.html(editArea)
 
@@ -86,7 +86,7 @@ $(".post").on("click", function (e) {
                     comments.forEach(function (comment) {
                         CommentCount = comments.length;
                         let NewCommentDiv = $(`<div class="comment" id=${comment.commentId}><img src=${comment.user.profileImg} /><a href="/Profile/Index/${comment.user.userId}"><span>${comment.user.firstName} ${comment.user.lastName}</span></a><p>${comment.text}</p></div>`)
-                        let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div><hr>`
+                        let EditOrDeleteComment = `<div class="EditOrDeleteComment"><a class="EditComment">Edit</a><a class="DeleteComment">Delete</a></div>`
                         comment.userId === user.userId ? NewCommentDiv.append(EditOrDeleteComment) : false;
                         CurrentPost.children(".CommentArea").append(NewCommentDiv)
                         CommentEventsForDeleteAndEdit()

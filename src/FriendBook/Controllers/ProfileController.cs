@@ -47,6 +47,7 @@ namespace FriendBook.Controllers
                                               select p).ToList();
             ProfileUserTagPosts.ForEach(TaggedPost => posts.Add(TaggedPost));
 
+            posts.ForEach(p => p.User = context.User.Where(u => u.UserId == p.UserId).SingleOrDefault());
             posts.ForEach(p => p.Comments = context.Comment.Where(c => c.PostId == p.PostId).ToList());
             foreach (Post p in posts)
             {
@@ -72,6 +73,14 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        /**
+        * Purpose: Method returns the view that includes all images of a particular album
+        * Arguments:
+        *       id - that particular profile user's userid
+        *       id2 - that id of the album being viewed
+        * Return:
+        *      The view that contains the images
+        */
         public IActionResult AlbumImages(int id, int id2)
         {
             Album album = context.Album.Where(a => a.AlbumId == id2).SingleOrDefault();
@@ -299,6 +308,14 @@ namespace FriendBook.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /**
+        * Purpose: To post a wall post on to another user's wall
+        * Arguments:
+        *       id - The Userid of the user's profile page being visited
+        *       model - contains all of the neccessary properties to create a new WallPost and notification
+        * Return:
+        *      Redirects to that same user's profile page
+        */
         public IActionResult CreateWallPost([FromRoute] int id, ProfileBaseViewModel model)
         {
             User PostingUser = ActiveUser.Instance.User;

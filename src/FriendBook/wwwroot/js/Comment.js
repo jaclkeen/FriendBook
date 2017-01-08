@@ -38,7 +38,7 @@ function CommentEventsForDeleteAndEdit(Post) {
                 let UpdatedCommentText = $(".editInput").val()
                 EditSpecificComment(CommentId, UpdatedCommentText)
                 .then(function (success) {
-                    let newComment = `<p>${UpdatedCommentText}</p>`
+                    let newComment = `${UpdatedCommentText}`
                     $(CommentTextDiv).html(newComment)
                     ToastNotification("Comment successfully updated!")
                 })
