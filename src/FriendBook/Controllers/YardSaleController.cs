@@ -263,6 +263,7 @@ namespace FriendBook.Controllers
 
             FilteredItems.ForEach(i => i.PostingUser = context.User.Where(u => u.UserId == i.PostingUserId).SingleOrDefault());
             FilteredItems.ForEach(d => d.DatePosted = d.DatePosted.Date);
+            FilteredItems = FilteredItems.OrderByDescending(d => d.DatePosted).ToList();
 
             return FilteredItems;
         }

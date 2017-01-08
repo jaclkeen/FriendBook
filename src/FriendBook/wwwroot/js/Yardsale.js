@@ -194,9 +194,14 @@ function AddFilteredYardSaleItemsToDom(YardSaleItem) {
                 </strong>
             </div>`)
 
-        comments.forEach(function (comment) {
-            YardSaleItemDOM.append(AddDOMCommentsToItem(comment))
-        })
+        if (comments.length > 0) {
+            comments.forEach(function (comment) {
+                YardSaleItemDOM.append(AddDOMCommentsToItem(comment))
+            })
+        }
+        else {
+            YardSaleItemDOM.append(`<div class="ItemComments hidden"></div>`)
+        }
 
         YardSaleItemDOM.append(`
             <div class ="AddAndSeeItemComments" id="${YardSaleItem.yardSaleItemId}"><hr />
