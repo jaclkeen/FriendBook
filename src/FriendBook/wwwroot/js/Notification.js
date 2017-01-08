@@ -24,6 +24,12 @@ function AddSingleUserNotificationToDom(un) {
                     <p class ="UserNotificationsText">${un.notificationText}</p>
                 </div>`
     }
+    else if (un.notificationType == "Sale") {
+        return `<div class="NewUserNotification" id="${un.yardSaleItemId}" data="${un.sendingUser.userId} ${un.notificationId} ${un.notificationType}">
+                    <img src="${un.sendingUser.profileImg}" class="UserNotificationsImage" />
+                    <p class ="UserNotificationsText">${un.notificationText}</p>
+                </div>`
+    }
     else{
         return `<div class="NewUserNotification" id="${un.postId}" data="${un.recievingUser.userId} ${un.notificationId} ${un.notificationType}">
                     <img src="${un.sendingUser.profileImg}" class="UserNotificationsImage" />
@@ -58,6 +64,12 @@ $(".UserNotificationDiv").on("click", function (e) {
             UserNotificationSeen(NotificationId)
             .then(function(){
                 window.location = `/Profile/Index/${SendingOrRecieverId}/#'${PostId}'`
+            })
+        }
+        if (NotificationType === "Sale") {
+            UserNotificationSeen(NotificationId)
+            .then(function () {
+                window.location = `/YardSale/#${PostId}`
             })
         }
         else {

@@ -114,7 +114,8 @@ namespace FriendBook.Migrations
                     RecievingUserId = table.Column<int>(nullable: false),
                     Seen = table.Column<bool>(nullable: false),
                     SenderUserId = table.Column<int>(nullable: false),
-                    SendingUserUserId = table.Column<int>(nullable: true)
+                    SendingUserUserId = table.Column<int>(nullable: true),
+                    YardSaleItemId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -15,10 +15,10 @@ $(".YardSaleItemsContainer").on("click", function (e) {
         $(context).parent().parent().siblings(".ItemComments").toggleClass("hidden")
 
         if ($(".ItemComments").hasClass("hidden")) {
-            $(context).children(".ViewCommentText").text("View comments (")
+            $(context).parent().children(".ViewCommentText").text("View comments (")
         }
         else {
-            $(context).children(".ViewCommentText").text("Hide comments (")
+            $(context).parent().children(".ViewCommentText").text("Hide comments (")
         }
     }
 })
@@ -128,11 +128,11 @@ function AddDOMCommentsToItem(comment) {
     else {
         DOMComments =
         `<div class="ItemComments hidden">
-                    <div class="comment" id="${comment.commentId}">
-                        <img src="${comment.user.profileImg}" />
-                        <a href="/Profile/Index/${comment.user.userId}"><span>${comment.user.firstName} ${comment.user.lastName}</span></a>
-                        <p class="YardSaleItemComment">${comment.text}</p>
-                    </div>
+                <div class="comment" id="${comment.commentId}">
+                    <img src="${comment.user.profileImg}" />
+                    <a href="/Profile/Index/${comment.user.userId}"><span>${comment.user.firstName} ${comment.user.lastName}</span></a>
+                    <p class="YardSaleItemComment">${comment.text}</p>
+                </div>
             </div>`
     }
 
@@ -163,7 +163,7 @@ function AddFilteredYardSaleItemsToDom(YardSaleItem) {
             $(`<div class="YardSaleItem" id="${YardSaleItem.yardSaleItemId}">
             <div class="ItemPosterContainer">
                 <img src="${YardSaleItem.postingUser.profileImg}" class ="ItemPosterProfileImg" />
-                <a href="Profile/Index/${YardSaleItem.postingUser.userId}"><h3 class ="ItemPosterName">${YardSaleItem.postingUser.firstName} ${YardSaleItem.postingUser.lastName}</h3></a>
+                <a href="/Profile/Index/${YardSaleItem.postingUser.userId}"><h3 class ="ItemPosterName">${YardSaleItem.postingUser.firstName} ${YardSaleItem.postingUser.lastName}</h3></a>
                 ${deleteButton}
             </div>
 
@@ -203,3 +203,39 @@ function AddFilteredYardSaleItemsToDom(YardSaleItem) {
         $(".YardSaleItemsContainer").append(YardSaleItemDOM)
     })
 }
+
+$(".AddNewYardSaleItem").on("click", function () {
+    let ValidName = false,
+        ValidCategory = false,
+        ValidImages = false,
+        ValidImageCount = false,
+        ValidDescription = false,
+        NewItemName = $(".NewItemName").val(),
+        ItemNameValidation = $(".ItemNameValidation").html(""),
+        NewItemCategory = $(".NewItemCategory").val(),
+        NewItemCategoryValidation = $(".ItemCategoryValidation").html(""),
+        NewItemImages = document.querySelector(".NewItemImages").files,
+        NewItemImagesValidation = $(".ItemImagesValidation").html(""),
+        NewItemDescription = $(".NewItemDescription").val(),
+        NewItemDescriptionValidation = $(".ItemDescriptionValidation").html("")
+
+    if (NewItemName === "" || NewItemName.length > 50) {
+        ItemNameValidation.html("Your item must have a name and must be less than 50 characters!")
+    } else { ValidName = true; }
+    if (NewItemCategory == "0") {
+        NewItemCategoryValidation.html("You must select a category for you item!")
+    } else { ValidCategory = true; }
+    if (NewItemImages.length === 0) {
+        NewItemImagesValidation.html("You must select at least one image!")
+    } else { ValidImages = true; }
+    if (NewItemImages.length > 4) {
+        NewItemImagesValidation.html("Only 4 images are allowed per item!")
+    } else { ValidImageCount = true; }
+    if (NewItemDescription === "" || NewItemDescription.length > 200) {
+        NewItemDescriptionValidation.html("An item description is requred, and must be less than 200 characters!")
+    } else { ValidDescription = true; }
+
+    if (ValidName && ValidCategory && ValidImages && ValidImageCount && ValidDescription) {
+        $(".NewItemForm").submit();
+    }
+})

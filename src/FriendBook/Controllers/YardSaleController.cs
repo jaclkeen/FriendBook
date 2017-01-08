@@ -129,10 +129,26 @@ namespace FriendBook.Controllers
         [HttpPost]
         public int CommentOnYardSaleItem([FromBody] Comment comment)
         {
+            YardSaleItem item = context.YardSaleItem.Where(ysi => ysi.YardSaleItemId == comment.YardSaleItemId).SingleOrDefault();
+            User RecievingUser = context.User.Where(u => u.UserId == item.PostingUserId).SingleOrDefault();
+
             comment.TimePosted = DateTime.Now;
             comment.UserId = ActiveUser.Instance.User.UserId;
 
             context.Comment.Add(comment);
+
+            Notification NewNotification = new Notification
+            {
+                NotificationText = $"{RecievingUser.FirstName} {RecievingUser.LastName}, commented on your {item.ItemName} that is up for sale!",
+                NotificationType = "Sale",
+                NotificatonDate = DateTime.Now,
+                RecievingUserId = RecievingUser.UserId,
+                YardSaleItemId = item.YardSaleItemId,
+                Seen = false,
+                SenderUserId = ActiveUser.Instance.User.UserId        
+            };
+
+            context.Notification.Add(NewNotification);
             context.SaveChanges();
 
             return comment.CommentId;

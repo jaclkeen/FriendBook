@@ -172,6 +172,8 @@ namespace FriendBook.Migrations
 
                     b.Property<int?>("SendingUserUserId");
 
+                    b.Property<int>("YardSaleItemId");
+
                     b.HasKey("NotificationId");
 
                     b.HasIndex("RecievingUserId");
