@@ -1,26 +1,4 @@
-﻿<div class="YardSaleFilters">
-    <h3>Filter By: </h3>
-    <label for="FilterByName">Item Name: </label>
-        <input type="text" id="FilterByName" class="FilterByName" />
-
-    <label>Category: </label>
-    <select class="FilterByCategory" id="FilterByCategory">
-        <option value="0">All Categories</option>
-        <option>Electronics</option>
-        <option>Movies</option>
-        <option>Books</option>
-        <option>Video Games</option>
-        <option>Pets</option>
-        <option>Beauty</option>
-        <option>Household</option>
-        <option>Automotive</option>
-        <option>Clothing</option>
-        <option>Sports and Fitness</option>
-        <option>Jewelry</option>
-    </select>
-</div>
-
-<div class="YardSaleItemsContainer">
+﻿<div class="YardSaleItemsContainer">
 @foreach (var i in Model.YardSaleItems)
 {
     <div class="YardSaleItem" id="@i.YardSaleItemId">
@@ -74,7 +52,7 @@
             @foreach (var comment in i.ItemComments)
             {
                 <div class="comment" id="@comment.CommentId">
-                    <img src="@i.PostingUser.ProfileImg" />
+                    <img src="@comment.User.ProfileImg" />
                     <a asp-action="Index" asp-controller="Profile" asp-route-id="@comment.User.UserId"><span>@comment.User.FirstName @comment.User.LastName</span></a>
                     <p class="YardSaleItemComment">@comment.Text</p>
                     @if (comment.User.UserId == Model.CurrentUser.UserId)
