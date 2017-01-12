@@ -30,7 +30,7 @@ namespace FriendBook.Models
 
         [Required]
         public string NotificationType { get; set; }
-        //Types: FR, LikeDislikeOrComment, Tag, Sale
+        //Types: FR, LikeDislikeOrComment, Tag, Sale, ProfileView
 
         public int PostId { get; set; }
 

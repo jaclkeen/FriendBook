@@ -172,23 +172,24 @@ namespace FriendBook.Controllers
         {
             YardSaleItem item = context.YardSaleItem.Where(ysi => ysi.YardSaleItemId == comment.YardSaleItemId).SingleOrDefault();
             User RecievingUser = context.User.Where(u => u.UserId == item.PostingUserId).SingleOrDefault();
+            User SendingUser = ActiveUser.Instance.User;
 
             comment.TimePosted = DateTime.Now;
-            comment.UserId = ActiveUser.Instance.User.UserId;
+            comment.UserId = SendingUser.UserId;
 
             context.Comment.Add(comment);
 
-            if (RecievingUser.UserId != ActiveUser.Instance.User.UserId)
+            if (RecievingUser.UserId != SendingUser.UserId)
             {
                 Notification NewNotification = new Notification
                 {
-                    NotificationText = $"{RecievingUser.FirstName} {RecievingUser.LastName}, commented on your {item.ItemName} that is up for sale!",
+                    NotificationText = $"{SendingUser.FirstName} {SendingUser.LastName}, commented on your {item.ItemName} that is up for sale!",
                     NotificationType = "Sale",
                     NotificatonDate = DateTime.Now,
                     RecievingUserId = RecievingUser.UserId,
                     YardSaleItemId = item.YardSaleItemId,
                     Seen = false,
-                    SenderUserId = ActiveUser.Instance.User.UserId
+                    SenderUserId = SendingUser.UserId
                 };
                 context.Notification.Add(NewNotification);
             }
@@ -246,19 +247,19 @@ namespace FriendBook.Controllers
                 FilteredItems = context.YardSaleItem.OrderBy(d => d.DatePosted).ToList();
             }
 
-            else if(model.ItemNameFilter == "")
+            else if(model.ItemNameFilter == "" && model.ItemCategoryFilter != "0")
             {
                 FilteredItems = context.YardSaleItem.Where(ysi => ysi.Category == model.ItemCategoryFilter).OrderBy(d => d.DatePosted).ToList();
             }
 
-            else if(model.ItemCategoryFilter == "0")
+            else if(model.ItemCategoryFilter == "0" && model.ItemNameFilter != "")
             {
                 FilteredItems = context.YardSaleItem.Where(ysi => ysi.ItemName.ToLower() == model.ItemNameFilter.ToLower()).OrderBy(d => d.DatePosted).ToList();
             }
 
             else
             {
-                FilteredItems = context.YardSaleItem.OrderBy(d => d.DatePosted).ToList();
+                FilteredItems = context.YardSaleItem.Where(ysi => ysi.Category == model.ItemCategoryFilter && ysi.ItemName.ToLower() == model.ItemNameFilter.ToLower()).OrderBy(d => d.DatePosted).ToList();
             }
 
             FilteredItems.ForEach(i => i.PostingUser = context.User.Where(u => u.UserId == i.PostingUserId).SingleOrDefault());

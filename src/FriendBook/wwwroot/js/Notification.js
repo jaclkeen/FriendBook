@@ -68,11 +68,15 @@ $(".UserNotificationDiv").on("click", function (e) {
                 window.location = `/Profile/Index/${SendingOrRecieverId}/#'${PostId}'`
             })
         }
-        if (NotificationType === "Sale") {
+        else if (NotificationType === "Sale") {
             UserNotificationSeen(NotificationId)
             .then(function () {
                 window.location = `/YardSale/#${PostId}`
             })
+        }
+        else if (NotificationType === "ProfileView") {
+            UserNotificationSeen(NotificationId)
+            .then(function () {})
         }
         else {
             UserNotificationSeen(NotificationId)

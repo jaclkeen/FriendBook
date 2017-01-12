@@ -37,6 +37,26 @@ namespace FriendBook.Controllers
         */
         public IActionResult Index([FromRoute] int id)
         {
+            User ProfileUser = context.User.Where(u => u.UserId == id).SingleOrDefault();
+            User SignedInUser = ActiveUser.Instance.User;
+            Notification ProfileSeenNotificationExists = context.Notification.Where(c => c.NotificationType == "ProfileView" && c.RecievingUserId == ProfileUser.UserId && c.SenderUserId == SignedInUser.UserId && c.Seen == false).SingleOrDefault();
+
+            if (ProfileUser.UserId != SignedInUser.UserId && ProfileSeenNotificationExists == null)
+            {
+                Notification NewNotification = new Notification
+                {
+                    NotificationText = $"{SignedInUser.FirstName} {SignedInUser.LastName}, viewed your profile page!",
+                    NotificationType = "ProfileView",
+                    NotificatonDate = DateTime.Now,
+                    RecievingUserId = ProfileUser.UserId,
+                    Seen = false,
+                    SenderUserId = SignedInUser.UserId
+                };
+
+                context.Notification.Add(NewNotification);
+                context.SaveChanges();
+            }
+
             int UserId = ActiveUser.Instance.User.UserId;
 
             List<Post> posts = context.Post.Where(p => p.UserId == id || p.RecievingUserId == id).ToList();

@@ -140,7 +140,6 @@ function AddDOMCommentsToItem(comment) {
             </div>`
     }
 
-
     return DOMComments;
 }
 
