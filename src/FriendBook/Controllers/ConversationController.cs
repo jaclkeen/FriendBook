@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FriendBook.Data;
 using FriendBook.Models;
+using FriendBook.ViewModels;
 
 namespace FriendBook.Controllers
 {
@@ -15,6 +16,19 @@ namespace FriendBook.Controllers
         public ConversationController(FriendBookContext ctx)
         {
             context = ctx;
+        }
+
+        public IActionResult Index()
+        {
+            int UserId = ActiveUser.Instance.User.UserId;
+            ConversationIndexViewModel model = new ConversationIndexViewModel(context);
+            model.UserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
+            List<Conversation> UserConversations = context.Conversation.Where(c => c.ConversationRecieverId == UserId || c.ConversationStarterId == UserId).ToList();
+            UserConversations.ForEach(us => us.ConversationMessages = context.Message.OrderByDescending(m => m.MessageSentDate).ToList());
+            //model.Conversations.ForEach(c => c.ConversationStarter = context.User.Where(u => u.UserId == c.ConversationStarterId).SingleOrDefault());
+            //model.Conversations.ForEach(c => c.ConversationReciever = context.User.Where(u => u.UserId == c.ConversationRecieverId).SingleOrDefault());
+
+            return View(model);
         }
 
         /**

@@ -156,7 +156,7 @@ function UpdateUnseenMessages() {
     GetUserMessageNotifications()
     .then(function (notifications) {
         $(".messageNotificationArea").html("")
-        $(".messageNotificationArea").append(`<h4 class="NTitle">Messages:</h4><br />`)
+        $(".messageNotificationArea").append(`<a href="/Conversation"><h4 class="NTitle">Messages:</h4></a><br />`)
 
         if (notifications.length === 0) {
             let noti = `<h4 style="text-align:center; padding-top:4%;">No new messages!</h4>`
