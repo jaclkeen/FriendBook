@@ -156,9 +156,10 @@ function UpdateUnseenMessages() {
     GetUserMessageNotifications()
     .then(function (notifications) {
         $(".messageNotificationArea").html("")
+        $(".messageNotificationArea").append(`<a href="/Conversation"><h4 class="NTitle">Messages:</h4></a><br />`)
 
         if (notifications.length === 0) {
-            let noti = `<h4 style="text-align:center">No new messages!</h4>`
+            let noti = `<h4 style="text-align:center; padding-top:4%;">No new messages!</h4>`
             $(".messageNotificationArea").append(noti)
         }
 
@@ -173,7 +174,7 @@ function UpdateUnseenMessages() {
             $(".messageNotificationArea").append(noti)
         })
 
-        $(".messageNotifications").html(`<a class="glyphicon glyphicon-inbox navGlyph">(${notifications.length})</a>`)
+        $(".messageNotifications").html(`<a class="glyphicon glyphicon-inbox navGlyph"><span class='badge'>${notifications.length}</span></a>`)
     })
 }
 

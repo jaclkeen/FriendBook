@@ -2,6 +2,7 @@
     GetUserNotifications()
     .then(function (notifications) {
         $(".UserNotificationDiv").html("")
+        $(".UserNotificationDiv").append(`<h4 class="NotiTitle">Notifications:</h4><br />`)
         notifications.forEach(function (notification) {
             let NotificationDOMElement = AddSingleUserNotificationToDom(notification)
             $(".UserNotificationDiv").append(NotificationDOMElement)
@@ -13,7 +14,7 @@
                                               </div>`)
         }
 
-        $(".ShowUserNotifications").html(`<a class="UserNotifications glyphicon glyphicon-globe navGlyph">(${notifications.length})</a>`)
+        $(".ShowUserNotifications").html(`<a class="UserNotifications glyphicon glyphicon-globe navGlyph"><span class='badge'>${notifications.length}</span></a>`)
     })
 }
 

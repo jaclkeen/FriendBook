@@ -1,0 +1,23 @@
+﻿@model FriendBook.ViewModels.ConversationIndexViewModel
+
+@{Html.RenderPartial("MessageAreaPartial");}
+
+<div class="colorContainer">
+    <h2>Conversations: </h2>
+
+    <div class="ConvoList">
+        @foreach(var c in Model.Conversations)
+        {
+            @if(c.ConversationRecieverId == Model.CurrentUser.UserId)
+            {
+                <h3>@c.ConversationStarter.FirstName @c.ConversationStarter.LastName</h3>
+                <img src="@c.ConversationStarter.ProfileImg" />
+            }
+            else
+            {
+                <h3>@c.ConversationReciever.FirstName @c.ConversationReciever.LastName</h3>
+                <img src="@c.ConversationReciever.ProfileImg" />
+            }
+        }
+    </div>
+</div>

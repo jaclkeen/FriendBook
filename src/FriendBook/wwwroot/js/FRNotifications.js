@@ -4,7 +4,8 @@ function GetAllPendingUserFriendRequests() {
     GetUserFriendRequests()
     .then(function (requests) {
         $(".notificationArea").html("")
-        $(".Notifications").text(`(${requests.length})`)
+        $(".notificationArea").append(`<h4 class="NTitle">Friend Requests:</h4><br />`)
+        $(".Notifications").html(`<span class='badge'>${requests.length}</span>`)
         if (requests.length === 0) {
             $(".notificationArea").append(`<div class="NoFR">
                                                 <p>No new friend requests!</p>
