@@ -6,18 +6,24 @@
     <h2>Conversations: </h2>
 
     <div class="ConvoList">
-        @foreach(var c in Model.Conversations)
+        @foreach (var c in Model.Conversations)
         {
-            @if(c.ConversationRecieverId == Model.CurrentUser.UserId)
-            {
-                <h3>@c.ConversationStarter.FirstName @c.ConversationStarter.LastName</h3>
-                <img src="@c.ConversationStarter.ProfileImg" />
-            }
-            else
-            {
-                <h3>@c.ConversationReciever.FirstName @c.ConversationReciever.LastName</h3>
-                <img src="@c.ConversationReciever.ProfileImg" />
-            }
+            <div class="actualConversation">
+                @if (c.ConversationRecieverId == Model.CurrentUser.UserId)
+                {
+                    <img src="@c.ConversationStarter.ProfileImg" class="convoPersonImg"/>
+                    <h3 class="convoPersonName">@c.ConversationStarter.FirstName @c.ConversationStarter.LastName</h3>
+                    <p class="firstConvoMessDate">@c.ConversationMessages[0].MessageSentDate</p>
+                    <p class="firstConvoMess"><strong>@c.ConversationMessages[0].SendingUser.FirstName</strong>: @c.ConversationMessages[0].MessageText</p>
+                }
+                else
+                {
+                    <img class="convoPersonImg" src="@c.ConversationReciever.ProfileImg" />
+                    <h3 class="convoPersonName">@c.ConversationReciever.FirstName @c.ConversationReciever.LastName</h3>
+                    <p class="firstConvoMessDate">@c.ConversationMessages[0].MessageSentDate</p>
+                    <p class="firstConvoMess"><strong>@c.ConversationMessages[0].SendingUser.FirstName</strong>: @c.ConversationMessages[0].MessageText</p>
+                }
+            </div>
         }
     </div>
 </div>

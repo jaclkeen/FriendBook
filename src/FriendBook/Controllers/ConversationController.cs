@@ -24,11 +24,16 @@ namespace FriendBook.Controllers
             ConversationIndexViewModel model = new ConversationIndexViewModel(context);
             model.UserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
             List<Conversation> UserConversations = context.Conversation.Where(c => c.ConversationRecieverId == UserId || c.ConversationStarterId == UserId).ToList();
-            UserConversations.ForEach(us => us.ConversationMessages = context.Message.OrderByDescending(m => m.MessageSentDate).ToList());
-            //model.Conversations.ForEach(c => c.ConversationStarter = context.User.Where(u => u.UserId == c.ConversationStarterId).SingleOrDefault());
-            //model.Conversations.ForEach(c => c.ConversationReciever = context.User.Where(u => u.UserId == c.ConversationRecieverId).SingleOrDefault());
+            UserConversations.ForEach(us => us.ConversationMessages = context.Message.Where(m => us.ConversationRoomName == m.ConversationRoomName).OrderByDescending(m => m.MessageSentDate).Take(1).ToList());
+            model.Conversations = UserConversations.Where(uc => uc.ConversationMessages.Count != 0).ToList();
+            model.Conversations = model.Conversations.OrderByDescending(uc => uc.ConversationMessages[0].MessageSentDate).ToList();
 
             return View(model);
+        }
+
+        public IActionResult Messages([FromRoute] int id)
+        {
+            return View();
         }
 
         /**
