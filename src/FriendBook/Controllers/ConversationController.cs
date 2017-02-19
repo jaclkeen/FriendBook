@@ -21,10 +21,11 @@ namespace FriendBook.Controllers
         public IActionResult Index()
         {
             int UserId = ActiveUser.Instance.User.UserId;
-            ConversationIndexViewModel model = new ConversationIndexViewModel(context);
-            model.UserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
             List<Conversation> UserConversations = context.Conversation.Where(c => c.ConversationRecieverId == UserId || c.ConversationStarterId == UserId).ToList();
             UserConversations.ForEach(us => us.ConversationMessages = context.Message.Where(m => us.ConversationRoomName == m.ConversationRoomName).OrderByDescending(m => m.MessageSentDate).Take(1).ToList());
+
+            ConversationIndexViewModel model = new ConversationIndexViewModel(context);
+            model.UserStyle = context.Style.Where(s => s.UserId == UserId).SingleOrDefault();
             model.Conversations = UserConversations.Where(uc => uc.ConversationMessages.Count != 0).ToList();
             model.Conversations = model.Conversations.OrderByDescending(uc => uc.ConversationMessages[0].MessageSentDate).ToList();
 
@@ -33,7 +34,14 @@ namespace FriendBook.Controllers
 
         public IActionResult Messages([FromRoute] int id)
         {
-            return View();
+            List<Message> ConversationMessages = context.Message.Where(m => m.ConversationRoomName == Convert.ToString(id)).ToList();
+
+            ConversationMessagesViewModel model = new ConversationMessagesViewModel(context);
+            model.UserStyle = context.Style.Where(s => s.UserId == ActiveUser.Instance.User.UserId).SingleOrDefault();
+            model.Messages = ConversationMessages.OrderByDescending(cm => cm.MessageSentDate).ToList();
+            model.CurrentConversation = context.Conversation.Where(c => c.ConversationRoomName == Convert.ToString(id)).SingleOrDefault();
+
+            return View(model);
         }
 
         /**

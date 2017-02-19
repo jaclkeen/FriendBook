@@ -1,0 +1,25 @@
+﻿@model FriendBook.ViewModels.ConversationMessagesViewModel
+
+@{Html.RenderPartial("MessageAreaPartial");}
+
+<div class="colorContainer">
+    <h2 class="convoTitle">Messages</h2>
+
+    <div class="ConvoHead">
+        <div class="NewConversationMessageContainer">
+            <textarea class="NewConversationMessageText" placeholder="Your message..."></textarea>
+        </div>
+    </div>
+
+    <div class="ConvoMessageList">
+        @foreach (var message in Model.Messages)
+        {
+            <div class="messagesInConvo">
+                <img class="convoPersonImg" src="@message.SendingUser.ProfileImg" />
+                <h3 class="convoPersonName">@message.SendingUser.FirstName @message.SendingUser.LastName</h3>
+                <p class="firstConvoMessDate">@message.MessageSentDate</p>
+                <p class="firstConvoMess">@message.MessageText</p>
+            </div>
+        }
+    </div>
+</div>

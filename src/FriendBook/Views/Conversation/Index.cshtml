@@ -3,23 +3,30 @@
 @{Html.RenderPartial("MessageAreaPartial");}
 
 <div class="colorContainer">
-    <h2>Conversations: </h2>
+    <h2 class="convoTitle">Conversations: </h2>
 
     <div class="ConvoList">
+        @if(Model.Conversations.Count == 0)
+        {
+            <div class="noActiveConversationsDiv">
+                <h3>You currently have no active conversations</h3>
+                <p>To begin a conversation, click on a friend's name from your friend's list on the right.</p>
+            </div>
+        }
         @foreach (var c in Model.Conversations)
         {
-            <div class="actualConversation">
+            <div class="actualConversation" id="@c.ConversationRoomName">
                 @if (c.ConversationRecieverId == Model.CurrentUser.UserId)
                 {
                     <img src="@c.ConversationStarter.ProfileImg" class="convoPersonImg"/>
-                    <h3 class="convoPersonName">@c.ConversationStarter.FirstName @c.ConversationStarter.LastName</h3>
+                    <h3 class="convoPersonName"><a asp-action="Index" asp-controller="Profile" asp-route-id="@c.ConversationStarter.UserId">@c.ConversationStarter.FirstName @c.ConversationStarter.LastName</a></h3>
                     <p class="firstConvoMessDate">@c.ConversationMessages[0].MessageSentDate</p>
                     <p class="firstConvoMess"><strong>@c.ConversationMessages[0].SendingUser.FirstName</strong>: @c.ConversationMessages[0].MessageText</p>
                 }
                 else
                 {
                     <img class="convoPersonImg" src="@c.ConversationReciever.ProfileImg" />
-                    <h3 class="convoPersonName">@c.ConversationReciever.FirstName @c.ConversationReciever.LastName</h3>
+                    <h3 class="convoPersonName"><a asp-action="Index" asp-controller="Profile" asp-route-id="@c.ConversationReciever.UserId">@c.ConversationReciever.FirstName @c.ConversationReciever.LastName</a></h3>
                     <p class="firstConvoMessDate">@c.ConversationMessages[0].MessageSentDate</p>
                     <p class="firstConvoMess"><strong>@c.ConversationMessages[0].SendingUser.FirstName</strong>: @c.ConversationMessages[0].MessageText</p>
                 }
