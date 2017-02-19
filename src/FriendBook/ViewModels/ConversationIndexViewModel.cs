@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using FriendBook.Data;
 using FriendBook.Models;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace FriendBook.ViewModels
 {
     public class ConversationIndexViewModel : BaseViewModel

@@ -26,7 +26,7 @@
         .YardSaleFilters input, .YardSaleFilters select {
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
-        .YSImage, .SubmitNewItemComment, .AddNewItemComment, .ItemPosterProfileImg{
+        .YSImage, .SubmitNewItemComment, .AddNewItemComment, .ItemPosterProfileImg, .firstConvoMess, .noActiveConversationsDiv, .NewConversationMessageText{
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .SaleItemHead p, .YardSaleItemComment, .comment p{
@@ -69,7 +69,7 @@
         .NewM:hover, .FR:hover, .NewUserNotification:hover{
             background-color: @Model.CurrentUserStyle.BackgroundColor;
         }
-        .notificationProfileImg, .frButton, .MnImg, .UserNotificationsImage{
+        .notificationProfileImg, .frButton, .MnImg, .UserNotificationsImage, .convoPersonImg{
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .comment{
@@ -269,6 +269,28 @@
         }
         .brandImg, .brandName{
             color: @Model.CurrentUserStyle.DetailColor;
+        }
+        .actualConversation, .messagesInConvo{
+            background: @Model.CurrentUserStyle.NavColor;
+            border-bottom: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-left: 2px solid @Model.CurrentUserStyle.DetailColor;
+            border-right: 2px solid @Model.CurrentUserStyle.DetailColor;
+        }
+        .actualConversation:hover{
+            background-color: @Model.CurrentUserStyle.BackgroundColor;
+            border-left: none;
+            border-right: none;
+        }
+        .ConvoList, .ConvoMessageList{
+            border-top: 2px solid @Model.CurrentUserStyle.DetailColor;
+        }
+        .convoTitle{
+            border: 2px solid @Model.CurrentUserStyle.DetailColor;
+            background: @Model.CurrentUserStyle.PostHeaderColor;
+            box-shadow: 2px 2px 2px @Model.CurrentUserStyle.DetailColor;
+        }
+        .noActiveConversationsDiv{
+            background: @Model.CurrentUserStyle.NavColor;
         }
     </style>
 </head>
