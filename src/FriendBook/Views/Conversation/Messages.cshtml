@@ -3,18 +3,29 @@
 @{Html.RenderPartial("MessageAreaPartial");}
 
 <div class="colorContainer">
-    <h2 class="convoTitle">Messages</h2>
-
     <div class="ConvoHead">
+        <div class="ConvoHeadInfo">
+            <div class="convoReciever">
+                <img src="@Model.CurrentConversation.ConversationReciever.ProfileImg" class="convoMessImg" />
+                <h4 class="convoMessName">@Model.CurrentConversation.ConversationReciever.FirstName @Model.CurrentConversation.ConversationReciever.LastName</h4>
+            </div>
+            <div class="convoStarter">
+                <img src="@Model.CurrentConversation.ConversationStarter.ProfileImg" class="convoMessImg" />
+                <h4 class="convoMessName">@Model.CurrentConversation.ConversationStarter.FirstName @Model.CurrentConversation.ConversationStarter.LastName</h4>
+            </div>
+        </div>
+
         <div class="NewConversationMessageContainer">
-            <textarea class="NewConversationMessageText" placeholder="Your message..."></textarea>
+            <textarea id="@Model.CurrentConversation.ConversationRoomName" class="NewConversationMessageText" placeholder="Enter your message and press enter to submit..."></textarea>
         </div>
     </div>
 
-    <div class="ConvoMessageList">
+    <hr />
+
+    <div class="ConvoMessageList" id="@Model.CurrentConversation.ConversationRoomName">
         @foreach (var message in Model.Messages)
         {
-            <div class="messagesInConvo">
+            <div class="messagesInConvo colorHighlight">
                 <img class="convoPersonImg" src="@message.SendingUser.ProfileImg" />
                 <h3 class="convoPersonName">@message.SendingUser.FirstName @message.SendingUser.LastName</h3>
                 <p class="firstConvoMessDate">@message.MessageSentDate</p>

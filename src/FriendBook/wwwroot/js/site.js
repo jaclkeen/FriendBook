@@ -159,6 +159,7 @@
             setInterval(UpdateConversationMessages, 3000)
             setInterval(GetCurrentUserNotifications, 3000)
             setInterval(GetAllPendingUserFriendRequests, 3000)
+            window.location.href.includes("/Conversation/Messages/") ? setInterval(AutoUpdateConversationMessages, 3000) : false
         }
     })
 

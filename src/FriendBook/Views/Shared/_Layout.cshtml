@@ -26,7 +26,7 @@
         .YardSaleFilters input, .YardSaleFilters select {
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
-        .YSImage, .SubmitNewItemComment, .AddNewItemComment, .ItemPosterProfileImg, .firstConvoMess, .noActiveConversationsDiv, .NewConversationMessageText{
+        .YSImage, .SubmitNewItemComment, .AddNewItemComment, .ItemPosterProfileImg, .firstConvoMess, .noActiveConversationsDiv{
             border: 2px solid @Model.CurrentUserStyle.DetailColor;
         }
         .SaleItemHead p, .YardSaleItemComment, .comment p{
@@ -289,8 +289,11 @@
             background: @Model.CurrentUserStyle.PostHeaderColor;
             box-shadow: 2px 2px 2px @Model.CurrentUserStyle.DetailColor;
         }
-        .noActiveConversationsDiv{
+        .noActiveConversationsDiv, .ConvoHead{
             background: @Model.CurrentUserStyle.NavColor;
+        }
+        .colorHighlight:hover{
+            background: @Model.CurrentUserStyle.BackgroundColor;
         }
     </style>
 </head>
