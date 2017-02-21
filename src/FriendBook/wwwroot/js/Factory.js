@@ -6,6 +6,33 @@ function ToastNotification(message) {
     $(".toast").fadeOut(2000)
 }
 
+function GetConversationMessages(ConversationRoomName) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: `/Conversation/ConversationMessages/${ConversationRoomName}`
+        }).done(function (messages) {
+            resolve(messages)
+        }).error(function (e) {
+            reject(e)
+        })
+    })
+}
+
+function CreateMessage(CRoomName, NewMessageText) {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/Conversation/NewMessage",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ ConversationRoomName: CRoomName, MessageText: NewMessageText })
+        }).done(function (NewMessage) {
+            resolve(NewMessage)
+        }).error(function (err) {
+            reject(err)
+        })
+    })
+}
+
 function DeleteYardSaleItem(ItemId) {
     return new Promise(function (resolve, reject) {
         $.ajax({

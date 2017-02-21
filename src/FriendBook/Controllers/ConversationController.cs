@@ -44,6 +44,37 @@ namespace FriendBook.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<Message> NewMessage([FromBody] Message NewMessage)
+        {
+            NewMessage.MessageSentDate = DateTime.Now;
+            NewMessage.SendingUserId = ActiveUser.Instance.User.UserId;
+
+            context.Message.Add(NewMessage);
+
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+            NewMessage.SendingUser = ActiveUser.Instance.User;
+
+            return NewMessage;
+        }
+
+        [HttpGet]
+        public List<Message> ConversationMessages([FromRoute] int id)
+        {
+            List<Message> Messages = context.Message.Where(m => m.ConversationRoomName == Convert.ToString(id)).ToList();
+            Messages.ForEach(m => m.SendingUser = context.User.Where(u => u.UserId == m.SendingUserId).SingleOrDefault());
+
+            return Messages;
+        }
+
         /**
         * Purpose: Method that is called in JavaScript to create a new Conversation between 2 users or return an
         *           already existing one if it already exists.

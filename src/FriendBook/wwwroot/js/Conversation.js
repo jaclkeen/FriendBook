@@ -343,7 +343,55 @@ $("body").on("click", function (e) {
     }
 })
 
+function AutoUpdateConversationMessages() {
+    let ConversationRoomName = $(".ConvoMessageList").attr("id")
+
+    GetConversationMessages(ConversationRoomName)
+    .then(function (Messages) {
+        $(".ConvoMessageList").html("")
+        Messages.forEach(function (message) {
+            PrependNewMessageToDom(message, false)
+        })
+    })
+}
+
+function PrependNewMessageToDom(NewMessage, isNew) {
+    let date = new Date(Date.parse(NewMessage.messageSentDate))
+    isNew === false ? date = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` : date = "Now"
+
+    let message = `<div class="messagesInConvo colorHighlight">
+        <img class="convoPersonImg" src="${NewMessage.sendingUser.profileImg}" />
+        <h3 class ="convoPersonName">${NewMessage.sendingUser.firstName} ${NewMessage.sendingUser.lastName}</h3>
+        <p class ="firstConvoMessDate">${date}</p>
+        <p class="firstConvoMess">${NewMessage.messageText}</p>
+    </div>`
+
+    $(".ConvoMessageList").prepend(message);
+}
+
+function AddMessageToConversation(ConversationRoomName) {
+    let NewMessageText = $(".NewConversationMessageText").val()
+    CreateMessage(ConversationRoomName, NewMessageText)
+    .then(function (NewlyCreatedMessage) {
+        $(".NewConversationMessageText").val('')
+        PrependNewMessageToDom(NewlyCreatedMessage, true)
+    })
+}
+
 $(".actualConversation").on("click", function () {
     let roomName = $(this).attr("id")
     location.href = `/Conversation/Messages/${roomName}`
+})
+
+$(".NewConversationMessageText").on("keypress", function (e) {
+    if (e.which == 13) {
+        let MessageText = $(this).val()
+
+        if (MessageText != " " && MessageText != "") {
+            AddMessageToConversation($(this).attr("id"))
+        }
+        else {
+            ToastNotification("hello")
+        }
+    }
 })
